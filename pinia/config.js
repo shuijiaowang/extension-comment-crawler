@@ -1,17 +1,55 @@
-import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
-import {appState as externalAppState, DEFAULT_DOMAIN_CONFIG} from '../core/config.js';
-import * as domain from "node:domain";
-export const useConfigStore = defineStore('config', () => {
+import { defineStore } from 'pinia';
+import { ref, reactive } from 'vue';
+import {
+    DEFAULT_DOMAIN_CONFIG,
+    getDomainConfigStorage,
+    MESSAGE_START_CRAWL,
+} from '../core/config.js';
 
-    //消息通信
-    const notifyContentScript = async (type) => {
-        const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-        if (!tab.id) return;
-        await browser.tabs.sendMessage(tab.id, {type: type});
+export const useConfigStore = defineStore('config', () => {
+    const hostname = ref('');
+    const tabError = ref('');
+    const domainConfig = reactive({ ...DEFAULT_DOMAIN_CONFIG });
+
+    const loadActiveTabConfig = async () => {
+        tabError.value = '';
+        const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+        if (!tab?.url?.startsWith('http')) {
+            hostname.value = '';
+            tabError.value = '请在目标网页标签页打开 popup';
+            Object.assign(domainConfig, { ...DEFAULT_DOMAIN_CONFIG });
+            return;
+        }
+        hostname.value = new URL(tab.url).hostname;
+        const saved = await getDomainConfigStorage(hostname.value).getValue();
+        Object.assign(domainConfig, { ...DEFAULT_DOMAIN_CONFIG }, saved);
     };
-    // 统一导出
+
+    const saveConfig = async () => {
+        if (!hostname.value) return;
+        await getDomainConfigStorage(hostname.value).setValue({ ...domainConfig });
+    };
+
+    const notifyContentScript = async (type) => {
+        const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+        if (!tab?.id) {
+            throw new Error('无活动标签页');
+        }
+        return browser.tabs.sendMessage(tab.id, { type });
+    };
+
+    const startCrawl = async () => {
+        await saveConfig();
+        return notifyContentScript(MESSAGE_START_CRAWL);
+    };
+
     return {
-        notifyContentScript
-    }
-})
+        hostname,
+        tabError,
+        domainConfig,
+        loadActiveTabConfig,
+        saveConfig,
+        startCrawl,
+        notifyContentScript,
+    };
+});

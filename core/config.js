@@ -1,23 +1,30 @@
-// core/config.js
-export const APP_CONFIG = {
-    // 快捷键配置
-    KEYBOARD: {},
-    // UI配置
-    UI: {}
-};
-// ... (保留 DEFAULT_DOMAIN_CONFIG) ...
+/** @typedef {typeof DEFAULT_DOMAIN_CONFIG} DomainConfig */
+
+export const MESSAGE_START_CRAWL = 'START_CRAWL';
+
 export const DEFAULT_DOMAIN_CONFIG = {
     pluginEnabled: false,
+    commentLimit: 100,
+    commentReplisePageSizeLimit: 1,
+    crawlReplies: false,
+    delayMin: 400,
+    delayMax: 800,
+    scrollStep: 400,
 };
+
+/** @param {string} hostname */
+export function getDomainConfigStorage(hostname) {
+    return storage.defineItem(`local:${hostname}`, {
+        fallback: { ...DEFAULT_DOMAIN_CONFIG },
+    });
+}
+
 export const appState = {
-    //--------该网站独有的存储属性-------
-    domainConfigStorage : storage.defineItem(`local:${window.location.hostname}`, {
-        fallback: DEFAULT_DOMAIN_CONFIG //不存在则返回默认值
-    }),
-    domainConfig: {
-        isPluginEnabled: false, //是否启用插件
+    domainConfigStorage: null,
+    domainConfig: { ...DEFAULT_DOMAIN_CONFIG },
+    saveDomainConfig: async () => {
+        if (appState.domainConfigStorage) {
+            await appState.domainConfigStorage.setValue({ ...appState.domainConfig });
+        }
     },
-    saveDomainConfig:async () => {
-        await appState.domainConfigStorage.setValue(appState.domainConfig)
-    }
 };

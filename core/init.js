@@ -1,7 +1,7 @@
-import {appState} from "./config.js";
+import { appState, getDomainConfigStorage } from './config.js';
 
 export async function init() {
-    //初始化数据
-    appState.domainConfig = await appState.domainConfigStorage.getValue()
-
+    const hostname = window.location.hostname;
+    appState.domainConfigStorage = getDomainConfigStorage(hostname);
+    appState.domainConfig = await appState.domainConfigStorage.getValue();
 }

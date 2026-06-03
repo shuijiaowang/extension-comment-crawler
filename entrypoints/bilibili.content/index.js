@@ -1,15 +1,15 @@
+import { getDomainConfigStorage, MESSAGE_START_CRAWL } from '../../core/config.js';
+
 export default defineContentScript({
     matches: ['https://www.bilibili.com/*'],
     runAt: 'document_idle',
     main() {
         console.log('bilibili comment craw Content Script');
 
-        const commentLimit = 100;
-        const commentReplisePageSizeLimit = 1;
-        /** false：不展开「查看全部」，不爬取二级评论 */
-        const crawlReplies = false;
+        const configStorage = getDomainConfigStorage(window.location.hostname);
 
-        const delay = (min, max) =>
+        const delay =
+            (min, max) =>
             new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
 
         const getFeed = () =>
@@ -80,7 +80,8 @@ export default defineContentScript({
             return list;
         };
 
-        const expandAndScrapeReplies = async (commentItem) => {
+        const expandAndScrapeReplies = async (commentItem, cfg) => {
+            const { commentReplisePageSizeLimit, delayMin, delayMax } = cfg;
             const expander = commentItem
                 .querySelector('bili-comment-replies-renderer')
                 ?.shadowRoot?.querySelector('#expander-contents');
@@ -89,7 +90,7 @@ export default defineContentScript({
             const viewMore = expander.querySelector('#view-more bili-text-button');
             if (viewMore) {
                 viewMore.click();
-                await delay(600, 1200);
+                await delay(delayMin, delayMax);
             }
 
             const all = [];
@@ -104,23 +105,35 @@ export default defineContentScript({
                 );
                 if (!nextBtn) break;
                 nextBtn.click();
-                await delay(600, 1200);
+                await delay(delayMin, delayMax);
             }
 
             const footBtns = expander.querySelectorAll('#pagination-foot bili-text-button');
             const collapse = footBtns[footBtns.length - 1];
             if (collapse) {
                 collapse.click();
-                await delay(400, 800);
+                await delay(delayMin, delayMax);
             }
 
             return all;
         };
 
-        const crawl = async () => {
+        let crawling = false;
+
+        const crawl = async (cfg) => {
+            if (crawling) return { ok: false, error: '爬取进行中' };
+
+            const {
+                commentLimit,
+                crawlReplies,
+                delayMin,
+                delayMax,
+                scrollStep,
+            } = cfg;
+
+            crawling = true;
+            console.log('开始爬取评论…');
             const results = [];
-            btn.disabled = true;
-            btn.textContent = '爬取中…';
 
             try {
                 while (results.length < commentLimit) {
@@ -141,7 +154,7 @@ export default defineContentScript({
 
                         const first = parseFirst(item);
                         const replies = crawlReplies
-                            ? await expandAndScrapeReplies(item)
+                            ? await expandAndScrapeReplies(item, cfg)
                             : [];
                         const row = { ...first, replies };
                         results.push(row);
@@ -151,8 +164,8 @@ export default defineContentScript({
                     if (results.length >= commentLimit) break;
 
                     const scrollBefore = window.scrollY;
-                    window.scrollBy(0, 400);
-                    await delay(400, 800);
+                    window.scrollBy(0, scrollStep);
+                    await delay(delayMin, delayMax);
 
                     const threadsAfter = getFeed()?.querySelectorAll('bili-comment-thread-renderer')
                         .length;
@@ -165,17 +178,21 @@ export default defineContentScript({
                 }
 
                 console.log('爬取完成', results);
+                return { ok: true, count: results.length };
             } finally {
-                btn.disabled = false;
-                btn.textContent = '爬取评论';
+                crawling = false;
             }
         };
 
-        const btn = document.createElement('button');
-        btn.textContent = '爬取评论';
-        btn.style.cssText =
-            'position:fixed;top:80px;right:20px;z-index:99999;padding:8px 12px;cursor:pointer;';
-        btn.addEventListener('click', crawl);
-        document.body.appendChild(btn);
+        const runCrawlFromStorage = async () => {
+            const cfg = await configStorage.getValue();
+            return crawl(cfg);
+        };
+
+        browser.runtime.onMessage.addListener(async (message) => {
+            if (message.type === MESSAGE_START_CRAWL) {
+                return runCrawlFromStorage();
+            }
+        });
     },
 });
