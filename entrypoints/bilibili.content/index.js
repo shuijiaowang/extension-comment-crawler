@@ -1,45 +1,181 @@
 export default defineContentScript({
     matches: ['https://www.bilibili.com/*'],
-    runAt: 'document_idle',//页面完全加载完成
-    // 脚本注入后执行的核心逻辑
+    runAt: 'document_idle',
     main() {
-        // 调用业务模块的初始化函数
-        console.log("Example Content Script")
+        console.log('bilibili comment craw Content Script');
 
+        const commentLimit = 100;
+        const commentReplisePageSizeLimit = 1;
+        /** false：不展开「查看全部」，不爬取二级评论 */
+        const crawlReplies = false;
 
+        const delay = (min, max) =>
+            new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
 
-        //评论区域，所有评论区域
-        const commentsEl = document.querySelector('bili-comments').shadowRoot.querySelector("#feed");
-        //所有评论
-        const commentItemList = commentsEl.querySelectorAll("bili-comment-thread-renderer")
-        //单个评论区(包含一级和二级)
-        const commentItem=commentItemList[0].shadowRoot
-        //一级评论
-        const commentFirst = commentItem.querySelector("bili-comment-renderer").shadowRoot
-        //一级评论的主体
-        const commentFirstMain=commentFirst.querySelector("#body #main")
-        const commentFirstFooter=commentFirst.querySelector("#body #footer")
+        const getFeed = () =>
+            document.querySelector('bili-comments')?.shadowRoot?.querySelector('#feed');
 
-        //评论人和评论内容(一二级结构一样)
-        const commentUserId = commentFirstMain.querySelector("bili-comment-user-info").shadowRoot.querySelector("a") //属性data-user-profile-id
-        const commentUserName = commentFirstMain.querySelector("bili-comment-user-info").shadowRoot.querySelector("a").textContent
-        const commentContent = commentFirstMain.querySelector("bili-rich-text").shadowRoot.querySelector("#contents").textContent //循环内部元素的textContent //span.
+        const parseRichContent = (main) => {
+            const contents = main
+                ?.querySelector('bili-rich-text')
+                ?.shadowRoot?.querySelector('#contents');
+            if (!contents) return '';
 
-        //二级评论所有
-        const commentReplise = commentItem.querySelector("bili-comment-replies-renderer").shadowRoot.querySelector("#expander-contents")
-        //二级评论点击查看按钮
-        const commentRepliseViewMoreButton=commentReplise.querySelector("#view-more bili-text-button") //直接用.click()方法
-        //二级评论多的话会分页，共多少页
-        const commentReplisePageSize=commentReplise.querySelector("#pagination-head ").textContent //输出：共10页
-        //二级评论所有分页按钮
-        const commentReplisePageButton=commentReplise.querySelectorAll("#pagination-body bili-text-button")//data-idx属性是页号，下标从零开始，存在缺省，点击后下次要重新获取所有页号元素// data-idx="0"
+            let text = '';
+            const walk = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    text += node.textContent;
+                    return;
+                }
+                if (node.nodeType !== Node.ELEMENT_NODE) return;
+                if (node.tagName === 'IMG') {
+                    text += node.getAttribute('alt') || '';
+                    return;
+                }
+                node.childNodes.forEach(walk);
+            };
+            walk(contents);
+            return text.trim();
+        };
 
-        //所有二级评论，先查看是否有commentRepliseViewMoreButton，有则点击，再查看是否有commentReplisePageSize，有则是多页，记录当前是第几页
-        //当前所有二级评论
-        const commentReplyList = commentReplise.querySelectorAll("#expander-contents bili-comment-reply-renderer")
-        const commentReplyItem = commentReplyList[0].shadowRoot
-        const commentReplyMain = commentReplyItem.querySelector("#body #main")
-        const commentReplyFooter=commentFirst.querySelector("#body #footer")
-        const commentReplyUserName = commentReplyMain.querySelector("bili-comment-user-info").shadowRoot.querySelector("a").textContent
+        const parseComment = (main, footer) => {
+            if (!main || !footer) return null;
+            const userInfo = main.querySelector('bili-comment-user-info')?.shadowRoot;
+            return {
+                userId: userInfo?.querySelector('#user-name')?.getAttribute('data-user-profile-id') ?? '',
+                userName: userInfo?.querySelector('a')?.textContent?.trim() ?? '',
+                content: parseRichContent(main),
+                picture: main.querySelector('#pictures') ? '[图片]' : '',
+                time: footer.querySelector('#pubdate')?.textContent?.trim() ?? '',
+                like: footer.querySelector('#like #count')?.textContent?.trim() || '0',
+            };
+        };
+
+        const parseFirst = (commentItem) => {
+            const root = commentItem.querySelector('bili-comment-renderer')?.shadowRoot;
+            if (!root) return null;
+            const main = root.querySelector('#body #main');
+            const footer = root
+                .querySelector('#body #footer bili-comment-action-buttons-renderer')
+                ?.shadowRoot;
+            return parseComment(main, footer);
+        };
+
+        const parseReply = (replyEl) => {
+            const root = replyEl.shadowRoot;
+            if (!root) return null;
+            const main = root.querySelector('#body #main');
+            const footer = root
+                .querySelector('#body #footer bili-comment-action-buttons-renderer')
+                ?.shadowRoot;
+            return parseComment(main, footer);
+        };
+
+        const scrapeReplyPage = (expander) => {
+            const list = [];
+            for (const el of expander.querySelectorAll('bili-comment-reply-renderer')) {
+                const row = parseReply(el);
+                if (row) list.push(row);
+            }
+            return list;
+        };
+
+        const expandAndScrapeReplies = async (commentItem) => {
+            const expander = commentItem
+                .querySelector('bili-comment-replies-renderer')
+                ?.shadowRoot?.querySelector('#expander-contents');
+            if (!expander) return [];
+
+            const viewMore = expander.querySelector('#view-more bili-text-button');
+            if (viewMore) {
+                viewMore.click();
+                await delay(600, 1200);
+            }
+
+            const all = [];
+            for (let page = 0; page < commentReplisePageSizeLimit; page++) {
+                all.push(...scrapeReplyPage(expander));
+
+                const head = expander.querySelector('#pagination-head');
+                if (!head?.textContent?.includes('共')) break;
+
+                const nextBtn = [...expander.querySelectorAll('#pagination-body bili-text-button')].find(
+                    (b) => b.getAttribute('data-idx') === String(page + 1),
+                );
+                if (!nextBtn) break;
+                nextBtn.click();
+                await delay(600, 1200);
+            }
+
+            const footBtns = expander.querySelectorAll('#pagination-foot bili-text-button');
+            const collapse = footBtns[footBtns.length - 1];
+            if (collapse) {
+                collapse.click();
+                await delay(400, 800);
+            }
+
+            return all;
+        };
+
+        const crawl = async () => {
+            const results = [];
+            btn.disabled = true;
+            btn.textContent = '爬取中…';
+
+            try {
+                while (results.length < commentLimit) {
+                    const feed = getFeed();
+                    if (!feed) {
+                        console.warn('未找到评论区域');
+                        break;
+                    }
+
+                    const threads = feed.querySelectorAll('bili-comment-thread-renderer');
+
+                    while (results.length < commentLimit && results.length < threads.length) {
+                        const item = threads[results.length].shadowRoot;
+                        if (!item) {
+                            results.push({ error: 'shadowRoot 为空', replies: [] });
+                            continue;
+                        }
+
+                        const first = parseFirst(item);
+                        const replies = crawlReplies
+                            ? await expandAndScrapeReplies(item)
+                            : [];
+                        const row = { ...first, replies };
+                        results.push(row);
+                        console.log(`[${results.length}]`, row);
+                    }
+
+                    if (results.length >= commentLimit) break;
+
+                    const scrollBefore = window.scrollY;
+                    window.scrollBy(0, 400);
+                    await delay(400, 800);
+
+                    const threadsAfter = getFeed()?.querySelectorAll('bili-comment-thread-renderer')
+                        .length;
+                    if (
+                        window.scrollY === scrollBefore &&
+                        (threadsAfter ?? 0) <= results.length
+                    ) {
+                        break;
+                    }
+                }
+
+                console.log('爬取完成', results);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '爬取评论';
+            }
+        };
+
+        const btn = document.createElement('button');
+        btn.textContent = '爬取评论';
+        btn.style.cssText =
+            'position:fixed;top:80px;right:20px;z-index:99999;padding:8px 12px;cursor:pointer;';
+        btn.addEventListener('click', crawl);
+        document.body.appendChild(btn);
     },
 });
