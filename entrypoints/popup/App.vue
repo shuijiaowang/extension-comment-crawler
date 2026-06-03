@@ -1,11 +1,32 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from '@/pinia/config.js';
+import { resolvePlatformTheme } from '@/core/config.js';
 
 const store = useConfigStore();
 const { hostname, tabError, domainConfig } = storeToRefs(store);
 const crawling = ref(false);
+
+const platformTheme = computed(() => resolvePlatformTheme(hostname.value));
+const platformThemeStyle = computed(() => ({
+    '--accent': platformTheme.value.primary,
+    '--accent-hover': platformTheme.value.primaryHover,
+    '--accent-rgb': platformTheme.value.primaryRgb,
+}));
+const isBilibili = computed(() => platformTheme.value.id === 'bilibili');
+const isXiaohongshu = computed(() => platformTheme.value.id === 'xiaohongshu');
+const pageHint = computed(() => {
+    if (tabError.value) return '';
+    if (isXiaohongshu.value) return '在笔记详情页打开 popup，保存配置后点击开始爬取';
+    if (isBilibili.value) return '在视频页打开 popup，保存配置后点击开始爬取';
+    return '在目标页面打开 popup，保存配置后点击开始爬取';
+});
+const crawlErrorHint = computed(() => {
+    if (isXiaohongshu.value) return '发送失败，请确认已在小红书笔记页且已刷新';
+    if (isBilibili.value) return '发送失败，请确认已在 B 站页面且已刷新';
+    return '发送失败，请确认已在目标页面且已刷新';
+});
 
 onMounted(() => {
     store.loadActiveTabConfig();
@@ -19,7 +40,7 @@ const onStartCrawl = async () => {
     try {
         await store.startCrawl();
     } catch (e) {
-        tabError.value = e?.message ?? '发送失败，请确认已在 B 站页面且已刷新';
+        tabError.value = e?.message ?? crawlErrorHint.value;
     } finally {
         crawling.value = false;
     }
@@ -27,14 +48,14 @@ const onStartCrawl = async () => {
 </script>
 
 <template>
-    <div class="popup">
+    <div class="popup" :style="platformThemeStyle">
         <header class="header">
             <div class="header-top">
                 <h1>评论爬取</h1>
                 <span v-if="hostname && !tabError" class="host-badge">{{ hostname }}</span>
             </div>
             <p v-if="tabError" class="banner error">{{ tabError }}</p>
-            <p v-else class="hint">在视频页打开 popup，保存配置后点击开始爬取</p>
+            <p v-else class="hint">{{ pageHint }}</p>
         </header>
 
         <form class="form" @submit.prevent>
@@ -49,7 +70,7 @@ const onStartCrawl = async () => {
                         min="1"
                     />
                 </div>
-                <div class="field">
+                <div v-if="isBilibili" class="field">
                     <label for="replyPages">二级评论分页数</label>
                     <input
                         id="replyPages"
@@ -58,10 +79,23 @@ const onStartCrawl = async () => {
                         min="0"
                     />
                 </div>
+                <div v-if="isXiaohongshu" class="field">
+                    <label for="replyLimit">二级评论数量上限</label>
+                    <input
+                        id="replyLimit"
+                        v-model.number="domainConfig.commentReplyLimit"
+                        type="number"
+                        min="0"
+                    />
+                </div>
                 <label class="toggle">
                     <input v-model="domainConfig.crawlReplies" type="checkbox" />
                     <span class="toggle-track" aria-hidden="true" />
-                    <span class="toggle-label">爬取二级评论（展开「查看全部」）</span>
+                    <span class="toggle-label">{{
+                        isXiaohongshu
+                            ? '爬取二级评论（点击「查看更多」）'
+                            : '爬取二级评论（展开「查看全部」）'
+                    }}</span>
                 </label>
             </section>
 
@@ -145,9 +179,9 @@ h1 {
     padding: 2px 8px;
     font-size: 0.7rem;
     font-weight: 500;
-    color: #fb7299;
-    background: rgb(251 114 153 / 12%);
-    border: 1px solid rgb(251 114 153 / 25%);
+    color: var(--accent);
+    background: rgb(var(--accent-rgb) / 12%);
+    border: 1px solid rgb(var(--accent-rgb) / 25%);
     border-radius: 999px;
 }
 
@@ -233,8 +267,8 @@ input[type='number'] {
 }
 
 input[type='number']:focus {
-    border-color: #fb7299;
-    box-shadow: 0 0 0 2px rgb(251 114 153 / 18%);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgb(var(--accent-rgb) / 18%);
 }
 
 .toggle {
@@ -277,7 +311,7 @@ input[type='number']:focus {
 }
 
 .toggle input:checked + .toggle-track {
-    background: #fb7299;
+    background: var(--accent);
 }
 
 .toggle input:checked + .toggle-track::after {
@@ -285,7 +319,7 @@ input[type='number']:focus {
 }
 
 .toggle input:focus-visible + .toggle-track {
-    box-shadow: 0 0 0 2px rgb(251 114 153 / 35%);
+    box-shadow: 0 0 0 2px rgb(var(--accent-rgb) / 35%);
 }
 
 .toggle-label {
@@ -324,13 +358,13 @@ input[type='number']:focus {
 
 .btn.primary {
     color: #fff;
-    background: #fb7299;
-    border-color: #fb7299;
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 .btn.primary:hover:not(:disabled) {
-    background: #ff85a8;
-    border-color: #ff85a8;
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
 }
 
 .btn:disabled {
