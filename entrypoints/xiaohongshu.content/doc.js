@@ -1,37 +1,62 @@
+//评论区域容器
+const commentsContainer = document.querySelector(".comments-el .comments-container")
+//评论列表容器
+const commentListContainer = commentsContainer.querySelector(".list-container")
+//所有一级评论项
+const parentCommentList = commentListContainer.querySelectorAll(".parent-comment")
+//单个一级评论项
+const parentCommentItem = parentCommentList[0].querySelector(".comment-item")
 
-const comments_container=document.querySelector(".comments-el .comments-container")
+//评论人ID
+const userId = parentCommentItem.querySelector(".avatar a").getAttribute("data-user-id")
+//评论人昵称
+const userName = parentCommentItem.querySelector(".author a").textContent
+//评论人主页链接
+const userLink = parentCommentItem.querySelector(".avatar a").getAttribute("href")
+//是否作者
+const isAuthor = parentCommentItem.querySelector(".author span").textContent
+//评论内容
+const content = parentCommentItem.querySelector(".content").textContent
+//是否有图片
+const picture = parentCommentItem.querySelector(".comment-picture") ? "[图片]" : ""
+//评论时间
+const time = parentCommentItem.querySelector(".date span").textContent
+//评论地点
+const location = parentCommentItem.querySelector(".date .location").textContent
+//点赞数
+const like = parentCommentItem.querySelector(".interactions .like .count").textContent
+//评论标签（本站无）
+const tag = ""
+//回复数量
+const replyCount = parentCommentItem.querySelector(".reply .count").textContent
+//展开更多回复按钮
+const replyShowMoreButton = parentCommentList[0].querySelector(".reply-container .show-more")
 
-// 评论容器
-const comments_list_container=comments_container.querySelector(".list-container")
+//所有二级评论
+const replyList = parentCommentList[1].querySelectorAll(".reply-container .list-container .comment-item")
+//单个二级评论
+const replyItem = replyList[1]
 
-const parent_comment_list=comments_list_container.querySelectorAll(".parent-comment")
-const parent_comment_item=parent_comment_list[0].querySelector(".comment-item") //这个得是一级子元素
-const parent_comment_user_id=parent_comment_item.querySelector(".avatar a").getAttribute("data-user-id")//用户id
-const parent_comment_username=parent_comment_item.querySelector(".author a").textContent //用户名
-const parent_comment_is_author=parent_comment_item.querySelector(".author span").textContent //存在就是作者 "作者"
-const parent_comment_content=parent_comment_item.querySelector(".content").textContent //评论内容
-const parent_comment_content_picture=parent_comment_item.querySelector(".comment-picture")?"[图片]":"" //是否有图片
-const parent_comment_data=parent_comment_item.querySelector(".date span").textContent //评论时间：05-01,
-const parent_comment_location=parent_comment_item.querySelector(".date .location").textContent //IP：广东
-const parent_comment_like=parent_comment_item.querySelector(".interactions .like .count").textContent //评论点赞：'赞'=0个
-const parent_comment_reply_count=parent_comment_item.querySelector(".reply .count").textContent //子评论数:'回复'=0个
+//评论人ID
+const userId = replyItem.querySelector(".avatar a").getAttribute("data-user-id")
+//评论人昵称
+const userName = replyItem.querySelector(".author a").textContent
+//评论人主页链接
+const userLink = replyItem.querySelector(".avatar a").getAttribute("href")
+//是否作者
+const isAuthor = replyItem.querySelector(".author span")?.textContent
+//评论内容
+const content = replyItem.querySelector(".content").textContent
+//是否有图片
+const picture = replyItem.querySelector(".comment-picture") ? "[图片]" : ""
+//评论时间
+const time = replyItem.querySelector(".date span").textContent
+//评论地点
+const location = replyItem.querySelector(".date .location").textContent
+//点赞数
+const like = replyItem.querySelector(".interactions .like .count").textContent
 
-
-const reply_comment_list=parent_comment_list[1].querySelectorAll(".reply-container .list-container .comment-item") //可能没有二级评论
-const reply_comment_item=reply_comment_list[1]
-const reply_comment_user_id = reply_comment_item.querySelector(".avatar a").getAttribute("data-user-id")
-const reply_comment_username = reply_comment_item.querySelector(".author a").textContent
-const reply_comment_is_author = reply_comment_item.querySelector(".author span")?.textContent
-const reply_comment_content = reply_comment_item.querySelector(".content").textContent
-const reply_comment_date = reply_comment_item.querySelector(".date span").textContent
-const reply_comment_location = reply_comment_item.querySelector(".date .location").textContent
-const reply_comment_like = reply_comment_item.querySelector(".interactions .like .count").textContent
-
-//点击查看更多
-const reply_comment_show_more_button = reply_comment_item.querySelector(".reply-container .show-more")//.click()
-
-
-
-document.querySelector(".note-scroller").scrollBy(0,200) //移动
-document.querySelector(".note-scroller").scrollTop //判断是否到底
-
+//滚动容器
+const scrollContainer = document.querySelector(".note-scroller")
+scrollContainer.scrollBy(0, 200)
+scrollContainer.scrollTop

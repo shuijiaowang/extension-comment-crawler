@@ -4,6 +4,7 @@ import {
     MESSAGE_START_CRAWL,
     normalizeDomainConfig,
 } from '../../core/config.js';
+import { saveCrawlResults } from '../../core/records.js';
 
 export default defineContentScript({
     matches: ['https://www.douyin.com/*'],
@@ -11,35 +12,42 @@ export default defineContentScript({
     main() {
         console.log('douyin comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const getCommentMainContent = () =>
+        const getCommentsContainer = () =>
             document.querySelector(
                 '[data-e2e="feed-active-video"] #merge-all-comment-container .comment-mainContent',
             );
         const getParentList = () => {
-            const main = getCommentMainContent();
-            if (!main) return [];
-            return [...main.querySelectorAll(':scope > div')].filter((el) =>
+            const commentsContainer = getCommentsContainer();
+            if (!commentsContainer) return [];
+            return [...commentsContainer.querySelectorAll(':scope > div')].filter((el) =>
                 el.querySelector('[data-e2e="comment-item"]'),
             );
         };
+        const parseTimeLoc = (text) => {
+            const parts = text.split('·').map((s) => s.trim());
+            return { time: parts[0] ?? '', location: parts[1] ?? '' };
+        };
         const parseCommentItem = (item) => {
             if (!item) return null;
-            const body = item.querySelector(':scope > div:nth-child(2) > div:nth-child(1)');
-            if (!body) return null;
-            const userLink = body.querySelector(':scope > div:nth-child(1) a');
-            const href = userLink?.getAttribute('href') ?? '';
+            const parentCommentMain = item.querySelector(':scope > div:nth-child(2) > div:nth-child(1)');
+            if (!parentCommentMain) return null;
+            const userAnchor = parentCommentMain.querySelector(':scope > div:nth-child(1) a');
+            const userLink = userAnchor?.getAttribute('href') ?? '';
             const timeLocText =
-                body.querySelector(':scope > div:nth-child(3) span')?.textContent?.trim() ?? '';
-            const parts = timeLocText.split('·').map((s) => s.trim());
+                parentCommentMain.querySelector(':scope > div:nth-child(3) span')?.textContent?.trim() ?? '';
+            const { time, location } = parseTimeLoc(timeLocText);
             return {
-                userId: href.split('/').pop() ?? '',
-                userLink: href,
-                userName: userLink?.textContent?.trim() ?? '',
-                content: body.querySelector(':scope > div:nth-child(2)')?.textContent?.trim() ?? '',
-                picture: body.querySelector(':scope > div:nth-child(2) > div') ? '[图片]' : '',
-                time: parts[0] ?? '',
-                location: parts[1] ?? '',
-                like: body.querySelector(':scope > div:nth-child(4) p span')?.textContent?.trim() || '0',
+                userId: userLink.split('/').pop() ?? '',
+                userName: userAnchor?.textContent?.trim() ?? '',
+                userLink,
+                content: parentCommentMain.querySelector(':scope > div:nth-child(2)')?.textContent?.trim() ?? '',
+                picture: parentCommentMain.querySelector(':scope > div:nth-child(2) > div') ? '[图片]' : '',
+                time,
+                location,
+                like:
+                    parentCommentMain.querySelector(':scope > div:nth-child(4) p span')?.textContent?.trim() || '0',
+                isAuthor: '',
+                tag: '',
             };
         };
         const parseParentComment = (parentEl) => {
@@ -60,7 +68,7 @@ export default defineContentScript({
             }
             return list;
         };
-        const getShowMoreButton = (parentEl) => {
+        const getReplyShowMoreButton = (parentEl) => {
             const item = parentEl.querySelector('[data-e2e="comment-item"]');
             return item?.querySelector(':scope > div:nth-child(2) button div span');
         };
@@ -79,10 +87,10 @@ export default defineContentScript({
                     }
                 }
                 if (all.length >= commentReplyLimit) break;
-                const showMore = getShowMoreButton(parentEl);
-                if (!showMore?.textContent?.includes('展开')) break;
+                const replyShowMoreButton = getReplyShowMoreButton(parentEl);
+                if (!replyShowMoreButton?.textContent?.includes('展开')) break;
                 const before = item.querySelectorAll('.replyContainer [data-e2e="comment-item"]').length;
-                showMore.click();
+                replyShowMoreButton.click();
                 await delayMs(clickDelay);
                 const after = item.querySelectorAll('.replyContainer [data-e2e="comment-item"]').length;
                 if (after <= before) break;
@@ -98,8 +106,8 @@ export default defineContentScript({
             const results = [];
             try {
                 while (results.length < commentLimit) {
-                    const scroller = getCommentMainContent();
-                    if (!scroller) {
+                    const scrollContainer = getCommentsContainer();
+                    if (!scrollContainer) {
                         console.warn('未找到评论区域');
                         break;
                     }
@@ -113,13 +121,14 @@ export default defineContentScript({
                         console.log(`[${results.length}]`, row);
                     }
                     if (results.length >= commentLimit) break;
-                    const scrollBefore = scroller.scrollTop;
-                    scroller.scrollBy(0, scrollStep);
+                    const scrollBefore = scrollContainer.scrollTop;
+                    scrollContainer.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
                     const parentsAfter = getParentList().length;
-                    if (scroller.scrollTop === scrollBefore && parentsAfter <= results.length) break;
+                    if (scrollContainer.scrollTop === scrollBefore && parentsAfter <= results.length) break;
                 }
                 console.log('爬取完成', results);
+                await saveCrawlResults(window.location.hostname, results);
                 return { ok: true, count: results.length };
             } finally {
                 crawling = false;

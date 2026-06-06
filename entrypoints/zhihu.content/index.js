@@ -4,6 +4,7 @@ import {
     MESSAGE_START_CRAWL,
     normalizeDomainConfig,
 } from '../../core/config.js';
+import { saveCrawlResults } from '../../core/records.js';
 
 export default defineContentScript({
     matches: ['https://www.zhihu.com/*'],
@@ -11,10 +12,10 @@ export default defineContentScript({
     main() {
         console.log('zhihu comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const getParentScroller = () => document.querySelector('.Modal-content > div > div:nth-child(2)');
+        const getScrollContainer = () => document.querySelector('.Modal-content > div > div:nth-child(2)');
         const getParentList = () =>
             document.querySelectorAll('.Modal-content > div > div:nth-child(2) > div > div');
-        const getReplyScroller = () =>
+        const getReplyScrollContainer = () =>
             document.querySelector('.Modal-content > div:nth-child(2) > div:nth-child(2)');
         const getReplyList = () =>
             document.querySelectorAll(
@@ -22,7 +23,7 @@ export default defineContentScript({
             );
         const getReturnParentButton = () =>
             document.querySelector('.Modal-content > div:nth-child(2) > div:nth-child(1) span');
-        const parseDateLoc = (text) => {
+        const parseTimeLocTag = (text) => {
             const parts = text.split('·').map((s) => s.trim());
             return {
                 time: parts[0] ?? '',
@@ -32,27 +33,29 @@ export default defineContentScript({
         };
         const parseCommentItem = (item) => {
             if (!item) return null;
-            const body = item.querySelector(':scope > div > div:nth-child(2)');
-            if (!body) return null;
-            const userLink = body.querySelector(':scope > div:nth-child(1) a');
-            const href = userLink?.getAttribute('href') ?? '';
-            const dateLocText =
-                body.querySelector(':scope > div:nth-child(3) > div:nth-child(1) > div:nth-child(1)')
+            const parentCommentMain = item.querySelector(':scope > div > div:nth-child(2)');
+            if (!parentCommentMain) return null;
+            const userAnchor = parentCommentMain.querySelector(':scope > div:nth-child(1) a');
+            const userLink = userAnchor?.getAttribute('href') ?? '';
+            const timeLocTag =
+                parentCommentMain
+                    .querySelector(':scope > div:nth-child(3) > div:nth-child(1) > div:nth-child(1)')
                     ?.textContent?.trim() ?? '';
-            const { time, location, tag } = parseDateLoc(dateLocText);
+            const { time, location, tag } = parseTimeLocTag(timeLocTag);
             return {
-                userId: href.split('/').pop() ?? '',
-                userLink: href,
-                userName: userLink?.textContent?.trim() ?? '',
-                content: body.querySelector(':scope > .CommentContent')?.textContent?.trim() ?? '',
-                picture: body.querySelector(':scope > .CommentContent .comment_img') ? '[图片]' : '',
+                userId: userLink.split('/').pop() ?? '',
+                userName: userAnchor?.textContent?.trim() ?? '',
+                userLink,
+                content: parentCommentMain.querySelector(':scope > .CommentContent')?.textContent?.trim() ?? '',
+                picture: parentCommentMain.querySelector(':scope > .CommentContent .comment_img') ? '[图片]' : '',
                 time,
                 location,
-                tag,
                 like:
-                    body
+                    parentCommentMain
                         .querySelector(':scope > div:nth-child(3) > div:nth-child(2) > button:nth-child(2)')
                         ?.textContent?.trim() || '0',
+                isAuthor: '',
+                tag,
             };
         };
         const scrapeVisibleReplies = () => {
@@ -72,9 +75,9 @@ export default defineContentScript({
         };
         const expandAndScrapeReplies = async (parentItem, cfg) => {
             const { commentReplyLimit, clickDelay, scrollDelay, scrollStep } = cfg;
-            const showMoreBtn = parentItem.querySelector(':scope > button');
-            if (!showMoreBtn) return [];
-            showMoreBtn.click();
+            const replyShowMoreButton = parentItem.querySelector(':scope > button');
+            if (!replyShowMoreButton) return [];
+            replyShowMoreButton.click();
             await delayMs(clickDelay);
             const all = [];
             try {
@@ -88,12 +91,12 @@ export default defineContentScript({
                         }
                     }
                     if (all.length >= commentReplyLimit) break;
-                    const scroller = getReplyScroller();
-                    if (!scroller) break;
-                    const scrollBefore = scroller.scrollTop;
-                    scroller.scrollBy(0, scrollStep);
+                    const replyScrollContainer = getReplyScrollContainer();
+                    if (!replyScrollContainer) break;
+                    const scrollBefore = replyScrollContainer.scrollTop;
+                    replyScrollContainer.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
-                    if (scroller.scrollTop === scrollBefore) break;
+                    if (replyScrollContainer.scrollTop === scrollBefore) break;
                 }
             } finally {
                 await returnToParentPage(clickDelay);
@@ -107,10 +110,10 @@ export default defineContentScript({
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
-            const scroller = getParentScroller();
+            const scrollContainer = getScrollContainer();
             try {
                 while (results.length < commentLimit) {
-                    if (!scroller) {
+                    if (!scrollContainer) {
                         console.warn('未找到评论弹窗，请先打开评论区');
                         break;
                     }
@@ -126,13 +129,14 @@ export default defineContentScript({
                         console.log(`[${results.length}]`, row);
                     }
                     if (results.length >= commentLimit) break;
-                    const scrollBefore = scroller.scrollTop;
-                    scroller.scrollBy(0, scrollStep);
+                    const scrollBefore = scrollContainer.scrollTop;
+                    scrollContainer.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
                     const parentsAfter = getParentList().length;
-                    if (scroller.scrollTop === scrollBefore && parentsAfter <= results.length) break;
+                    if (scrollContainer.scrollTop === scrollBefore && parentsAfter <= results.length) break;
                 }
                 console.log('爬取完成', results);
+                await saveCrawlResults(window.location.hostname, results);
                 return { ok: true, count: results.length };
             } finally {
                 crawling = false;

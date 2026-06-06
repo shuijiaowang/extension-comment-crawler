@@ -4,6 +4,7 @@ import {
     MESSAGE_START_CRAWL,
     normalizeDomainConfig,
 } from '../../core/config.js';
+import { saveCrawlResults } from '../../core/records.js';
 
 export default defineContentScript({
     matches: ['https://www.bilibili.com/*'],
@@ -11,7 +12,8 @@ export default defineContentScript({
     main() {
         console.log('bilibili comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const getFeed = () => document.querySelector('bili-comments')?.shadowRoot?.querySelector('#feed');
+        const getCommentsContainer = () =>
+            document.querySelector('bili-comments')?.shadowRoot?.querySelector('#feed');
         const parseRichContent = (main) => {
             const contents = main?.querySelector('bili-rich-text')?.shadowRoot?.querySelector('#contents');
             if (!contents) return '';
@@ -34,13 +36,18 @@ export default defineContentScript({
         const parseComment = (main, footer) => {
             if (!main || !footer) return null;
             const userInfo = main.querySelector('bili-comment-user-info')?.shadowRoot;
+            const userAnchor = userInfo?.querySelector('a');
             return {
                 userId: userInfo?.querySelector('#user-name')?.getAttribute('data-user-profile-id') ?? '',
-                userName: userInfo?.querySelector('a')?.textContent?.trim() ?? '',
+                userName: userAnchor?.textContent?.trim() ?? '',
+                userLink: userAnchor?.getAttribute('href') ?? '',
                 content: parseRichContent(main),
                 picture: main.querySelector('#pictures') ? '[图片]' : '',
                 time: footer.querySelector('#pubdate')?.textContent?.trim() ?? '',
+                location: '',
                 like: footer.querySelector('#like #count')?.textContent?.trim() || '0',
+                isAuthor: '',
+                tag: '',
             };
         };
         const parseFirst = (commentItem) => {
@@ -67,27 +74,31 @@ export default defineContentScript({
         };
         const expandAndScrapeReplies = async (commentItem, cfg) => {
             const { commentReplisePageSizeLimit, clickDelay } = cfg;
-            const expander = commentItem.querySelector('bili-comment-replies-renderer')?.shadowRoot?.querySelector('#expander-contents');
-            if (!expander) return [];
-            const viewMore = expander.querySelector('#view-more bili-text-button');
-            if (viewMore) {
-                viewMore.click();
+            const replyContainer = commentItem
+                .querySelector('bili-comment-replies-renderer')
+                ?.shadowRoot?.querySelector('#expander-contents');
+            if (!replyContainer) return [];
+            const replyShowMoreButton = replyContainer.querySelector('#view-more bili-text-button');
+            if (replyShowMoreButton) {
+                replyShowMoreButton.click();
                 await delayMs(clickDelay);
             }
             const all = [];
             for (let page = 0; page < commentReplisePageSizeLimit; page++) {
-                all.push(...scrapeReplyPage(expander));
-                const head = expander.querySelector('#pagination-head');
-                if (!head?.textContent?.includes('共')) break;
-                const nextBtn = [...expander.querySelectorAll('#pagination-body bili-text-button')].find((b) => b.getAttribute('data-idx') === String(page + 1));
+                all.push(...scrapeReplyPage(replyContainer));
+                const replyPageSize = replyContainer.querySelector('#pagination-head');
+                if (!replyPageSize?.textContent?.includes('共')) break;
+                const nextBtn = [...replyContainer.querySelectorAll('#pagination-body bili-text-button')].find(
+                    (b) => b.getAttribute('data-idx') === String(page + 1),
+                );
                 if (!nextBtn) break;
                 nextBtn.click();
                 await delayMs(clickDelay);
             }
-            const footBtns = expander.querySelectorAll('#pagination-foot bili-text-button');
-            const collapse = footBtns[footBtns.length - 1];
-            if (collapse) {
-                collapse.click();
+            const replyCollapseButtons = replyContainer.querySelectorAll('#pagination-foot bili-text-button');
+            const replyCollapseButton = replyCollapseButtons[replyCollapseButtons.length - 1];
+            if (replyCollapseButton) {
+                replyCollapseButton.click();
                 await delayMs(clickDelay);
             }
             return all;
@@ -101,12 +112,12 @@ export default defineContentScript({
             const results = [];
             try {
                 while (results.length < commentLimit) {
-                    const feed = getFeed();
-                    if (!feed) {
+                    const commentsContainer = getCommentsContainer();
+                    if (!commentsContainer) {
                         console.warn('未找到评论区域');
                         break;
                     }
-                    const threads = feed.querySelectorAll('bili-comment-thread-renderer');
+                    const threads = commentsContainer.querySelectorAll('bili-comment-thread-renderer');
                     while (results.length < commentLimit && results.length < threads.length) {
                         const item = threads[results.length].shadowRoot;
                         if (!item) {
@@ -123,10 +134,12 @@ export default defineContentScript({
                     const scrollBefore = window.scrollY;
                     window.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
-                    const threadsAfter = getFeed()?.querySelectorAll('bili-comment-thread-renderer').length;
+                    const threadsAfter =
+                        getCommentsContainer()?.querySelectorAll('bili-comment-thread-renderer').length;
                     if (window.scrollY === scrollBefore && (threadsAfter ?? 0) <= results.length) break;
                 }
                 console.log('爬取完成', results);
+                await saveCrawlResults(window.location.hostname, results);
                 return { ok: true, count: results.length };
             } finally {
                 crawling = false;

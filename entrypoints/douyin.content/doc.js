@@ -1,30 +1,67 @@
-const comment_mainContent=document.querySelector('[data-e2e="feed-active-video"]  #merge-all-comment-container .comment-mainContent')
-const parent_comment_list=comment_mainContent.querySelectorAll(":scope > div")
-const parent_comment_item=parent_comment_list[1].querySelector('[data-e2e="comment-item"]')
-const parent_comment_body=parent_comment_item.querySelector(":scope > div:nth-child(2)> div:nth-child(1)")
-const parent_comment_body_userlink=parent_comment_body.querySelector(':scope > div:nth-child(1) a').getAttribute("href")
-const parent_comment_body_username=parent_comment_body.querySelector(':scope > div:nth-child(1) a').textContent
-const parent_comment_body_content=parent_comment_body.querySelector(':scope > div:nth-child(2)').textContent
-const parent_comment_body_content_picture=parent_comment_body.querySelector(':scope > div:nth-child(2) >div')?"图片":''
-const parent_comment_body_time_loc=parent_comment_body.querySelector(':scope > div:nth-child(3) span').textContent //2周前·吉林,2周前·吉林,2小时前·河北,4月前·山西,2年前·湖北
-const parent_comment_body_like_count=parent_comment_body.querySelector(':scope > div:nth-child(4) p span').textContent //点赞数
+//评论区域容器
+const commentsContainer = document.querySelector('[data-e2e="feed-active-video"] #merge-all-comment-container .comment-mainContent')
+//所有一级评论项
+const parentCommentList = commentsContainer.querySelectorAll(":scope > div")
+//单个一级评论项
+const parentCommentItem = parentCommentList[1].querySelector('[data-e2e="comment-item"]')
+//一级评论主体
+const parentCommentMain = parentCommentItem.querySelector(":scope > div:nth-child(2)> div:nth-child(1)")
 
-const reply_comment_show_more_button=parent_comment_item.querySelector(":scope > div:nth-child(2) button div span") //.click,
-const parent_comment_body_reply_count=reply_comment_show_more_button.textContent //"展开5条回复"(需要先获取再点击) 点击->不会全部展开，重新获取button元素会变成"展开更多"
+//评论人主页链接
+const userLink = parentCommentMain.querySelector(':scope > div:nth-child(1) a').getAttribute("href")
+//评论人昵称
+const userName = parentCommentMain.querySelector(':scope > div:nth-child(1) a').textContent
+//评论人ID（从主页链接提取）
+const userId = userLink.split('/').pop()
+//评论内容
+const content = parentCommentMain.querySelector(':scope > div:nth-child(2)').textContent
+//是否有图片
+const picture = parentCommentMain.querySelector(':scope > div:nth-child(2) >div') ? "[图片]" : ''
+//评论时间·地点（用 · 分割）
+const timeLoc = parentCommentMain.querySelector(':scope > div:nth-child(3) span').textContent
+//评论时间
+const time = timeLoc.split('·')[0]
+//评论地点
+const location = timeLoc.split('·')[1]
+//点赞数
+const like = parentCommentMain.querySelector(':scope > div:nth-child(4) p span').textContent
+//是否作者（本站无）
+const isAuthor = ""
+//评论标签（本站无）
+const tag = ""
 
-const reply_comment_list=parent_comment_item.querySelectorAll('.replyContainer [data-e2e="comment-item"]')
-const reply_comment_item=reply_comment_list[0]
-const reply_comment_body = reply_comment_item.querySelector(":scope > div:nth-child(2) > div:nth-child(1)");
+//展开更多回复按钮（先取 replyCount 再点击；点击后文案变为「展开更多」）
+const replyShowMoreButton = parentCommentItem.querySelector(":scope > div:nth-child(2) button div span")
+//回复数量
+const replyCount = replyShowMoreButton.textContent
 
-// 提取回复信息
-const reply_comment_body_userlink = reply_comment_body.querySelector(':scope > div:nth-child(1) a').getAttribute("href");
-const reply_comment_body_username = reply_comment_body.querySelector(':scope > div:nth-child(1) a').textContent;
-const reply_comment_body_content = reply_comment_body.querySelector(':scope > div:nth-child(2)').textContent;
-const reply_comment_body_content_picture = reply_comment_body.querySelector(':scope > div:nth-child(2) > div') ? "图片" : '';
-const reply_comment_body_time_loc = reply_comment_body.querySelector(':scope > div:nth-child(3) span').textContent; // 例如：2天前·北京
-const reply_comment_body_like_count = reply_comment_body.querySelector(':scope > div:nth-child(4) p span').textContent; // 点赞数
+//所有二级评论
+const replyList = parentCommentItem.querySelectorAll('.replyContainer [data-e2e="comment-item"]')
+//单个二级评论
+const replyItem = replyList[0]
+//二级评论主体
+const replyMain = replyItem.querySelector(":scope > div:nth-child(2) > div:nth-child(1)")
 
-//滚动
-document.querySelector('[data-e2e="feed-active-video"]  #merge-all-comment-container .comment-mainContent').scrollBy(0,1000)
-document.querySelector('[data-e2e="feed-active-video"]  #merge-all-comment-container .comment-mainContent').scrollTop
+//评论人主页链接
+const userLink = replyMain.querySelector(':scope > div:nth-child(1) a').getAttribute("href")
+//评论人昵称
+const userName = replyMain.querySelector(':scope > div:nth-child(1) a').textContent
+//评论人ID
+const userId = userLink.split('/').pop()
+//评论内容
+const content = replyMain.querySelector(':scope > div:nth-child(2)').textContent
+//是否有图片
+const picture = replyMain.querySelector(':scope > div:nth-child(2) > div') ? "[图片]" : ''
+//评论时间·地点
+const timeLoc = replyMain.querySelector(':scope > div:nth-child(3) span').textContent
+//评论时间
+const time = timeLoc.split('·')[0]
+//评论地点
+const location = timeLoc.split('·')[1]
+//点赞数
+const like = replyMain.querySelector(':scope > div:nth-child(4) p span').textContent
 
+//滚动容器
+const scrollContainer = document.querySelector('[data-e2e="feed-active-video"] #merge-all-comment-container .comment-mainContent')
+scrollContainer.scrollBy(0, 1000)
+scrollContainer.scrollTop
