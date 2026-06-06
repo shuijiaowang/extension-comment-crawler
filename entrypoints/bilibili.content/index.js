@@ -1,8 +1,10 @@
 import {
     delayMs,
     getDomainConfigStorage,
+    isTotalLimitReached,
     MESSAGE_START_CRAWL,
     normalizeDomainConfig,
+    remainingTotalQuota,
 } from '../../core/config.js';
 import { saveCrawlResults } from '../../core/records.js';
 
@@ -72,7 +74,7 @@ export default defineContentScript({
             }
             return list;
         };
-        const expandAndScrapeReplies = async (commentItem, cfg) => {
+        const expandAndScrapeReplies = async (commentItem, cfg, maxReplies = Infinity) => {
             const { commentReplisePageSizeLimit, clickDelay } = cfg;
             const replyContainer = commentItem
                 .querySelector('bili-comment-replies-renderer')
@@ -85,7 +87,11 @@ export default defineContentScript({
             }
             const all = [];
             for (let page = 0; page < commentReplisePageSizeLimit; page++) {
-                all.push(...scrapeReplyPage(replyContainer));
+                for (const row of scrapeReplyPage(replyContainer)) {
+                    if (all.length >= maxReplies) break;
+                    all.push(row);
+                }
+                if (all.length >= maxReplies) break;
                 const replyPageSize = replyContainer.querySelector('#pagination-head');
                 if (!replyPageSize?.textContent?.includes('共')) break;
                 const nextBtn = [...replyContainer.querySelectorAll('#pagination-body bili-text-button')].find(
@@ -101,36 +107,46 @@ export default defineContentScript({
                 replyCollapseButton.click();
                 await delayMs(clickDelay);
             }
-            return all;
+            return all.slice(0, maxReplies);
         };
         let crawling = false;
         const crawl = async (cfg) => {
             if (crawling) return { ok: false, error: '爬取进行中' };
-            const { commentLimit, crawlReplies, scrollDelay, scrollStep } = cfg;
+            const { commentLimit, commentTotalLimit, crawlReplies, scrollDelay, scrollStep } = cfg;
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
             try {
-                while (results.length < commentLimit) {
+                while (results.length < commentLimit && !isTotalLimitReached(results, commentTotalLimit)) {
                     const commentsContainer = getCommentsContainer();
                     if (!commentsContainer) {
                         console.warn('未找到评论区域');
                         break;
                     }
                     const threads = commentsContainer.querySelectorAll('bili-comment-thread-renderer');
-                    while (results.length < commentLimit && results.length < threads.length) {
+                    while (
+                        results.length < commentLimit &&
+                        results.length < threads.length &&
+                        !isTotalLimitReached(results, commentTotalLimit)
+                    ) {
+                        const remaining = remainingTotalQuota(results, commentTotalLimit);
+                        if (remaining <= 0) break;
                         const item = threads[results.length].shadowRoot;
                         if (!item) {
                             results.push({ error: 'shadowRoot 为空', replies: [] });
                             continue;
                         }
                         const first = parseFirst(item);
-                        const replies = crawlReplies ? await expandAndScrapeReplies(item, cfg) : [];
+                        const maxReplies = remaining - 1;
+                        const replies =
+                            crawlReplies && maxReplies > 0
+                                ? await expandAndScrapeReplies(item, cfg, maxReplies)
+                                : [];
                         const row = { ...first, replies };
                         results.push(row);
                         console.log(`[${results.length}]`, row);
                     }
-                    if (results.length >= commentLimit) break;
+                    if (results.length >= commentLimit || isTotalLimitReached(results, commentTotalLimit)) break;
                     const scrollBefore = window.scrollY;
                     window.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);

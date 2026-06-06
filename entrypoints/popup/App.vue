@@ -72,13 +72,25 @@ const onOpenRecords = () => {
             <section class="section">
                 <h2 class="section-title">采集范围</h2>
                 <div class="field">
-                    <label for="commentLimit">评论数量上限</label>
+                    <label for="commentLimit">一级评论数量上限</label>
                     <input
                         id="commentLimit"
                         v-model.number="domainConfig.commentLimit"
                         type="number"
                         min="1"
                     />
+                </div>
+                <div class="field">
+                    <label for="commentTotalLimit">累计评论数量上限</label>
+                    <input
+                        id="commentTotalLimit"
+                        v-model.number="domainConfig.commentTotalLimit"
+                        type="number"
+                        min="0"
+                    />
+                    <p class="field-hint field-hint--inline">
+                        一级+二级合计，达标后停止；优先级高于上方一级与下方二级上限。填 0 表示不限制。
+                    </p>
                 </div>
                 <div v-if="isBilibili" class="field">
                     <label for="replyPages">二级评论分页数</label>
@@ -265,6 +277,10 @@ h1 {
     font-size: 0.72rem;
     line-height: 1.4;
     color: #6b6b78;
+}
+
+.field-hint--inline {
+    margin: 0;
 }
 
 .field-row {

@@ -61,6 +61,7 @@ export function delayMs(baseMs) {
 export const DEFAULT_DOMAIN_CONFIG = {
     pluginEnabled: false,
     commentLimit: 100,
+    commentTotalLimit: 0,
     commentReplisePageSizeLimit: 1,
     commentReplyLimit: 50,
     crawlReplies: false,
@@ -68,6 +69,30 @@ export const DEFAULT_DOMAIN_CONFIG = {
     scrollDelay: 500,
     scrollStep: 400,
 };
+
+/** 累计评论数：一级 + 全部二级 */
+export function countTotalComments(results) {
+    return results.reduce((n, row) => n + 1 + (row.replies?.length ?? 0), 0);
+}
+
+/** 累计上限剩余可采集条数；0 或未设置表示不限制 */
+export function remainingTotalQuota(results, commentTotalLimit) {
+    const limit = Number(commentTotalLimit);
+    if (!limit || limit <= 0) return Infinity;
+    return Math.max(0, limit - countTotalComments(results));
+}
+
+export function isTotalLimitReached(results, commentTotalLimit) {
+    const limit = Number(commentTotalLimit);
+    if (!limit || limit <= 0) return false;
+    return countTotalComments(results) >= limit;
+}
+
+/** @param {number} commentReplyLimit 单条一级下的二级上限，0 表示不采二级 */
+export function effectiveReplyLimit(commentReplyLimit, maxReplies) {
+    const perParent = Number(commentReplyLimit) > 0 ? Number(commentReplyLimit) : Infinity;
+    return Math.min(perParent, maxReplies);
+}
 
 /** @param {Record<string, unknown>} [raw] */
 export function normalizeDomainConfig(raw = {}) {

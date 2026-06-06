@@ -1,8 +1,11 @@
 import {
     delayMs,
+    effectiveReplyLimit,
     getDomainConfigStorage,
+    isTotalLimitReached,
     MESSAGE_START_CRAWL,
     normalizeDomainConfig,
+    remainingTotalQuota,
 } from '../../core/config.js';
 import { saveCrawlResults } from '../../core/records.js';
 
@@ -73,24 +76,25 @@ export default defineContentScript({
                 await delayMs(clickDelay);
             }
         };
-        const expandAndScrapeReplies = async (parentItem, cfg) => {
+        const expandAndScrapeReplies = async (parentItem, cfg, maxReplies = Infinity) => {
             const { commentReplyLimit, clickDelay, scrollDelay, scrollStep } = cfg;
+            const limit = effectiveReplyLimit(commentReplyLimit, maxReplies);
             const replyShowMoreButton = parentItem.querySelector(':scope > button');
             if (!replyShowMoreButton) return [];
             replyShowMoreButton.click();
             await delayMs(clickDelay);
             const all = [];
             try {
-                while (all.length < commentReplyLimit) {
+                while (all.length < limit) {
                     const batch = scrapeVisibleReplies();
                     for (const row of batch) {
-                        if (all.length >= commentReplyLimit) break;
+                        if (all.length >= limit) break;
                         const key = `${row.userId}\0${row.time}\0${row.content}`;
                         if (!all.some((r) => `${r.userId}\0${r.time}\0${r.content}` === key)) {
                             all.push(row);
                         }
                     }
-                    if (all.length >= commentReplyLimit) break;
+                    if (all.length >= limit) break;
                     const replyScrollContainer = getReplyScrollContainer();
                     if (!replyScrollContainer) break;
                     const scrollBefore = replyScrollContainer.scrollTop;
@@ -101,34 +105,43 @@ export default defineContentScript({
             } finally {
                 await returnToParentPage(clickDelay);
             }
-            return all.slice(0, commentReplyLimit);
+            return all.slice(0, limit);
         };
         let crawling = false;
         const crawl = async (cfg) => {
             if (crawling) return { ok: false, error: '爬取进行中' };
-            const { commentLimit, crawlReplies, scrollDelay, scrollStep } = cfg;
+            const { commentLimit, commentTotalLimit, commentReplyLimit, crawlReplies, scrollDelay, scrollStep } =
+                cfg;
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
             const scrollContainer = getScrollContainer();
             try {
-                while (results.length < commentLimit) {
+                while (results.length < commentLimit && !isTotalLimitReached(results, commentTotalLimit)) {
                     if (!scrollContainer) {
                         console.warn('未找到评论弹窗，请先打开评论区');
                         break;
                     }
                     const parents = getParentList();
-                    while (results.length < commentLimit && results.length < parents.length) {
+                    while (
+                        results.length < commentLimit &&
+                        results.length < parents.length &&
+                        !isTotalLimitReached(results, commentTotalLimit)
+                    ) {
+                        const remaining = remainingTotalQuota(results, commentTotalLimit);
+                        if (remaining <= 0) break;
                         const parentItem = parents[results.length];
                         const first = parseCommentItem(parentItem);
-                        const replies = crawlReplies
-                            ? await expandAndScrapeReplies(parentItem, cfg)
-                            : [];
+                        const maxReplies = effectiveReplyLimit(commentReplyLimit, remaining - 1);
+                        const replies =
+                            crawlReplies && maxReplies > 0
+                                ? await expandAndScrapeReplies(parentItem, cfg, maxReplies)
+                                : [];
                         const row = first ? { ...first, replies } : { error: '解析失败', replies: [] };
                         results.push(row);
                         console.log(`[${results.length}]`, row);
                     }
-                    if (results.length >= commentLimit) break;
+                    if (results.length >= commentLimit || isTotalLimitReached(results, commentTotalLimit)) break;
                     const scrollBefore = scrollContainer.scrollTop;
                     scrollContainer.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
