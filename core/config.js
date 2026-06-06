@@ -19,6 +19,13 @@ export const PLATFORM_THEME_ENTRIES = [
         primaryHover: '#ff85a8',
         primaryRgb: '251 114 153',
     },
+    {
+        id: 'zhihu',
+        test: (hostname) => hostname.includes('zhihu'),
+        primary: '#0066ff',
+        primaryHover: '#3385ff',
+        primaryRgb: '0 102 255',
+    },
 ];
 
 /** @type {PlatformTheme} */

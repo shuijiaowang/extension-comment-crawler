@@ -16,15 +16,18 @@ const platformThemeStyle = computed(() => ({
 }));
 const isBilibili = computed(() => platformTheme.value.id === 'bilibili');
 const isXiaohongshu = computed(() => platformTheme.value.id === 'xiaohongshu');
+const isZhihu = computed(() => platformTheme.value.id === 'zhihu');
 const pageHint = computed(() => {
     if (tabError.value) return '';
     if (isXiaohongshu.value) return '在笔记详情页打开 popup，保存配置后点击开始爬取';
     if (isBilibili.value) return '在视频页打开 popup，保存配置后点击开始爬取';
+    if (isZhihu.value) return '在知乎页面打开评论区弹窗后，保存配置并点击开始爬取';
     return '在目标页面打开 popup，保存配置后点击开始爬取';
 });
 const crawlErrorHint = computed(() => {
     if (isXiaohongshu.value) return '发送失败，请确认已在小红书笔记页且已刷新';
     if (isBilibili.value) return '发送失败，请确认已在 B 站页面且已刷新';
+    if (isZhihu.value) return '发送失败，请确认已在知乎页面且已打开评论区弹窗';
     return '发送失败，请确认已在目标页面且已刷新';
 });
 
@@ -79,7 +82,7 @@ const onStartCrawl = async () => {
                         min="0"
                     />
                 </div>
-                <div v-if="isXiaohongshu" class="field">
+                <div v-if="isXiaohongshu || isZhihu" class="field">
                     <label for="replyLimit">二级评论数量上限</label>
                     <input
                         id="replyLimit"
@@ -94,7 +97,9 @@ const onStartCrawl = async () => {
                     <span class="toggle-label">{{
                         isXiaohongshu
                             ? '爬取二级评论（点击「查看更多」）'
-                            : '爬取二级评论（展开「查看全部」）'
+                            : isZhihu
+                              ? '爬取二级评论（进入回复页）'
+                              : '爬取二级评论（展开「查看全部」）'
                     }}</span>
                 </label>
             </section>
