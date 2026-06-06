@@ -7,6 +7,15 @@ import { resolvePlatformTheme } from '@/core/config.js';
 const store = useConfigStore();
 const { hostname, tabError, domainConfig } = storeToRefs(store);
 const crawling = ref(false);
+const batchText = ref('');
+const queueStarted = ref(false);
+
+const batchUrls = computed(() =>
+    batchText.value
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => /^https?:\/\//.test(line)),
+);
 
 const platformTheme = computed(() => resolvePlatformTheme(hostname.value));
 const platformThemeStyle = computed(() => ({
@@ -50,6 +59,12 @@ const onStartCrawl = async () => {
     } finally {
         crawling.value = false;
     }
+};
+
+const onStartQueue = async () => {
+    if (!batchUrls.value.length) return;
+    await store.startQueue([...batchUrls.value]);
+    queueStarted.value = true;
 };
 
 const onOpenRecords = () => {
@@ -157,6 +172,33 @@ const onOpenRecords = () => {
                         min="0"
                     />
                 </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">批量链接（混合平台）</h2>
+                <p class="field-hint">
+                    一行一个链接，支持 B 站 / 小红书混合。点击后由后台依次打开并爬取，每页加载后等待 5 秒。请先在各平台页面保存好配置。
+                </p>
+                <div class="field">
+                    <textarea
+                        id="batchUrls"
+                        v-model="batchText"
+                        class="batch-input"
+                        rows="5"
+                        placeholder="https://www.bilibili.com/video/BV...&#10;https://www.xiaohongshu.com/explore/..."
+                    />
+                </div>
+                <button
+                    type="button"
+                    class="btn primary"
+                    :disabled="!batchUrls.length"
+                    @click="onStartQueue"
+                >
+                    批量爬取（{{ batchUrls.length }} 个链接）
+                </button>
+                <p v-if="queueStarted" class="field-hint field-hint--inline">
+                    已交给后台执行，可关闭此弹窗，爬取结果会自动保存到记录。
+                </p>
             </section>
         </form>
 
@@ -308,6 +350,27 @@ input[type='number'] {
 }
 
 input[type='number']:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgb(var(--accent-rgb) / 18%);
+}
+
+.batch-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #e8e8ed;
+    background: #222228;
+    border: 1px solid #36363f;
+    border-radius: 8px;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.batch-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 2px rgb(var(--accent-rgb) / 18%);
 }

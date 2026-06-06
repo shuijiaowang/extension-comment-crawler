@@ -2,6 +2,10 @@
 /** @typedef {{ id: string, primary: string, primaryHover: string, primaryRgb: string }} PlatformTheme */
 
 export const MESSAGE_START_CRAWL = 'START_CRAWL';
+export const MESSAGE_START_QUEUE = 'START_CRAWL_QUEUE';
+
+/** 队列中每个页面加载完成后的等待时间（毫秒） */
+export const QUEUE_PAGE_LOAD_WAIT_MS = 5000;
 
 /** 各平台 popup 默认主题色（按 hostname 匹配，先匹配先生效） */
 export const PLATFORM_THEME_ENTRIES = [

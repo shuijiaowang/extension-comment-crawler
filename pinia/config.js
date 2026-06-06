@@ -4,6 +4,7 @@ import {
     DEFAULT_DOMAIN_CONFIG,
     getDomainConfigStorage,
     MESSAGE_START_CRAWL,
+    MESSAGE_START_QUEUE,
     normalizeDomainConfig,
 } from '../core/config.js';
 
@@ -44,6 +45,11 @@ export const useConfigStore = defineStore('config', () => {
         return notifyContentScript(MESSAGE_START_CRAWL);
     };
 
+    /** 把多行链接交给 background 依次爬取 */
+    const startQueue = async (urls) => {
+        return browser.runtime.sendMessage({ type: MESSAGE_START_QUEUE, urls });
+    };
+
     return {
         hostname,
         tabError,
@@ -51,6 +57,7 @@ export const useConfigStore = defineStore('config', () => {
         loadActiveTabConfig,
         saveConfig,
         startCrawl,
+        startQueue,
         notifyContentScript,
     };
 });
