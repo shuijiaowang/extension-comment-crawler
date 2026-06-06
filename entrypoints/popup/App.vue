@@ -51,6 +51,10 @@ const onStartCrawl = async () => {
         crawling.value = false;
     }
 };
+
+const onOpenRecords = () => {
+    browser.tabs.create({ url: browser.runtime.getURL('/records.html') });
+};
 </script>
 
 <template>
@@ -155,6 +159,9 @@ const onStartCrawl = async () => {
                 {{ crawling ? '爬取中…' : '开始爬取' }}
             </button>
         </footer>
+        <div class="records-link-wrap">
+            <button type="button" class="records-link" @click="onOpenRecords">查看爬取记录</button>
+        </div>
     </div>
 </template>
 
@@ -388,5 +395,27 @@ input[type='number']:focus {
 .btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+}
+
+.records-link-wrap {
+    padding: 0 16px 16px;
+}
+
+.records-link {
+    width: 100%;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    color: #888894;
+    background: transparent;
+    border: 1px dashed #36363f;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.records-link:hover {
+    color: var(--accent);
+    background: rgb(var(--accent-rgb) / 6%);
+    border-color: rgb(var(--accent-rgb) / 35%);
 }
 </style>

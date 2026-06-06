@@ -10,25 +10,25 @@
 
 import { storage } from '#imports'; //导入
 permissions: ['storage','unlimitedStorage'],//存储权限,突破存储上限权限
-await storage.getItem('local:installDate'); //基础使用setItem/removeItem
+    await storage.getItem('local:installDate'); //基础使用setItem/removeItem
 // 设置监听器
 const unwatch = storage.watch('local:counter', (newCount, oldCount) => {
-  console.log('计数器变化:', { newCount, oldCount });
+    console.log('计数器变化:', { newCount, oldCount });
 });
 // 移除监听器
 unwatch();
 const theme = storage.defineItem('local:theme', {
-  fallback: 'dark', //不存在返回默认值不存储
+    fallback: 'dark', //不存在返回默认值不存储
 });
 const userId = storage.defineItem('local:user-id', {
-  init: () => globalThis.crypto.randomUUID(), //不存在则创建并存储
+    init: () => globalThis.crypto.randomUUID(), //不存在则创建并存储
 });
 //可定义存储项复用,就不用每次用key
 const item = storage.defineItem(
-  'local:showChangelogOnUpdate',
-  {
-    fallback: true, // 默认值
-  },
+    'local:showChangelogOnUpdate',
+    {
+        fallback: true, // 默认值
+    },
 );
 // 使用存储项
 await item.getValue().setValue.removeValue;
@@ -65,14 +65,14 @@ const response = await browser.runtime.sendMessage(tab.id, {type: '', payload: {
 //监听消息并回复sendResponse
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "ADD_NUMBERS") {
-      const { a, b } = message.payload;
-      // 模拟异步处理
-      setTimeout(() => {
-        sendResponse({ok: true,result: a + b,message: '计算完成'});
-      }, 1000);
-      // return true;//异步回复 Manifest V3 不需要 return true
+        const { a, b } = message.payload;
+        // 模拟异步处理
+        setTimeout(() => {
+            sendResponse({ok: true,result: a + b,message: '计算完成'});
+        }, 1000);
+        // return true;//异步回复 Manifest V3 不需要 return true
     }
-  });
+});
 ```
 
 #### 多语言
@@ -81,23 +81,23 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //导入
 import { i18n } from '#i18n';
 const t = i18n.t; // 简化i18n调用
-t.("test.test1") 
+t.("test.test1")
 //配置
 export default defineConfig({
-modules: ['@wxt-dev/module-vue','@wxt-dev/i18n/module'], //虚拟模块需要导入。
-manifest:{
+    modules: ['@wxt-dev/module-vue','@wxt-dev/i18n/module'], //虚拟模块需要导入。
+    manifest:{
         permissions: ['storage'],
         default_locale: 'zh_CN', // 默认语言为英语
         name: '__MSG_extName__',
         description: '__MSG_extDescription__',
-},
+    },
 //src/locales/zh-CN.yml
 //src/locales/en.yml
-extName: 
-extDescription: 
+    extName:
+    extDescription:
 test:
-  test1: this is test1
-  test2: this is test2
+    test1: this is test1
+test2: this is test2
 ```
 #### 里世界
 ```javascript
@@ -209,6 +209,34 @@ await browser.windows.create({
     left,
     top,
 });
+
+//相对于电脑屏幕。需要权限：system.display
+const displays = await browser.system.display.getInfo();
+
+const primary = displays.find(d => d.isPrimary) || displays[0];
+
+const width = 400;
+const height = 200;
+
+const left =
+    primary.workArea.width +
+    primary.workArea.left -
+    width;
+
+const top =
+    primary.workArea.height +
+    primary.workArea.top -
+    height;
+
+await browser.windows.create({
+    url: "/popup.html",
+    type: "popup",
+    width,
+    height,
+    left,
+    top,
+});
+
 ```
 ### popup与background长连接
 ```javascript
@@ -220,7 +248,7 @@ export const notifyPopup = async () => {
     });
 };
 
- // 监听 Popup 连接（自动处理，不用改）
+// 监听 Popup 连接（自动处理，不用改）
 browser.runtime.onConnect.addListener(port => {
     if (port.name === "popup") popupPort = port;
     port.onDisconnect.addListener(() => popupPort = null);
