@@ -1,5 +1,6 @@
 <script setup>
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
+import { storage } from '#imports';
 import { resolvePlatformTheme } from '@/core/config.js';
 import {
     PLATFORM_IDS,
@@ -24,13 +25,24 @@ const COMMENT_FIELDS = [
     { key: 'tag', label: '标签' },
 ];
 
+const DEFAULT_FIELD_VISIBILITY = Object.fromEntries(
+    COMMENT_FIELDS.map((f) => [f.key, true]),
+);
+
+const fieldVisibilityStorage = storage.defineItem('local:records-field-visibility', {
+    fallback: DEFAULT_FIELD_VISIBILITY,
+});
+
 const activePlatform = ref('bilibili');
 const records = ref([]);
 const expandedRecordId = ref(null);
 const editing = ref(null);
 const editForm = reactive({});
+const fieldVisibility = reactive({ ...DEFAULT_FIELD_VISIBILITY });
 /** @type {import('vue').Ref<(() => void) | null>} */
 const unwatchRef = ref(null);
+
+const isFieldVisible = (key) => fieldVisibility[key];
 
 const platformTheme = computed(() => resolvePlatformTheme(`${activePlatform.value}.com`));
 const platformThemeStyle = computed(() => ({
@@ -86,16 +98,98 @@ const onClearPlatform = async () => {
     expandedRecordId.value = null;
 };
 
-const onExport = () => {
-    const blob = new Blob([JSON.stringify(records.value, null, 2)], {
-        type: 'application/json',
-    });
+/** @param {Record<string, unknown>} comment */
+const filterCommentForExport = (comment) => {
+    /** @type {Record<string, unknown>} */
+    const filtered = {};
+    for (const f of COMMENT_FIELDS) {
+        if (fieldVisibility[f.key]) {
+            filtered[f.key] = comment[f.key] ?? '';
+        }
+    }
+    if (comment.replies?.length) {
+        filtered.replies = comment.replies.map(filterCommentForExport);
+    }
+    return filtered;
+};
+
+/** @param {import('@/core/records.js').CrawlRecord} record */
+const filterRecordForExport = (record) => ({
+    id: record.id,
+    url: record.url,
+    title: record.title,
+    crawledAt: record.crawledAt,
+    commentCount: record.commentCount ?? record.comments?.length ?? 0,
+    comments: (record.comments ?? []).map(filterCommentForExport),
+});
+
+/** @param {string} content @param {string} filename @param {string} mimeType */
+const downloadFile = (content, filename, mimeType) => {
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `crawl-records-${activePlatform.value}-${Date.now()}.json`;
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
+};
+
+/** @param {import('@/core/records.js').CrawlRecord} record */
+const recordToTxt = (record) => {
+    const lines = [
+        `标题: ${record.title || '未命名页面'}`,
+        `链接: ${record.url}`,
+        `爬取时间: ${formatTime(record.crawledAt)}`,
+        `评论数: ${record.commentCount ?? record.comments?.length ?? 0}`,
+        '',
+    ];
+
+    /** @param {Record<string, unknown>} comment @param {string} [indent] */
+    const appendCommentLines = (comment, indent = '') => {
+        for (const f of COMMENT_FIELDS) {
+            if (!fieldVisibility[f.key]) continue;
+            const val = comment[f.key];
+            if (val != null && val !== '') {
+                lines.push(`${indent}${f.label}: ${val}`);
+            }
+        }
+    };
+
+    record.comments?.forEach((comment, i) => {
+        lines.push(`======== 评论 ${i + 1} ========`);
+        appendCommentLines(comment);
+        comment.replies?.forEach((reply, ri) => {
+            lines.push(`--- 回复 ${ri + 1} ---`);
+            appendCommentLines(reply, '  ');
+        });
+        lines.push('');
+    });
+
+    return lines.join('\n');
+};
+
+const onExport = () => {
+    const data = records.value.map(filterRecordForExport);
+    downloadFile(
+        JSON.stringify(data, null, 2),
+        `crawl-records-${activePlatform.value}-${Date.now()}.json`,
+        'application/json',
+    );
+};
+
+/** @param {import('@/core/records.js').CrawlRecord} record @param {'json' | 'txt'} format */
+const onExportRecord = (record, format) => {
+    const stamp = Date.now();
+    const base = `crawl-${activePlatform.value}-${record.id.slice(0, 8)}-${stamp}`;
+    if (format === 'json') {
+        downloadFile(
+            JSON.stringify(filterRecordForExport(record), null, 2),
+            `${base}.json`,
+            'application/json',
+        );
+    } else {
+        downloadFile(recordToTxt(record), `${base}.txt`, 'text/plain;charset=utf-8');
+    }
 };
 
 const openEdit = (recordId, commentIndex, comment, replyIndex = null) => {
@@ -146,9 +240,22 @@ const onDeleteComment = async (recordId, commentIndex, replyIndex = null) => {
     );
 };
 
-onMounted(() => {
-    loadRecords().then(setupWatch);
+onMounted(async () => {
+    const saved = await fieldVisibilityStorage.getValue();
+    for (const f of COMMENT_FIELDS) {
+        fieldVisibility[f.key] = saved[f.key] ?? true;
+    }
+    await loadRecords();
+    setupWatch();
 });
+
+watch(
+    fieldVisibility,
+    () => {
+        fieldVisibilityStorage.setValue({ ...fieldVisibility });
+    },
+    { deep: true },
+);
 
 onUnmounted(() => {
     unwatchRef.value?.();
@@ -185,6 +292,13 @@ onUnmounted(() => {
                     <span v-if="activePlatform === id" class="tab-count">{{ records.length }}</span>
                 </button>
             </nav>
+            <div class="field-filter">
+                <span class="field-filter-label">显示 / 导出字段</span>
+                <label v-for="f in COMMENT_FIELDS" :key="f.key" class="field-checkbox">
+                    <input v-model="fieldVisibility[f.key]" type="checkbox" />
+                    <span>{{ f.label }}</span>
+                </label>
+            </div>
         </header>
 
         <main class="main">
@@ -205,6 +319,22 @@ onUnmounted(() => {
                         </p>
                     </div>
                     <div class="record-actions" @click.stop>
+                        <button
+                            type="button"
+                            class="btn sm"
+                            title="导出为 JSON（仅含已选字段）"
+                            @click="onExportRecord(record, 'json')"
+                        >
+                            JSON
+                        </button>
+                        <button
+                            type="button"
+                            class="btn sm"
+                            title="导出为 TXT（仅含已选字段）"
+                            @click="onExportRecord(record, 'txt')"
+                        >
+                            TXT
+                        </button>
                         <button
                             type="button"
                             class="btn icon"
@@ -233,16 +363,52 @@ onUnmounted(() => {
                         <div class="comment-row">
                             <div class="comment-main">
                                 <div class="comment-header">
-                                    <strong>{{ comment.userName || '匿名' }}</strong>
-                                    <span v-if="comment.isAuthor" class="badge">{{ comment.isAuthor }}</span>
-                                    <span v-if="comment.tag" class="badge tag">{{ comment.tag }}</span>
-                                    <span class="muted">{{ comment.time }}</span>
-                                    <span v-if="comment.location" class="muted">{{ comment.location }}</span>
-                                    <span class="like">♥ {{ comment.like }}</span>
+                                    <strong v-if="isFieldVisible('userName')">{{
+                                        comment.userName || '匿名'
+                                    }}</strong>
+                                    <span
+                                        v-if="isFieldVisible('userId') && comment.userId"
+                                        class="muted"
+                                    >ID: {{ comment.userId }}</span>
+                                    <a
+                                        v-if="isFieldVisible('userLink') && comment.userLink"
+                                        class="user-link"
+                                        :href="comment.userLink"
+                                        target="_blank"
+                                        rel="noopener"
+                                        @click.stop
+                                    >主页</a>
+                                    <span
+                                        v-if="isFieldVisible('isAuthor') && comment.isAuthor"
+                                        class="badge"
+                                    >{{ comment.isAuthor }}</span>
+                                    <span
+                                        v-if="isFieldVisible('tag') && comment.tag"
+                                        class="badge tag"
+                                    >{{ comment.tag }}</span>
+                                    <span v-if="isFieldVisible('time')" class="muted">{{
+                                        comment.time
+                                    }}</span>
+                                    <span
+                                        v-if="isFieldVisible('location') && comment.location"
+                                        class="muted"
+                                    >{{ comment.location }}</span>
+                                    <span v-if="isFieldVisible('like')" class="like"
+                                        >♥ {{ comment.like }}</span
+                                    >
                                 </div>
-                                <p class="comment-content">
+                                <p v-if="isFieldVisible('content')" class="comment-content">
                                     {{ comment.content }}
-                                    <span v-if="comment.picture" class="picture-tag">{{ comment.picture }}</span>
+                                    <span
+                                        v-if="isFieldVisible('picture') && comment.picture"
+                                        class="picture-tag"
+                                    >{{ comment.picture }}</span>
+                                </p>
+                                <p
+                                    v-else-if="isFieldVisible('picture') && comment.picture"
+                                    class="comment-content"
+                                >
+                                    <span class="picture-tag">{{ comment.picture }}</span>
                                 </p>
                             </div>
                             <div class="comment-actions">
@@ -271,15 +437,48 @@ onUnmounted(() => {
                             >
                                 <div class="comment-main">
                                     <div class="comment-header">
-                                        <strong>{{ reply.userName || '匿名' }}</strong>
-                                        <span v-if="reply.tag" class="badge tag">{{ reply.tag }}</span>
-                                        <span class="muted">{{ reply.time }}</span>
-                                        <span v-if="reply.location" class="muted">{{ reply.location }}</span>
-                                        <span class="like">♥ {{ reply.like }}</span>
+                                        <strong v-if="isFieldVisible('userName')">{{
+                                            reply.userName || '匿名'
+                                        }}</strong>
+                                        <span
+                                            v-if="isFieldVisible('userId') && reply.userId"
+                                            class="muted"
+                                        >ID: {{ reply.userId }}</span>
+                                        <a
+                                            v-if="isFieldVisible('userLink') && reply.userLink"
+                                            class="user-link"
+                                            :href="reply.userLink"
+                                            target="_blank"
+                                            rel="noopener"
+                                            @click.stop
+                                        >主页</a>
+                                        <span
+                                            v-if="isFieldVisible('tag') && reply.tag"
+                                            class="badge tag"
+                                        >{{ reply.tag }}</span>
+                                        <span v-if="isFieldVisible('time')" class="muted">{{
+                                            reply.time
+                                        }}</span>
+                                        <span
+                                            v-if="isFieldVisible('location') && reply.location"
+                                            class="muted"
+                                        >{{ reply.location }}</span>
+                                        <span v-if="isFieldVisible('like')" class="like"
+                                            >♥ {{ reply.like }}</span
+                                        >
                                     </div>
-                                    <p class="comment-content">
+                                    <p v-if="isFieldVisible('content')" class="comment-content">
                                         {{ reply.content }}
-                                        <span v-if="reply.picture" class="picture-tag">{{ reply.picture }}</span>
+                                        <span
+                                            v-if="isFieldVisible('picture') && reply.picture"
+                                            class="picture-tag"
+                                        >{{ reply.picture }}</span>
+                                    </p>
+                                    <p
+                                        v-else-if="isFieldVisible('picture') && reply.picture"
+                                        class="comment-content"
+                                    >
+                                        <span class="picture-tag">{{ reply.picture }}</span>
                                     </p>
                                 </div>
                                 <div class="comment-actions">
@@ -401,6 +600,46 @@ h1 {
     color: var(--accent);
     background: rgb(var(--accent-rgb) / 12%);
     border-radius: 999px;
+}
+
+.field-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 14px 0 16px;
+}
+
+.field-filter-label {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #888894;
+}
+
+.field-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #a8a8b3;
+    cursor: pointer;
+    user-select: none;
+}
+
+.field-checkbox input {
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.user-link {
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.user-link:hover {
+    text-decoration: underline;
 }
 
 .main {
