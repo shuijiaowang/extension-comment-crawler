@@ -17,17 +17,20 @@ const platformThemeStyle = computed(() => ({
 const isBilibili = computed(() => platformTheme.value.id === 'bilibili');
 const isXiaohongshu = computed(() => platformTheme.value.id === 'xiaohongshu');
 const isZhihu = computed(() => platformTheme.value.id === 'zhihu');
+const isDouyin = computed(() => platformTheme.value.id === 'douyin');
 const pageHint = computed(() => {
     if (tabError.value) return '';
     if (isXiaohongshu.value) return '在笔记详情页打开 popup，保存配置后点击开始爬取';
     if (isBilibili.value) return '在视频页打开 popup，保存配置后点击开始爬取';
     if (isZhihu.value) return '在知乎页面打开评论区弹窗后，保存配置并点击开始爬取';
+    if (isDouyin.value) return '在抖音视频页打开评论区后，保存配置并点击开始爬取';
     return '在目标页面打开 popup，保存配置后点击开始爬取';
 });
 const crawlErrorHint = computed(() => {
     if (isXiaohongshu.value) return '发送失败，请确认已在小红书笔记页且已刷新';
     if (isBilibili.value) return '发送失败，请确认已在 B 站页面且已刷新';
     if (isZhihu.value) return '发送失败，请确认已在知乎页面且已打开评论区弹窗';
+    if (isDouyin.value) return '发送失败，请确认已在抖音视频页且已打开评论区';
     return '发送失败，请确认已在目标页面且已刷新';
 });
 
@@ -82,7 +85,7 @@ const onStartCrawl = async () => {
                         min="0"
                     />
                 </div>
-                <div v-if="isXiaohongshu || isZhihu" class="field">
+                <div v-if="isXiaohongshu || isZhihu || isDouyin" class="field">
                     <label for="replyLimit">二级评论数量上限</label>
                     <input
                         id="replyLimit"
@@ -99,28 +102,31 @@ const onStartCrawl = async () => {
                             ? '爬取二级评论（点击「查看更多」）'
                             : isZhihu
                               ? '爬取二级评论（进入回复页）'
-                              : '爬取二级评论（展开「查看全部」）'
+                              : isDouyin
+                                ? '爬取二级评论（点击「展开回复」）'
+                                : '爬取二级评论（展开「查看全部」）'
                     }}</span>
                 </label>
             </section>
 
             <section class="section">
                 <h2 class="section-title">速率与滚动</h2>
+                <p class="field-hint">间隔时间在填写值基础上随机 ±50ms</p>
                 <div class="field-row">
                     <div class="field">
-                        <label for="delayMin">休眠最小 (ms)</label>
+                        <label for="clickDelay">点击间隔 (ms)</label>
                         <input
-                            id="delayMin"
-                            v-model.number="domainConfig.delayMin"
+                            id="clickDelay"
+                            v-model.number="domainConfig.clickDelay"
                             type="number"
                             min="0"
                         />
                     </div>
                     <div class="field">
-                        <label for="delayMax">休眠最大 (ms)</label>
+                        <label for="scrollDelay">滚动间隔 (ms)</label>
                         <input
-                            id="delayMax"
-                            v-model.number="domainConfig.delayMax"
+                            id="scrollDelay"
+                            v-model.number="domainConfig.scrollDelay"
                             type="number"
                             min="0"
                         />
@@ -245,6 +251,13 @@ h1 {
 .field label {
     font-size: 0.8rem;
     color: #a8a8b3;
+}
+
+.field-hint {
+    margin: -4px 0 12px;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #6b6b78;
 }
 
 .field-row {

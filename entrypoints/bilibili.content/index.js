@@ -1,4 +1,9 @@
-import { getDomainConfigStorage, MESSAGE_START_CRAWL } from '../../core/config.js';
+import {
+    delayMs,
+    getDomainConfigStorage,
+    MESSAGE_START_CRAWL,
+    normalizeDomainConfig,
+} from '../../core/config.js';
 
 export default defineContentScript({
     matches: ['https://www.bilibili.com/*'],
@@ -6,7 +11,6 @@ export default defineContentScript({
     main() {
         console.log('bilibili comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const delay = (min, max) => new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
         const getFeed = () => document.querySelector('bili-comments')?.shadowRoot?.querySelector('#feed');
         const parseRichContent = (main) => {
             const contents = main?.querySelector('bili-rich-text')?.shadowRoot?.querySelector('#contents');
@@ -62,13 +66,13 @@ export default defineContentScript({
             return list;
         };
         const expandAndScrapeReplies = async (commentItem, cfg) => {
-            const { commentReplisePageSizeLimit, delayMin, delayMax } = cfg;
+            const { commentReplisePageSizeLimit, clickDelay } = cfg;
             const expander = commentItem.querySelector('bili-comment-replies-renderer')?.shadowRoot?.querySelector('#expander-contents');
             if (!expander) return [];
             const viewMore = expander.querySelector('#view-more bili-text-button');
             if (viewMore) {
                 viewMore.click();
-                await delay(delayMin, delayMax);
+                await delayMs(clickDelay);
             }
             const all = [];
             for (let page = 0; page < commentReplisePageSizeLimit; page++) {
@@ -78,20 +82,20 @@ export default defineContentScript({
                 const nextBtn = [...expander.querySelectorAll('#pagination-body bili-text-button')].find((b) => b.getAttribute('data-idx') === String(page + 1));
                 if (!nextBtn) break;
                 nextBtn.click();
-                await delay(delayMin, delayMax);
+                await delayMs(clickDelay);
             }
             const footBtns = expander.querySelectorAll('#pagination-foot bili-text-button');
             const collapse = footBtns[footBtns.length - 1];
             if (collapse) {
                 collapse.click();
-                await delay(delayMin, delayMax);
+                await delayMs(clickDelay);
             }
             return all;
         };
         let crawling = false;
         const crawl = async (cfg) => {
             if (crawling) return { ok: false, error: '爬取进行中' };
-            const { commentLimit, crawlReplies, delayMin, delayMax, scrollStep } = cfg;
+            const { commentLimit, crawlReplies, scrollDelay, scrollStep } = cfg;
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
@@ -118,7 +122,7 @@ export default defineContentScript({
                     if (results.length >= commentLimit) break;
                     const scrollBefore = window.scrollY;
                     window.scrollBy(0, scrollStep);
-                    await delay(delayMin, delayMax);
+                    await delayMs(scrollDelay);
                     const threadsAfter = getFeed()?.querySelectorAll('bili-comment-thread-renderer').length;
                     if (window.scrollY === scrollBefore && (threadsAfter ?? 0) <= results.length) break;
                 }
@@ -129,7 +133,7 @@ export default defineContentScript({
             }
         };
         const runCrawlFromStorage = async () => {
-            const cfg = await configStorage.getValue();
+            const cfg = normalizeDomainConfig(await configStorage.getValue());
             return crawl(cfg);
         };
         browser.runtime.onMessage.addListener(async (message) => {

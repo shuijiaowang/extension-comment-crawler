@@ -4,6 +4,7 @@ import {
     DEFAULT_DOMAIN_CONFIG,
     getDomainConfigStorage,
     MESSAGE_START_CRAWL,
+    normalizeDomainConfig,
 } from '../core/config.js';
 
 export const useConfigStore = defineStore('config', () => {
@@ -22,7 +23,7 @@ export const useConfigStore = defineStore('config', () => {
         }
         hostname.value = new URL(tab.url).hostname;
         const saved = await getDomainConfigStorage(hostname.value).getValue();
-        Object.assign(domainConfig, { ...DEFAULT_DOMAIN_CONFIG }, saved);
+        Object.assign(domainConfig, normalizeDomainConfig(saved));
     };
 
     const saveConfig = async () => {

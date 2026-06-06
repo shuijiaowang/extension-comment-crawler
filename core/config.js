@@ -26,6 +26,13 @@ export const PLATFORM_THEME_ENTRIES = [
         primaryHover: '#3385ff',
         primaryRgb: '0 102 255',
     },
+    {
+        id: 'douyin',
+        test: (hostname) => hostname.includes('douyin'),
+        primary: '#25f4ee',
+        primaryHover: '#5df7f2',
+        primaryRgb: '37 244 238',
+    },
 ];
 
 /** @type {PlatformTheme} */
@@ -43,16 +50,37 @@ export function resolvePlatformTheme(hostname = '') {
     );
 }
 
+export const DELAY_JITTER_MS = 50;
+
+/** @param {number} baseMs 基准毫秒，实际休眠在 [baseMs-50, baseMs+50] 随机 */
+export function delayMs(baseMs) {
+    const ms = Math.max(0, baseMs - DELAY_JITTER_MS + Math.random() * DELAY_JITTER_MS * 2);
+    return new Promise((r) => setTimeout(r, ms));
+}
+
 export const DEFAULT_DOMAIN_CONFIG = {
     pluginEnabled: false,
     commentLimit: 100,
     commentReplisePageSizeLimit: 1,
     commentReplyLimit: 50,
     crawlReplies: false,
-    delayMin: 400,
-    delayMax: 800,
+    clickDelay: 500,
+    scrollDelay: 500,
     scrollStep: 400,
 };
+
+/** @param {Record<string, unknown>} [raw] */
+export function normalizeDomainConfig(raw = {}) {
+    const cfg = { ...DEFAULT_DOMAIN_CONFIG, ...raw };
+    if (raw.delayMin != null || raw.delayMax != null) {
+        const mid = Math.round(
+            ((Number(raw.delayMin) || 400) + (Number(raw.delayMax) || 800)) / 2,
+        );
+        if (raw.clickDelay == null) cfg.clickDelay = mid;
+        if (raw.scrollDelay == null) cfg.scrollDelay = mid;
+    }
+    return cfg;
+}
 
 /** @param {string} hostname */
 export function getDomainConfigStorage(hostname) {

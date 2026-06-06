@@ -6,45 +6,68 @@ import {
 } from '../../core/config.js';
 
 export default defineContentScript({
-    matches: ['https://www.xiaohongshu.com/explore/*'],
+    matches: ['https://www.douyin.com/*'],
     runAt: 'document_idle',
     main() {
-        console.log('xiaohongshu comment craw Content Script');
+        console.log('douyin comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const getScroller = () => document.querySelector('.note-scroller');
-        const getCommentsListContainer = () =>
-            document.querySelector('.comments-el .comments-container')?.querySelector('.list-container');
+        const getCommentMainContent = () =>
+            document.querySelector(
+                '[data-e2e="feed-active-video"] #merge-all-comment-container .comment-mainContent',
+            );
+        const getParentList = () => {
+            const main = getCommentMainContent();
+            if (!main) return [];
+            return [...main.querySelectorAll(':scope > div')].filter((el) =>
+                el.querySelector('[data-e2e="comment-item"]'),
+            );
+        };
         const parseCommentItem = (item) => {
             if (!item) return null;
-            const avatar = item.querySelector('.avatar a');
+            const body = item.querySelector(':scope > div:nth-child(2) > div:nth-child(1)');
+            if (!body) return null;
+            const userLink = body.querySelector(':scope > div:nth-child(1) a');
+            const href = userLink?.getAttribute('href') ?? '';
+            const timeLocText =
+                body.querySelector(':scope > div:nth-child(3) span')?.textContent?.trim() ?? '';
+            const parts = timeLocText.split('·').map((s) => s.trim());
             return {
-                userId: avatar?.getAttribute('data-user-id') ?? '',
-                userName: item.querySelector('.author a')?.textContent?.trim() ?? '',
-                isAuthor: item.querySelector('.author span')?.textContent?.trim() ?? '',
-                content: item.querySelector('.content')?.textContent?.trim() ?? '',
-                picture: item.querySelector('.comment-picture') ? '[图片]' : '',
-                time: item.querySelector('.date span')?.textContent?.trim() ?? '',
-                location: item.querySelector('.date .location')?.textContent?.trim() ?? '',
-                like: item.querySelector('.interactions .like .count')?.textContent?.trim() || '0',
+                userId: href.split('/').pop() ?? '',
+                userLink: href,
+                userName: userLink?.textContent?.trim() ?? '',
+                content: body.querySelector(':scope > div:nth-child(2)')?.textContent?.trim() ?? '',
+                picture: body.querySelector(':scope > div:nth-child(2) > div') ? '[图片]' : '',
+                time: parts[0] ?? '',
+                location: parts[1] ?? '',
+                like: body.querySelector(':scope > div:nth-child(4) p span')?.textContent?.trim() || '0',
             };
         };
         const parseParentComment = (parentEl) => {
-            const item = parentEl.querySelector(':scope > .comment-item');
+            const item = parentEl.querySelector('[data-e2e="comment-item"]');
             const row = parseCommentItem(item);
             if (!row) return null;
-            row.replyCount = item?.querySelector('.reply .count')?.textContent?.trim() ?? '';
+            row.replyCount =
+                item?.querySelector(':scope > div:nth-child(2) button div span')?.textContent?.trim() ?? '';
             return row;
         };
         const scrapeVisibleReplies = (parentEl) => {
+            const item = parentEl.querySelector('[data-e2e="comment-item"]');
+            if (!item) return [];
             const list = [];
-            for (const item of parentEl.querySelectorAll('.reply-container .list-container .comment-item')) {
-                const row = parseCommentItem(item);
+            for (const replyItem of item.querySelectorAll('.replyContainer [data-e2e="comment-item"]')) {
+                const row = parseCommentItem(replyItem);
                 if (row) list.push(row);
             }
             return list;
         };
+        const getShowMoreButton = (parentEl) => {
+            const item = parentEl.querySelector('[data-e2e="comment-item"]');
+            return item?.querySelector(':scope > div:nth-child(2) button div span');
+        };
         const expandAndScrapeReplies = async (parentEl, cfg) => {
             const { commentReplyLimit, clickDelay } = cfg;
+            const item = parentEl.querySelector('[data-e2e="comment-item"]');
+            if (!item) return [];
             const all = [];
             while (all.length < commentReplyLimit) {
                 const batch = scrapeVisibleReplies(parentEl);
@@ -56,12 +79,12 @@ export default defineContentScript({
                     }
                 }
                 if (all.length >= commentReplyLimit) break;
-                const showMore = parentEl.querySelector('.reply-container .show-more');
-                if (!showMore) break;
-                const before = parentEl.querySelectorAll('.reply-container .list-container .comment-item').length;
+                const showMore = getShowMoreButton(parentEl);
+                if (!showMore?.textContent?.includes('展开')) break;
+                const before = item.querySelectorAll('.replyContainer [data-e2e="comment-item"]').length;
                 showMore.click();
                 await delayMs(clickDelay);
-                const after = parentEl.querySelectorAll('.reply-container .list-container .comment-item').length;
+                const after = item.querySelectorAll('.replyContainer [data-e2e="comment-item"]').length;
                 if (after <= before) break;
             }
             return all.slice(0, commentReplyLimit);
@@ -73,15 +96,14 @@ export default defineContentScript({
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
-            const scroller = getScroller();
             try {
                 while (results.length < commentLimit) {
-                    const listContainer = getCommentsListContainer();
-                    if (!listContainer) {
+                    const scroller = getCommentMainContent();
+                    if (!scroller) {
                         console.warn('未找到评论区域');
                         break;
                     }
-                    const parents = listContainer.querySelectorAll('.parent-comment');
+                    const parents = getParentList();
                     while (results.length < commentLimit && results.length < parents.length) {
                         const parentEl = parents[results.length];
                         const first = parseParentComment(parentEl);
@@ -91,11 +113,10 @@ export default defineContentScript({
                         console.log(`[${results.length}]`, row);
                     }
                     if (results.length >= commentLimit) break;
-                    if (!scroller) break;
                     const scrollBefore = scroller.scrollTop;
                     scroller.scrollBy(0, scrollStep);
                     await delayMs(scrollDelay);
-                    const parentsAfter = getCommentsListContainer()?.querySelectorAll('.parent-comment').length ?? 0;
+                    const parentsAfter = getParentList().length;
                     if (scroller.scrollTop === scrollBefore && parentsAfter <= results.length) break;
                 }
                 console.log('爬取完成', results);

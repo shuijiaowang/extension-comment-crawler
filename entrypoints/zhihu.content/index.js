@@ -1,4 +1,9 @@
-import { getDomainConfigStorage, MESSAGE_START_CRAWL } from '../../core/config.js';
+import {
+    delayMs,
+    getDomainConfigStorage,
+    MESSAGE_START_CRAWL,
+    normalizeDomainConfig,
+} from '../../core/config.js';
 
 export default defineContentScript({
     matches: ['https://www.zhihu.com/*'],
@@ -6,7 +11,6 @@ export default defineContentScript({
     main() {
         console.log('zhihu comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
-        const delay = (min, max) => new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
         const getParentScroller = () => document.querySelector('.Modal-content > div > div:nth-child(2)');
         const getParentList = () =>
             document.querySelectorAll('.Modal-content > div > div:nth-child(2) > div > div');
@@ -59,19 +63,19 @@ export default defineContentScript({
             }
             return list;
         };
-        const returnToParentPage = async (delayMin, delayMax) => {
+        const returnToParentPage = async (clickDelay) => {
             const returnBtn = getReturnParentButton();
             if (returnBtn) {
                 returnBtn.click();
-                await delay(delayMin, delayMax);
+                await delayMs(clickDelay);
             }
         };
         const expandAndScrapeReplies = async (parentItem, cfg) => {
-            const { commentReplyLimit, delayMin, delayMax, scrollStep } = cfg;
+            const { commentReplyLimit, clickDelay, scrollDelay, scrollStep } = cfg;
             const showMoreBtn = parentItem.querySelector(':scope > button');
             if (!showMoreBtn) return [];
             showMoreBtn.click();
-            await delay(delayMin, delayMax);
+            await delayMs(clickDelay);
             const all = [];
             try {
                 while (all.length < commentReplyLimit) {
@@ -88,18 +92,18 @@ export default defineContentScript({
                     if (!scroller) break;
                     const scrollBefore = scroller.scrollTop;
                     scroller.scrollBy(0, scrollStep);
-                    await delay(delayMin, delayMax);
+                    await delayMs(scrollDelay);
                     if (scroller.scrollTop === scrollBefore) break;
                 }
             } finally {
-                await returnToParentPage(delayMin, delayMax);
+                await returnToParentPage(clickDelay);
             }
             return all.slice(0, commentReplyLimit);
         };
         let crawling = false;
         const crawl = async (cfg) => {
             if (crawling) return { ok: false, error: '爬取进行中' };
-            const { commentLimit, crawlReplies, delayMin, delayMax, scrollStep } = cfg;
+            const { commentLimit, crawlReplies, scrollDelay, scrollStep } = cfg;
             crawling = true;
             console.log('开始爬取评论…');
             const results = [];
@@ -124,7 +128,7 @@ export default defineContentScript({
                     if (results.length >= commentLimit) break;
                     const scrollBefore = scroller.scrollTop;
                     scroller.scrollBy(0, scrollStep);
-                    await delay(delayMin, delayMax);
+                    await delayMs(scrollDelay);
                     const parentsAfter = getParentList().length;
                     if (scroller.scrollTop === scrollBefore && parentsAfter <= results.length) break;
                 }
@@ -135,7 +139,7 @@ export default defineContentScript({
             }
         };
         const runCrawlFromStorage = async () => {
-            const cfg = await configStorage.getValue();
+            const cfg = normalizeDomainConfig(await configStorage.getValue());
             return crawl(cfg);
         };
         browser.runtime.onMessage.addListener(async (message) => {
