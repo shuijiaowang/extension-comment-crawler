@@ -73,6 +73,33 @@ const scrollContainer = window
 scrollContainer.scrollBy(0, 100)
 scrollContainer.scrollY
 
+// 视频信息（主世界 hook 监听 view 接口，解析见 view_api.js）
+// https://api.bilibili.com/x/web-interface/view?bvid=BV1EDbfzsE7k
+const viewData = {
+    title: '说真的25年的风口已经很明显了…', // 标题
+    bvid: 'BV1EDbfzsE7k', // BV号
+    aid: 114900290570272, // AV号
+    tname_v2: '', // 分区名（可能为空，优先 tname_v2 再 tname）
+    pic: 'http://i1.hdslb.com/bfs/archive/....jpg', // 封面
+    pubdate: 1753239708, // 发布时间 Unix 秒
+    duration: 274, // 时长（秒）
+    dimension: { width: 1920, height: 1080 }, // 分辨率
+    owner: {
+        mid: 491266931, // UP主 mid，评论区比对判断是否作者
+        name: 'GenJi是真想教会你AI', // 昵称
+        face: 'https://i2.hdslb.com/bfs/face/....jpg', // 头像
+    },
+    stat: {
+        view: 2929569, // 播放量
+        like: 32822, // 点赞
+        coin: 3775, // 投币
+        favorite: 43417, // 收藏
+        share: 3280, // 分享
+        reply: 338, // 评论
+        danmaku: 213, // 弹幕
+    },
+};
+
 
 // https://api.bilibili.com/x/v2/reply/wbi/main?oid=898762590&type=1&mode=3&pagination_str=%7B%22offset%22:%22CAESEDE4MjM3MjA3OTA5MjYwOTYiAggB%22%7D&plat=1&web_location=1315875&w_rid=0f6d8e2f175ef9f98384a0d850abfd06&wts=1780977345
 // data.replies[0]

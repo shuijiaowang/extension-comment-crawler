@@ -5,14 +5,34 @@ export default defineContentScript({
     world: 'MAIN',
     runAt: 'document_start',
     main() {
-        const isReplyApi = (url) => String(url).includes('/x/v2/reply/');
+        /** @param {unknown} input */
+        const resolveUrl = (input) => {
+            if (typeof input === 'string') return input;
+            if (input instanceof Request) return input.url;
+            if (input instanceof URL) return input.href;
+            return String(input);
+        };
+
+        const isMainViewApi = (url) => {
+            try {
+                const path = new URL(url, location.origin).pathname;
+                return path === '/x/web-interface/view' || path === '/x/web-interface/wbi/view';
+            } catch {
+                return false;
+            }
+        };
+
+        const isHookedApi = (url) => {
+            const u = resolveUrl(url);
+            return u.includes('/x/v2/reply/') || isMainViewApi(u);
+        };
 
         const emit = (url, status, payload) => {
             window.postMessage({ source: HOOK_SOURCE, url, status, payload }, '*');
         };
 
         const handleBody = (url, status, text) => {
-            if (!isReplyApi(url)) return;
+            if (!isHookedApi(url)) return;
             let payload;
             try {
                 payload = JSON.parse(text);
@@ -24,9 +44,9 @@ export default defineContentScript({
 
         const originalFetch = window.fetch;
         window.fetch = async function (...args) {
-            const url = String(args[0]);
+            const url = resolveUrl(args[0]);
             const response = await originalFetch.apply(this, args);
-            if (isReplyApi(url)) {
+            if (isHookedApi(url)) {
                 try {
                     const text = await response.clone().text();
                     handleBody(url, response.status, text);
@@ -47,7 +67,7 @@ export default defineContentScript({
 
         XMLHttpRequest.prototype.send = function (...args) {
             this.addEventListener('load', function () {
-                if (!isReplyApi(this._biliHookUrl)) return;
+                if (!isHookedApi(this._biliHookUrl)) return;
                 handleBody(this._biliHookUrl, this.status, this.responseText);
             });
             return send.apply(this, args);

@@ -7,6 +7,10 @@ import {
     migrateLegacyFieldVisibility,
 } from '@/core/comment-fields.js';
 import {
+    getPlatformPageMetaFields,
+    getPlatformPageStatFields,
+} from '@/core/page-fields.js';
+import {
     PLATFORM_IDS,
     PLATFORM_LABELS,
     clearPlatformRecords,
@@ -26,6 +30,8 @@ const fieldVisibility = reactive({});
 const unwatchRef = ref(null);
 
 const commentFields = computed(() => getPlatformCommentFields(activePlatform.value));
+const pageMetaFields = computed(() => getPlatformPageMetaFields(activePlatform.value));
+const pageStatFields = computed(() => getPlatformPageStatFields(activePlatform.value));
 
 const isFieldVisible = (key) => fieldVisibility[key] === true;
 
@@ -56,6 +62,30 @@ const formatTime = (iso) => {
     if (!iso) return '';
     const d = new Date(iso);
     return Number.isNaN(d.getTime()) ? iso : d.toLocaleString('zh-CN');
+};
+
+/** @param {string} picture */
+const pictureUrls = (picture) =>
+    String(picture || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => /^https?:\/\//i.test(s));
+
+/** @param {import('@/core/page-fields.js').PageFieldDef} field @param {string} value */
+const formatPageFieldValue = (field, value) => `${value}${field.suffix ?? ''}`;
+
+/** @param {import('@/core/records.js').CrawlRecord} record */
+const hasPageInfo = (record) => {
+    const info = record.pageInfo;
+    if (!info) return false;
+    return Boolean(
+        info.videoTitle ||
+            info.coverPic ||
+            info.authorName ||
+            info.bvid ||
+            pageMetaFields.value.some((f) => info[f.key]) ||
+            pageStatFields.value.some((f) => info[f.key]),
+    );
 };
 
 const loadRecords = async () => {
@@ -140,8 +170,8 @@ const recordToTxt = (record) => {
         `链接: ${record.url}`,
         `爬取时间: ${formatTime(record.crawledAt)}`,
         `评论数: ${record.commentCount ?? record.comments?.length ?? 0}`,
-        '',
     ];
+    lines.push('');
 
     /** @param {Record<string, unknown>} comment @param {string} [indent] */
     const appendCommentLines = (comment, indent = '') => {
@@ -314,6 +344,73 @@ onUnmounted(() => {
                             <span>{{ formatTime(record.crawledAt) }}</span>
                             <span>{{ record.commentCount ?? record.comments?.length ?? 0 }} 条评论</span>
                         </p>
+                        <div
+                            v-if="hasPageInfo(record)"
+                            class="video-summary"
+                            @click.stop
+                        >
+                            <img
+                                v-if="record.pageInfo.coverPic"
+                                class="video-cover"
+                                :src="record.pageInfo.coverPic"
+                                alt="封面"
+                                loading="lazy"
+                            />
+                            <div class="video-summary-body">
+                                <div
+                                    v-if="record.pageInfo.authorName || record.pageInfo.authorAvatar"
+                                    class="video-author"
+                                >
+                                    <img
+                                        v-if="record.pageInfo.authorAvatar"
+                                        class="author-avatar"
+                                        :src="record.pageInfo.authorAvatar"
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    <div class="author-text">
+                                        <a
+                                            v-if="record.pageInfo.authorLink"
+                                            class="author-name"
+                                            :href="record.pageInfo.authorLink"
+                                            target="_blank"
+                                            rel="noopener"
+                                        >{{ record.pageInfo.authorName || record.pageInfo.authorId }}</a>
+                                        <span v-else class="author-name">{{
+                                            record.pageInfo.authorName || record.pageInfo.authorId
+                                        }}</span>
+                                        <span v-if="record.pageInfo.authorId" class="author-id"
+                                            >mid {{ record.pageInfo.authorId }}</span
+                                        >
+                                    </div>
+                                </div>
+                                <p v-if="record.pageInfo.videoTitle" class="video-title">
+                                    {{ record.pageInfo.videoTitle }}
+                                </p>
+                                <p
+                                    v-if="record.pageInfo.bvid || record.pageInfo.avid || record.pageInfo.category"
+                                    class="video-ids"
+                                >
+                                    <span v-if="record.pageInfo.bvid">{{ record.pageInfo.bvid }}</span>
+                                    <span v-if="record.pageInfo.avid">av{{ record.pageInfo.avid }}</span>
+                                    <span v-if="record.pageInfo.category">{{ record.pageInfo.category }}</span>
+                                </p>
+                                <p v-if="pageMetaFields.some((f) => record.pageInfo[f.key])" class="video-meta">
+                                    <span
+                                        v-for="f in pageMetaFields"
+                                        :key="f.key"
+                                        v-show="record.pageInfo[f.key]"
+                                    >{{ f.label }} {{ formatPageFieldValue(f, record.pageInfo[f.key]) }}</span>
+                                </p>
+                                <p v-if="pageStatFields.some((f) => record.pageInfo[f.key])" class="video-stats">
+                                    <span
+                                        v-for="f in pageStatFields"
+                                        :key="f.key"
+                                        v-show="record.pageInfo[f.key]"
+                                    >{{ f.label }} {{ record.pageInfo[f.key] }}</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="record-actions" @click.stop>
                         <button
@@ -404,16 +501,19 @@ onUnmounted(() => {
                                 </div>
                                 <p v-if="isFieldVisible('content')" class="comment-content">
                                     {{ comment.content }}
-                                    <span
-                                        v-if="isFieldVisible('picture') && comment.picture"
-                                        class="picture-tag"
-                                    >{{ comment.picture }}</span>
                                 </p>
                                 <p
-                                    v-else-if="isFieldVisible('picture') && comment.picture"
-                                    class="comment-content"
+                                    v-if="isFieldVisible('picture') && pictureUrls(comment.picture).length"
+                                    class="comment-pictures"
                                 >
-                                    <span class="picture-tag">{{ comment.picture }}</span>
+                                    <a
+                                        v-for="(img, pi) in pictureUrls(comment.picture)"
+                                        :key="pi"
+                                        class="picture-link"
+                                        :href="img"
+                                        target="_blank"
+                                        rel="noopener"
+                                    >{{ img }}</a>
                                 </p>
                             </div>
                             <div class="comment-actions">
@@ -482,16 +582,19 @@ onUnmounted(() => {
                                     </div>
                                     <p v-if="isFieldVisible('content')" class="comment-content">
                                         {{ reply.content }}
-                                        <span
-                                            v-if="isFieldVisible('picture') && reply.picture"
-                                            class="picture-tag"
-                                        >{{ reply.picture }}</span>
                                     </p>
                                     <p
-                                        v-else-if="isFieldVisible('picture') && reply.picture"
-                                        class="comment-content"
+                                        v-if="isFieldVisible('picture') && pictureUrls(reply.picture).length"
+                                        class="comment-pictures"
                                     >
-                                        <span class="picture-tag">{{ reply.picture }}</span>
+                                        <a
+                                            v-for="(img, pi) in pictureUrls(reply.picture)"
+                                            :key="pi"
+                                            class="picture-link"
+                                            :href="img"
+                                            target="_blank"
+                                            rel="noopener"
+                                        >{{ img }}</a>
                                     </p>
                                 </div>
                                 <div class="comment-actions">
@@ -721,6 +824,92 @@ h1 {
     color: #6b6b78;
 }
 
+.video-summary {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    background: #1f1f26;
+    border-radius: 8px;
+}
+
+.video-cover {
+    flex-shrink: 0;
+    width: 120px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #2a2a32;
+}
+
+.video-summary-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.video-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.author-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #2a2a32;
+}
+
+.author-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+}
+
+.author-name {
+    color: #e8e8ee;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+a.author-name:hover {
+    color: var(--accent);
+}
+
+.author-id {
+    color: #6b6b78;
+    font-size: 0.72rem;
+}
+
+.video-title {
+    margin: 0;
+    color: #c4c4ce;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.video-ids,
+.video-meta,
+.video-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    margin: 0;
+    color: #888894;
+    line-height: 1.4;
+}
+
+.video-stats {
+    color: #a8a8b4;
+}
+
 .record-actions {
     display: flex;
     flex-shrink: 0;
@@ -797,10 +986,22 @@ h1 {
     word-break: break-word;
 }
 
-.picture-tag {
-    margin-left: 4px;
+.comment-pictures {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 4px 0 0;
     font-size: 0.78rem;
-    color: #888894;
+}
+
+.picture-link {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.picture-link:hover {
+    text-decoration: underline;
 }
 
 .comment-actions {

@@ -9,7 +9,8 @@ import { resolvePlatformTheme } from './config.js';
 
 /** @typedef {{
  *   id: string, url: string, title: string, crawledAt: string,
- *   commentCount: number, comments: CommentItem[]
+ *   commentCount: number, comments: CommentItem[],
+ *   pageInfo?: Record<string, string>
  * }} CrawlRecord */
 
 export const PLATFORM_IDS = ['bilibili', 'douyin', 'xiaohongshu', 'zhihu'];
@@ -45,9 +46,9 @@ function cloneComments(comments) {
 /**
  * 爬取完成后追加一条记录（按平台独立、累计数组，新记录在前）
  * @param {string} hostname
- * @param {{ url: string, title?: string, comments: CommentItem[] }} payload
+ * @param {{ url: string, title?: string, comments: CommentItem[], pageInfo?: Record<string, string> }} payload
  */
-export async function appendCrawlRecord(hostname, { url, title = '', comments }) {
+export async function appendCrawlRecord(hostname, { url, title = '', comments, pageInfo }) {
     const platformId = resolvePlatformId(hostname);
     if (!platformId || !comments?.length) return null;
 
@@ -61,6 +62,7 @@ export async function appendCrawlRecord(hostname, { url, title = '', comments })
         crawledAt: new Date().toISOString(),
         commentCount: comments.length,
         comments: cloneComments(comments),
+        ...(pageInfo && Object.keys(pageInfo).length ? { pageInfo } : {}),
     };
     list.unshift(record);
     await item.setValue(list);
@@ -68,12 +70,13 @@ export async function appendCrawlRecord(hostname, { url, title = '', comments })
 }
 
 /** content script 爬取完成后调用 */
-export async function saveCrawlResults(hostname, results) {
+export async function saveCrawlResults(hostname, results, pageInfo) {
     if (!results?.length) return null;
     return appendCrawlRecord(hostname, {
         url: globalThis.location.href,
         title: globalThis.document.title,
         comments: results,
+        pageInfo,
     });
 }
 
