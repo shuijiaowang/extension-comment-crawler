@@ -1,7 +1,11 @@
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
-import { storage } from '#imports';
 import { resolvePlatformTheme } from '@/core/config.js';
+import {
+    getFieldVisibilityStorage,
+    getPlatformCommentFields,
+    migrateLegacyFieldVisibility,
+} from '@/core/comment-fields.js';
 import {
     PLATFORM_IDS,
     PLATFORM_LABELS,
@@ -12,37 +16,31 @@ import {
     updateComment,
 } from '@/core/records.js';
 
-const COMMENT_FIELDS = [
-    { key: 'userName', label: '昵称' },
-    { key: 'userId', label: '用户 ID' },
-    { key: 'userLink', label: '主页链接' },
-    { key: 'content', label: '内容', textarea: true },
-    { key: 'picture', label: '图片' },
-    { key: 'time', label: '时间' },
-    { key: 'location', label: '地点' },
-    { key: 'like', label: '点赞' },
-    { key: 'isAuthor', label: '是否作者' },
-    { key: 'tag', label: '标签' },
-];
-
-const DEFAULT_FIELD_VISIBILITY = Object.fromEntries(
-    COMMENT_FIELDS.map((f) => [f.key, true]),
-);
-
-const fieldVisibilityStorage = storage.defineItem('local:records-field-visibility', {
-    fallback: DEFAULT_FIELD_VISIBILITY,
-});
-
 const activePlatform = ref('bilibili');
 const records = ref([]);
 const expandedRecordId = ref(null);
 const editing = ref(null);
 const editForm = reactive({});
-const fieldVisibility = reactive({ ...DEFAULT_FIELD_VISIBILITY });
+const fieldVisibility = reactive({});
 /** @type {import('vue').Ref<(() => void) | null>} */
 const unwatchRef = ref(null);
 
-const isFieldVisible = (key) => fieldVisibility[key];
+const commentFields = computed(() => getPlatformCommentFields(activePlatform.value));
+
+const isFieldVisible = (key) => fieldVisibility[key] === true;
+
+const loadFieldVisibility = async (platformId) => {
+    const fields = getPlatformCommentFields(platformId);
+    const saved = await getFieldVisibilityStorage(platformId).getValue();
+    for (const key of Object.keys(fieldVisibility)) {
+        if (!fields.some((f) => f.key === key)) {
+            delete fieldVisibility[key];
+        }
+    }
+    for (const f of fields) {
+        fieldVisibility[f.key] = saved[f.key] ?? true;
+    }
+};
 
 const platformTheme = computed(() => resolvePlatformTheme(`${activePlatform.value}.com`));
 const platformThemeStyle = computed(() => ({
@@ -76,6 +74,7 @@ const switchPlatform = async (id) => {
     activePlatform.value = id;
     expandedRecordId.value = null;
     editing.value = null;
+    await loadFieldVisibility(id);
     await loadRecords();
     setupWatch();
 };
@@ -102,7 +101,7 @@ const onClearPlatform = async () => {
 const filterCommentForExport = (comment) => {
     /** @type {Record<string, unknown>} */
     const filtered = {};
-    for (const f of COMMENT_FIELDS) {
+    for (const f of commentFields.value) {
         if (fieldVisibility[f.key]) {
             filtered[f.key] = comment[f.key] ?? '';
         }
@@ -146,7 +145,7 @@ const recordToTxt = (record) => {
 
     /** @param {Record<string, unknown>} comment @param {string} [indent] */
     const appendCommentLines = (comment, indent = '') => {
-        for (const f of COMMENT_FIELDS) {
+        for (const f of commentFields.value) {
             if (!fieldVisibility[f.key]) continue;
             const val = comment[f.key];
             if (val != null && val !== '') {
@@ -194,7 +193,7 @@ const onExportRecord = (record, format) => {
 
 const openEdit = (recordId, commentIndex, comment, replyIndex = null) => {
     editing.value = { recordId, commentIndex, replyIndex };
-    for (const f of COMMENT_FIELDS) {
+    for (const f of commentFields.value) {
         editForm[f.key] = comment[f.key] ?? '';
     }
 };
@@ -207,7 +206,7 @@ const saveEdit = async () => {
     if (!editing.value) return;
     const { recordId, commentIndex, replyIndex } = editing.value;
     const patch = {};
-    for (const f of COMMENT_FIELDS) {
+    for (const f of commentFields.value) {
         patch[f.key] = editForm[f.key];
     }
 
@@ -241,10 +240,8 @@ const onDeleteComment = async (recordId, commentIndex, replyIndex = null) => {
 };
 
 onMounted(async () => {
-    const saved = await fieldVisibilityStorage.getValue();
-    for (const f of COMMENT_FIELDS) {
-        fieldVisibility[f.key] = saved[f.key] ?? true;
-    }
+    await migrateLegacyFieldVisibility();
+    await loadFieldVisibility(activePlatform.value);
     await loadRecords();
     setupWatch();
 });
@@ -252,7 +249,7 @@ onMounted(async () => {
 watch(
     fieldVisibility,
     () => {
-        fieldVisibilityStorage.setValue({ ...fieldVisibility });
+        getFieldVisibilityStorage(activePlatform.value).setValue({ ...fieldVisibility });
     },
     { deep: true },
 );
@@ -294,7 +291,7 @@ onUnmounted(() => {
             </nav>
             <div class="field-filter">
                 <span class="field-filter-label">显示 / 导出字段</span>
-                <label v-for="f in COMMENT_FIELDS" :key="f.key" class="field-checkbox">
+                <label v-for="f in commentFields" :key="f.key" class="field-checkbox">
                     <input v-model="fieldVisibility[f.key]" type="checkbox" />
                     <span>{{ f.label }}</span>
                 </label>
@@ -386,6 +383,14 @@ onUnmounted(() => {
                                         v-if="isFieldVisible('tag') && comment.tag"
                                         class="badge tag"
                                     >{{ comment.tag }}</span>
+                                    <span
+                                        v-if="isFieldVisible('vip') && comment.vip"
+                                        class="badge"
+                                    >{{ comment.vip }}</span>
+                                    <span
+                                        v-if="isFieldVisible('level') && comment.level"
+                                        class="badge"
+                                    >{{ comment.level }}</span>
                                     <span v-if="isFieldVisible('time')" class="muted">{{
                                         comment.time
                                     }}</span>
@@ -456,6 +461,14 @@ onUnmounted(() => {
                                             v-if="isFieldVisible('tag') && reply.tag"
                                             class="badge tag"
                                         >{{ reply.tag }}</span>
+                                        <span
+                                            v-if="isFieldVisible('vip') && reply.vip"
+                                            class="badge"
+                                        >{{ reply.vip }}</span>
+                                        <span
+                                            v-if="isFieldVisible('level') && reply.level"
+                                            class="badge"
+                                        >{{ reply.level }}</span>
                                         <span v-if="isFieldVisible('time')" class="muted">{{
                                             reply.time
                                         }}</span>
@@ -508,7 +521,7 @@ onUnmounted(() => {
             <div class="modal">
                 <h3>{{ editing.replyIndex != null ? '编辑回复' : '编辑评论' }}</h3>
                 <form class="edit-form" @submit.prevent="saveEdit">
-                    <label v-for="f in COMMENT_FIELDS" :key="f.key" class="field">
+                    <label v-for="f in commentFields" :key="f.key" class="field">
                         <span>{{ f.label }}</span>
                         <textarea
                             v-if="f.textarea"

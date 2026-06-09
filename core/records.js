@@ -3,7 +3,8 @@ import { resolvePlatformTheme } from './config.js';
 /** @typedef {{
  *   userId: string, userName: string, userLink: string, content: string,
  *   picture: string, time: string, location: string, like: string,
- *   isAuthor: string, tag: string, replies?: CommentItem[]
+ *   isAuthor?: string, tag?: string, vip?: string, level?: string,
+ *   replies?: CommentItem[]
  * }} CommentItem */
 
 /** @typedef {{
