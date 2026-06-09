@@ -8,10 +8,23 @@ import {
 } from '../../core/config.js';
 import { saveCrawlResults } from '../../core/records.js';
 
+const HOOK_SOURCE = 'bili-reply-hook';
+
 export default defineContentScript({
     matches: ['https://www.bilibili.com/*'],
-    runAt: 'document_idle',
+    runAt: 'document_start',
     main() {
+        window.addEventListener('message', (event) => {
+            if (event.source !== window || event.data?.source !== HOOK_SOURCE) return;
+            const { url, status, payload } = event.data;
+            console.group('[bilibili hook] 隔离环境收到主世界数据');
+            console.log('URL:', url);
+            console.log('STATUS:', status);
+            console.log('payload:', payload);
+            console.groupEnd();
+        });
+        console.log('[bilibili hook] 隔离环境监听中，等待评论接口响应…');
+
         console.log('bilibili comment craw Content Script');
         const configStorage = getDomainConfigStorage(window.location.hostname);
         const getCommentsContainer = () =>

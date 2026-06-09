@@ -77,7 +77,7 @@ scrollContainer.scrollY
 // https://api.bilibili.com/x/v2/reply/wbi/main?oid=898762590&type=1&mode=3&pagination_str=%7B%22offset%22:%22CAESEDE4MjM3MjA3OTA5MjYwOTYiAggB%22%7D&plat=1&web_location=1315875&w_rid=0f6d8e2f175ef9f98384a0d850abfd06&wts=1780977345
 // data.replies[0]
 const replies={
-    "type": 1,                         // 评论类型：1=视频 11=动态 17=专栏
+    "type": 1,                         // 类型：1=视频 11=动态 17=专栏
     "rcount": 1,                       // 回复数量
     "state": 0,                        // 评论状态
     "fansgrade": 0,                    // 粉丝等级
@@ -95,8 +95,6 @@ const replies={
         "sex": "女",                   // 性别
         "sign": "",                    // 个性签名
         "avatar": "http://...",        // 用户头像URL
-        "face_nft_new": 0,             // NFT头像标记（已基本废弃）
-        "is_senior_member": 0,         // 是否资深会员
         "level_info": {
             "current_level": 4         // 用户等级（Lv0~Lv6）
         },
@@ -104,8 +102,6 @@ const replies={
             "vipType": 1,              // 会员类型
             "vipStatus": 0             // 是否为有效大会员
         },
-        "user_sailing_v2": {},         // 用户装扮信息（头像框、卡片背景等）
-        "is_contractor": false         // 是否签约创作者/MCN成员
     },
     "content": {
         "message": "报名报名",          // 评论内容,祝6688组合健康长寿[爱心],包含emote
