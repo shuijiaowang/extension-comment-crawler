@@ -17,7 +17,8 @@
   "dependencies": {
     "@wxt-dev/i18n": "^0.2.5",
     "pinia": "^3.0.4",
-    "vue": "^3.5.29"
+    "vue": "^3.5.29",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@wxt-dev/module-vue": "^1.0.3",

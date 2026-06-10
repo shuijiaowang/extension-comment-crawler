@@ -23,6 +23,7 @@ import {
     getPlatformRecordsStorage,
     updateComment,
 } from '@/core/records.js';
+import { buildRecordXlsx } from '@/core/export-xlsx.js';
 
 const activePlatform = ref('bilibili');
 const records = ref([]);
@@ -213,6 +214,19 @@ const filterRecordForExport = (record) => {
     };
 };
 
+/** @param {Uint8Array} buffer @param {string} filename */
+const downloadBinary = (buffer, filename) => {
+    const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+};
+
 /** @param {string} content @param {string} filename @param {string} mimeType */
 const downloadFile = (content, filename, mimeType) => {
     const blob = new Blob([content], { type: mimeType });
@@ -280,7 +294,7 @@ const onExport = () => {
     );
 };
 
-/** @param {import('@/core/records.js').CrawlRecord} record @param {'json' | 'txt'} format */
+/** @param {import('@/core/records.js').CrawlRecord} record @param {'json' | 'txt' | 'xlsx'} format */
 const onExportRecord = (record, format) => {
     const stamp = Date.now();
     const base = `crawl-${activePlatform.value}-${record.id.slice(0, 8)}-${stamp}`;
@@ -290,8 +304,16 @@ const onExportRecord = (record, format) => {
             `${base}.json`,
             'application/json',
         );
-    } else {
+    } else if (format === 'txt') {
         downloadFile(recordToTxt(record), `${base}.txt`, 'text/plain;charset=utf-8');
+    } else if (format === 'xlsx') {
+        const buf = buildRecordXlsx(record, {
+            commentFieldDefs: commentFields.value.filter((f) => isCommentFieldVisible(f.key)),
+            videoFieldDefs: videoFields.value.filter((f) => isVideoFieldVisible(f.key)),
+            authorFieldDefs: authorFields.value.filter((f) => isAuthorFieldVisible(f.key)),
+            workSectionLabel: workSectionLabel.value,
+        });
+        downloadBinary(buf, `${base}.xlsx`);
     }
 };
 
@@ -477,6 +499,14 @@ onUnmounted(() => {
                             @click="onExportRecord(record, 'txt')"
                         >
                             TXT
+                        </button>
+                        <button
+                            type="button"
+                            class="btn sm"
+                            title="导出为 Excel（双 Sheet：评论 / 作品+作者；仅含已选字段）"
+                            @click="onExportRecord(record, 'xlsx')"
+                        >
+                            Excel
                         </button>
                         <button
                             type="button"
