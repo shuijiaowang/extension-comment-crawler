@@ -651,6 +651,15 @@ onUnmounted(() => {
                         <div class="comment-row">
                             <div class="comment-main">
                                 <div class="comment-header">
+                                    <img
+                                        v-if="
+                                            isCommentFieldVisible('userAvatar') && comment.userAvatar
+                                        "
+                                        class="comment-avatar"
+                                        :src="comment.userAvatar"
+                                        alt=""
+                                        loading="lazy"
+                                    />
                                     <strong v-if="isCommentFieldVisible('userName')">{{
                                         comment.userName || '匿名'
                                     }}</strong>
@@ -658,6 +667,10 @@ onUnmounted(() => {
                                         v-if="isCommentFieldVisible('userId') && comment.userId"
                                         class="muted"
                                     >ID: {{ comment.userId }}</span>
+                                    <span
+                                        v-if="isCommentFieldVisible('sex') && comment.sex"
+                                        class="muted"
+                                    >{{ comment.sex }}</span>
                                     <a
                                         v-if="isCommentFieldVisible('userLink') && comment.userLink"
                                         class="user-link"
@@ -681,7 +694,15 @@ onUnmounted(() => {
                                     <span
                                         v-if="isCommentFieldVisible('level') && comment.level"
                                         class="badge"
-                                    >{{ comment.level }}</span>
+                                    >Lv{{ comment.level }}</span>
+                                    <span
+                                        v-if="isCommentFieldVisible('official') && comment.official"
+                                        class="badge"
+                                    >{{ comment.official }}</span>
+                                    <span
+                                        v-if="isCommentFieldVisible('nameplate') && comment.nameplate"
+                                        class="badge tag"
+                                    >{{ comment.nameplate }}</span>
                                     <span v-if="isCommentFieldVisible('time')" class="muted">{{
                                         comment.time
                                     }}</span>
@@ -693,6 +714,12 @@ onUnmounted(() => {
                                         >♥ {{ comment.like }}</span
                                     >
                                 </div>
+                                <p
+                                    v-if="isCommentFieldVisible('sign') && comment.sign"
+                                    class="comment-sign muted"
+                                >
+                                    {{ comment.sign }}
+                                </p>
                                 <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                     {{ comment.content }}
                                 </p>
@@ -736,6 +763,15 @@ onUnmounted(() => {
                             >
                                 <div class="comment-main">
                                     <div class="comment-header">
+                                        <img
+                                            v-if="
+                                                isCommentFieldVisible('userAvatar') && reply.userAvatar
+                                            "
+                                            class="comment-avatar"
+                                            :src="reply.userAvatar"
+                                            alt=""
+                                            loading="lazy"
+                                        />
                                         <strong v-if="isCommentFieldVisible('userName')">{{
                                             reply.userName || '匿名'
                                         }}</strong>
@@ -743,6 +779,10 @@ onUnmounted(() => {
                                             v-if="isCommentFieldVisible('userId') && reply.userId"
                                             class="muted"
                                         >ID: {{ reply.userId }}</span>
+                                        <span
+                                            v-if="isCommentFieldVisible('sex') && reply.sex"
+                                            class="muted"
+                                        >{{ reply.sex }}</span>
                                         <a
                                             v-if="isCommentFieldVisible('userLink') && reply.userLink"
                                             class="user-link"
@@ -751,6 +791,10 @@ onUnmounted(() => {
                                             rel="noopener"
                                             @click.stop
                                         >主页</a>
+                                        <span
+                                            v-if="isCommentFieldVisible('isAuthor') && reply.isAuthor"
+                                            class="badge"
+                                        >{{ reply.isAuthor }}</span>
                                         <span
                                             v-if="isCommentFieldVisible('tag') && reply.tag"
                                             class="badge tag"
@@ -762,7 +806,17 @@ onUnmounted(() => {
                                         <span
                                             v-if="isCommentFieldVisible('level') && reply.level"
                                             class="badge"
-                                        >{{ reply.level }}</span>
+                                        >Lv{{ reply.level }}</span>
+                                        <span
+                                            v-if="isCommentFieldVisible('official') && reply.official"
+                                            class="badge"
+                                        >{{ reply.official }}</span>
+                                        <span
+                                            v-if="
+                                                isCommentFieldVisible('nameplate') && reply.nameplate
+                                            "
+                                            class="badge tag"
+                                        >{{ reply.nameplate }}</span>
                                         <span v-if="isCommentFieldVisible('time')" class="muted">{{
                                             reply.time
                                         }}</span>
@@ -774,6 +828,12 @@ onUnmounted(() => {
                                             >♥ {{ reply.like }}</span
                                         >
                                     </div>
+                                    <p
+                                        v-if="isCommentFieldVisible('sign') && reply.sign"
+                                        class="comment-sign muted"
+                                    >
+                                        {{ reply.sign }}
+                                    </p>
                                     <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                         {{ reply.content }}
                                     </p>
@@ -1220,6 +1280,21 @@ h1 {
 
 .comment-header strong {
     color: #e8e8ed;
+}
+
+.comment-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comment-sign {
+    margin: 0 0 4px;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
 .muted {

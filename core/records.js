@@ -1,10 +1,10 @@
 import { resolvePlatformTheme } from './config.js';
 
 /** @typedef {{
- *   userId: string, userName: string, userLink: string, content: string,
- *   picture: string, time: string, location: string, like: string,
- *   isAuthor?: string, tag?: string, vip?: string, level?: string,
- *   replies?: CommentItem[]
+ *   userId: string, userName: string, userLink: string, userAvatar?: string,
+ *   sex?: string, sign?: string, content: string, picture: string, time: string,
+ *   location: string, like: string, isAuthor?: string, tag?: string, vip?: string,
+ *   level?: string, official?: string, nameplate?: string, replies?: CommentItem[]
  * }} CommentItem */
 
 /** @typedef {{

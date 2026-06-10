@@ -18,11 +18,17 @@ const BASE_COMMENT_FIELDS = [
 /** @type {Record<string, CommentFieldDef[]>} */
 export const PLATFORM_COMMENT_FIELDS = {
     bilibili: [
-        ...BASE_COMMENT_FIELDS,
+        ...BASE_COMMENT_FIELDS.slice(0, 3),
+        { key: 'userAvatar', label: '头像' },
+        ...BASE_COMMENT_FIELDS.slice(3),
+        { key: 'sex', label: '性别' },
+        { key: 'sign', label: '签名' },
         { key: 'isAuthor', label: '是否作者' },
         { key: 'tag', label: '标签' },
         { key: 'vip', label: '大会员' },
         { key: 'level', label: '等级' },
+        { key: 'official', label: '认证' },
+        { key: 'nameplate', label: '勋章' },
     ],
     douyin: [...BASE_COMMENT_FIELDS],
     xiaohongshu: [

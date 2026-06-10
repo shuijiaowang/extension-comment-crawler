@@ -34,20 +34,50 @@ export function isTopLevelReply(item) {
     return root === '0' || parent === '0';
 }
 
-/** @param {unknown} item */
-export function parseApiReply(item) {
+/** @param {unknown} member */
+export function parseMemberFields(member) {
+    if (!member || typeof member !== 'object') {
+        return {
+            userAvatar: '',
+            sex: '',
+            sign: '',
+            level: '',
+            vip: '',
+            official: '',
+            nameplate: '',
+        };
+    }
+    const level = member.level_info?.current_level;
+    return {
+        userAvatar: member.avatar ?? '',
+        sex: member.sex ?? '',
+        sign: member.sign ?? '',
+        level: level != null && level !== '' ? String(level) : '',
+        vip: member.vip?.label?.text ?? '',
+        official: member.official_verify?.desc ?? '',
+        nameplate: member.nameplate?.name ?? '',
+    };
+}
+
+/**
+ * @param {unknown} item
+ * @param {{ upperMid?: string }} [ctx]
+ */
+export function parseApiReply(item, ctx = {}) {
     if (!item || typeof item !== 'object') return null;
     const mid = item.member?.mid ?? '';
+    const upperMid = ctx.upperMid ? String(ctx.upperMid) : '';
     return {
         userId: String(mid),
         userName: item.member?.uname ?? '',
         userLink: buildUserLink(mid),
+        ...parseMemberFields(item.member),
         content: item.content?.message ?? '',
         picture: extractPictureUrls(item.content),
         time: formatCtime(item.ctime),
         location: item.reply_control?.location ?? '',
         like: String(item.like ?? 0),
-        isAuthor: '',
+        isAuthor: upperMid && String(mid) === upperMid ? '作者' : '',
         tag: '',
     };
 }
@@ -85,9 +115,13 @@ export function createReplyCache() {
     const rootOrder = [];
     /** @type {Map<string, Map<string, ReturnType<typeof parseApiReply>>>} */
     const repliesByRoot = new Map();
+    /** @type {string} */
+    let upperMid = '';
+
+    const replyCtx = () => (upperMid ? { upperMid } : {});
 
     const upsertRoot = (rootId, item) => {
-        const row = parseApiReply(item);
+        const row = parseApiReply(item, replyCtx());
         if (!row) return;
         if (!roots.has(rootId)) rootOrder.push(rootId);
         roots.set(rootId, row);
@@ -99,8 +133,9 @@ export function createReplyCache() {
         for (const item of items) {
             const rootId = getRootId(item);
             if (!rootId) continue;
-            const row = parseApiReply(item);
+            const row = parseApiReply(item, replyCtx());
             if (!row) continue;
+            row.tag = '置顶';
             roots.set(rootId, row);
             upsertSubReplies(rootId, item.replies);
             if (!ids.includes(rootId)) ids.push(rootId);
@@ -134,7 +169,7 @@ export function createReplyCache() {
         for (const item of list) {
             const id = item?.rpid_str ?? String(item?.rpid ?? '');
             if (!id || map.has(id)) continue;
-            const row = parseApiReply(item);
+            const row = parseApiReply(item, replyCtx());
             if (row) map.set(id, row);
         }
     };
@@ -147,6 +182,7 @@ export function createReplyCache() {
             roots.clear();
             rootOrder.length = 0;
             repliesByRoot.clear();
+            upperMid = '';
         },
         upsertRoot,
         upsertSubReplies,
@@ -154,6 +190,8 @@ export function createReplyCache() {
         ingestMainData(data) {
             const body = data?.data;
             if (!body) return;
+
+            if (body.upper?.mid != null) upperMid = String(body.upper.mid);
 
             const pinned = [];
             const top = body.top;
