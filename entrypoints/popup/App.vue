@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from '@/pinia/config.js';
-import { resolvePlatformTheme } from '@/core/config.js';
+import { resolvePlatformTheme, MESSAGE_OPEN_RECORDS } from '@/core/config.js';
 
 const store = useConfigStore();
 const { hostname, tabError, domainConfig } = storeToRefs(store);
@@ -29,8 +29,8 @@ const isZhihu = computed(() => platformTheme.value.id === 'zhihu');
 const isDouyin = computed(() => platformTheme.value.id === 'douyin');
 const pageHint = computed(() => {
     if (tabError.value) return '';
-    if (isXiaohongshu.value) return '在笔记详情页打开 popup，保存配置后点击开始爬取';
-    if (isBilibili.value) return '在视频页打开 popup，保存配置后点击开始爬取';
+    if (isXiaohongshu.value) return '在笔记详情页打开 popup，保存配置后点击开始爬取；页面右下角会显示进度悬浮框';
+    if (isBilibili.value) return '在视频页打开 popup，保存配置后点击开始爬取；页面右下角会显示进度悬浮框';
     if (isZhihu.value) return '在知乎页面打开评论区弹窗后，保存配置并点击开始爬取';
     if (isDouyin.value) return '在抖音视频页打开评论区后，保存配置并点击开始爬取';
     return '在目标页面打开 popup，保存配置后点击开始爬取';
@@ -68,7 +68,8 @@ const onStartQueue = async () => {
 };
 
 const onOpenRecords = () => {
-    browser.tabs.create({ url: browser.runtime.getURL('/records.html') });
+    const platformId = platformTheme.value.id !== 'default' ? platformTheme.value.id : undefined;
+    browser.runtime.sendMessage({ type: MESSAGE_OPEN_RECORDS, platform: platformId });
 };
 </script>
 

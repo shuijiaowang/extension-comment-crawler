@@ -1,4 +1,5 @@
 import {
+    MESSAGE_OPEN_RECORDS,
     MESSAGE_START_CRAWL,
     MESSAGE_START_QUEUE,
     QUEUE_PAGE_LOAD_WAIT_MS,
@@ -43,6 +44,16 @@ export default defineBackground(() => {
     console.log('Background script started', { id: browser.runtime.id });
 
     browser.runtime.onMessage.addListener((message) => {
+        if (message?.type === MESSAGE_OPEN_RECORDS) {
+            const platform =
+                typeof message.platform === 'string' && message.platform.trim()
+                    ? message.platform.trim()
+                    : '';
+            const query = platform ? `?platform=${encodeURIComponent(platform)}` : '';
+            return browser.tabs
+                .create({ url: browser.runtime.getURL(`/records.html${query}`) })
+                .then(() => ({ ok: true }));
+        }
         if (message?.type === MESSAGE_START_QUEUE) {
             const urls = Array.isArray(message.urls)
                 ? message.urls.filter((u) => typeof u === 'string' && u.trim())

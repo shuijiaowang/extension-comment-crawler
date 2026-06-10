@@ -339,6 +339,10 @@ const onDeleteComment = async (recordId, commentIndex, replyIndex = null) => {
 };
 
 onMounted(async () => {
+    const platformFromUrl = new URLSearchParams(location.search).get('platform');
+    if (platformFromUrl && PLATFORM_IDS.includes(platformFromUrl)) {
+        activePlatform.value = platformFromUrl;
+    }
     await migrateLegacyFieldVisibility();
     await loadSectionVisibility(activePlatform.value);
     await loadRecords();
