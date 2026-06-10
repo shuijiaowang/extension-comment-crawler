@@ -43,6 +43,8 @@ export function parseApiComment(item) {
         userId: String(userId),
         userName: user.nickname ?? '',
         userLink: buildUserLink(userId),
+        userAvatar: user.image ?? '',
+        aiAgent: user.ai_agent === true ? 'AI' : '',
         content: item.content ?? '',
         picture: extractPictureUrls(item.pictures),
         time: formatCreateTime(item.create_time),

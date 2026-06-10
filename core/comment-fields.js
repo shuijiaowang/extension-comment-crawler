@@ -32,8 +32,11 @@ export const PLATFORM_COMMENT_FIELDS = {
     ],
     douyin: [...BASE_COMMENT_FIELDS],
     xiaohongshu: [
-        ...BASE_COMMENT_FIELDS,
+        ...BASE_COMMENT_FIELDS.slice(0, 3),
+        { key: 'userAvatar', label: '头像' },
+        ...BASE_COMMENT_FIELDS.slice(3),
         { key: 'isAuthor', label: '是否作者' },
+        { key: 'aiAgent', label: 'AI助手' },
     ],
     zhihu: [
         ...BASE_COMMENT_FIELDS,

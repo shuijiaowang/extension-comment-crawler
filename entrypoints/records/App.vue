@@ -37,6 +37,11 @@ const authorFieldVisibility = reactive({});
 /** @type {import('vue').Ref<(() => void) | null>} */
 const unwatchRef = ref(null);
 
+const showImagesStorage = storage.defineItem('local:records-show-images', {
+    fallback: false,
+});
+const showImages = ref(false);
+
 const commentFields = computed(() => getPlatformCommentFields(activePlatform.value));
 const videoFields = computed(() => getPlatformVideoFields(activePlatform.value));
 const authorFields = computed(() => getPlatformAuthorFields(activePlatform.value));
@@ -343,6 +348,7 @@ onMounted(async () => {
     if (platformFromUrl && PLATFORM_IDS.includes(platformFromUrl)) {
         activePlatform.value = platformFromUrl;
     }
+    showImages.value = await showImagesStorage.getValue();
     await migrateLegacyFieldVisibility();
     await loadSectionVisibility(activePlatform.value);
     await loadRecords();
@@ -370,6 +376,9 @@ watch(
     },
     { deep: true },
 );
+watch(showImages, (value) => {
+    showImagesStorage.setValue(value);
+});
 
 onUnmounted(() => {
     unwatchRef.value?.();
@@ -387,6 +396,10 @@ onUnmounted(() => {
                     </p>
                 </div>
                 <div class="header-actions">
+                    <label class="show-images-toggle field-checkbox" title="勾选后懒加载预览图片；默认仅显示封面与作者头像，其余为链接">
+                        <input v-model="showImages" type="checkbox" />
+                        <span>显示图片</span>
+                    </label>
                     <button type="button" class="btn secondary" @click="onExport">导出 JSON</button>
                     <button type="button" class="btn danger" @click="onClearPlatform">
                         清空当前平台
@@ -534,32 +547,53 @@ onUnmounted(() => {
                                                     ).length
                                                 "
                                                 class="meta-image-list"
+                                                :class="{ 'meta-image-links': !showImages }"
                                             >
+                                                <template v-if="showImages">
+                                                    <a
+                                                        v-for="(img, pi) in pictureUrls(
+                                                            getRecordMeta(record).videoInfo[f.key],
+                                                        )"
+                                                        :key="pi"
+                                                        :href="img"
+                                                        target="_blank"
+                                                        rel="noopener"
+                                                        :title="`图片 ${pi + 1}`"
+                                                    >
+                                                        <img
+                                                            class="meta-thumb"
+                                                            :src="img"
+                                                            alt=""
+                                                            loading="lazy"
+                                                        />
+                                                    </a>
+                                                </template>
                                                 <a
                                                     v-for="(img, pi) in pictureUrls(
                                                         getRecordMeta(record).videoInfo[f.key],
                                                     )"
+                                                    v-else
                                                     :key="pi"
+                                                    class="picture-link"
                                                     :href="img"
                                                     target="_blank"
                                                     rel="noopener"
-                                                    :title="`图片 ${pi + 1}`"
-                                                >
-                                                    <img
-                                                        class="meta-thumb"
-                                                        :src="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </a>
+                                                >{{ img }}</a>
                                             </div>
                                             <img
-                                                v-else-if="f.image"
+                                                v-else-if="f.image && showImages"
                                                 class="meta-thumb"
                                                 :src="getRecordMeta(record).videoInfo[f.key]"
                                                 alt=""
                                                 loading="lazy"
                                             />
+                                            <a
+                                                v-else-if="f.image && f.link"
+                                                :href="getRecordMeta(record).videoInfo[f.key]"
+                                                target="_blank"
+                                                rel="noopener"
+                                                class="picture-link"
+                                            >{{ getRecordMeta(record).videoInfo[f.key] }}</a>
                                             <a
                                                 v-else-if="f.link"
                                                 :href="getRecordMeta(record).videoInfo[f.key]"
@@ -615,12 +649,19 @@ onUnmounted(() => {
                                         <dt>{{ f.label }}</dt>
                                         <dd>
                                             <img
-                                                v-if="f.image"
+                                                v-if="f.image && showImages"
                                                 class="meta-thumb round"
                                                 :src="getRecordMeta(record).authorInfo[f.key]"
                                                 alt=""
                                                 loading="lazy"
                                             />
+                                            <a
+                                                v-else-if="f.image && f.link"
+                                                :href="getRecordMeta(record).authorInfo[f.key]"
+                                                target="_blank"
+                                                rel="noopener"
+                                                class="picture-link"
+                                            >{{ getRecordMeta(record).authorInfo[f.key] }}</a>
                                             <a
                                                 v-else-if="f.link"
                                                 :href="getRecordMeta(record).authorInfo[f.key]"
@@ -653,7 +694,9 @@ onUnmounted(() => {
                                 <div class="comment-header">
                                     <img
                                         v-if="
-                                            isCommentFieldVisible('userAvatar') && comment.userAvatar
+                                            showImages &&
+                                            isCommentFieldVisible('userAvatar') &&
+                                            comment.userAvatar
                                         "
                                         class="comment-avatar"
                                         :src="comment.userAvatar"
@@ -683,6 +726,10 @@ onUnmounted(() => {
                                         v-if="isCommentFieldVisible('isAuthor') && comment.isAuthor"
                                         class="badge"
                                     >{{ comment.isAuthor }}</span>
+                                    <span
+                                        v-if="isCommentFieldVisible('aiAgent') && comment.aiAgent"
+                                        class="badge tag"
+                                    >{{ comment.aiAgent }}</span>
                                     <span
                                         v-if="isCommentFieldVisible('tag') && comment.tag"
                                         class="badge tag"
@@ -723,19 +770,38 @@ onUnmounted(() => {
                                 <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                     {{ comment.content }}
                                 </p>
-                                <p
+                                <div
                                     v-if="isCommentFieldVisible('picture') && pictureUrls(comment.picture).length"
                                     class="comment-pictures"
+                                    :class="{ 'comment-pictures-grid': showImages }"
                                 >
+                                    <template v-if="showImages">
+                                        <a
+                                            v-for="(img, pi) in pictureUrls(comment.picture)"
+                                            :key="pi"
+                                            :href="img"
+                                            target="_blank"
+                                            rel="noopener"
+                                            :title="`图片 ${pi + 1}`"
+                                        >
+                                            <img
+                                                class="comment-picture-thumb"
+                                                :src="img"
+                                                alt=""
+                                                loading="lazy"
+                                            />
+                                        </a>
+                                    </template>
                                     <a
                                         v-for="(img, pi) in pictureUrls(comment.picture)"
+                                        v-else
                                         :key="pi"
                                         class="picture-link"
                                         :href="img"
                                         target="_blank"
                                         rel="noopener"
                                     >{{ img }}</a>
-                                </p>
+                                </div>
                             </div>
                             <div class="comment-actions">
                                 <button
@@ -765,7 +831,9 @@ onUnmounted(() => {
                                     <div class="comment-header">
                                         <img
                                             v-if="
-                                                isCommentFieldVisible('userAvatar') && reply.userAvatar
+                                                showImages &&
+                                                isCommentFieldVisible('userAvatar') &&
+                                                reply.userAvatar
                                             "
                                             class="comment-avatar"
                                             :src="reply.userAvatar"
@@ -795,6 +863,10 @@ onUnmounted(() => {
                                             v-if="isCommentFieldVisible('isAuthor') && reply.isAuthor"
                                             class="badge"
                                         >{{ reply.isAuthor }}</span>
+                                        <span
+                                            v-if="isCommentFieldVisible('aiAgent') && reply.aiAgent"
+                                            class="badge tag"
+                                        >{{ reply.aiAgent }}</span>
                                         <span
                                             v-if="isCommentFieldVisible('tag') && reply.tag"
                                             class="badge tag"
@@ -837,19 +909,38 @@ onUnmounted(() => {
                                     <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                         {{ reply.content }}
                                     </p>
-                                    <p
+                                    <div
                                         v-if="isCommentFieldVisible('picture') && pictureUrls(reply.picture).length"
                                         class="comment-pictures"
+                                        :class="{ 'comment-pictures-grid': showImages }"
                                     >
+                                        <template v-if="showImages">
+                                            <a
+                                                v-for="(img, pi) in pictureUrls(reply.picture)"
+                                                :key="pi"
+                                                :href="img"
+                                                target="_blank"
+                                                rel="noopener"
+                                                :title="`图片 ${pi + 1}`"
+                                            >
+                                                <img
+                                                    class="comment-picture-thumb"
+                                                    :src="img"
+                                                    alt=""
+                                                    loading="lazy"
+                                                />
+                                            </a>
+                                        </template>
                                         <a
                                             v-for="(img, pi) in pictureUrls(reply.picture)"
+                                            v-else
                                             :key="pi"
                                             class="picture-link"
                                             :href="img"
                                             target="_blank"
                                             rel="noopener"
                                         >{{ img }}</a>
-                                    </p>
+                                    </div>
                                 </div>
                                 <div class="comment-actions">
                                     <button
@@ -932,7 +1023,15 @@ h1 {
 .header-actions {
     display: flex;
     flex-shrink: 0;
+    align-items: center;
     gap: 8px;
+}
+
+.show-images-toggle {
+    padding: 6px 10px;
+    background: #222228;
+    border: 1px solid #36363f;
+    border-radius: 8px;
 }
 
 .platform-tabs {
@@ -1333,6 +1432,27 @@ h1 {
     flex-direction: column;
     gap: 4px;
     margin: 4px 0 0;
+    font-size: 0.78rem;
+}
+
+.comment-pictures-grid {
+    flex-flow: row wrap;
+    gap: 6px;
+}
+
+.comment-picture-thumb {
+    display: block;
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #18181c;
+}
+
+.meta-image-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
     font-size: 0.78rem;
 }
 
