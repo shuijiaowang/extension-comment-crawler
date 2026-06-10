@@ -27,6 +27,8 @@ import {
 const activePlatform = ref('bilibili');
 const records = ref([]);
 const expandedRecordId = ref(null);
+/** @type {import('vue').Ref<Set<string>>} */
+const expandedMetaSections = ref(new Set());
 const editing = ref(null);
 const editForm = reactive({});
 const commentFieldVisibility = reactive({});
@@ -68,6 +70,10 @@ const loadSectionVisibility = async (platformId) => {
         authorFieldVisibility[f.key] = authorSaved[f.key] ?? true;
     }
 };
+
+const workSectionLabel = computed(() =>
+    activePlatform.value === 'xiaohongshu' ? '作品' : '视频',
+);
 
 const platformTheme = computed(() => resolvePlatformTheme(`${activePlatform.value}.com`));
 const platformThemeStyle = computed(() => ({
@@ -132,15 +138,31 @@ const toggleRecord = (recordId) => {
     expandedRecordId.value = expandedRecordId.value === recordId ? null : recordId;
 };
 
+/** @param {string} recordId @param {'work' | 'author'} section */
+const metaSectionKey = (recordId, section) => `${recordId}:${section}`;
+
+/** @param {string} recordId @param {'work' | 'author'} section */
+const isMetaSectionExpanded = (recordId, section) =>
+    expandedMetaSections.value.has(metaSectionKey(recordId, section));
+
+/** @param {string} recordId @param {'work' | 'author'} section */
+const toggleMetaSection = (recordId, section) => {
+    const key = metaSectionKey(recordId, section);
+    const next = new Set(expandedMetaSections.value);
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    expandedMetaSections.value = next;
+};
+
 const onDeleteRecord = async (recordId) => {
-    if (!confirm('确定删除这条爬取记录？')) return;
+    if (!confirm('确定删除这条抓取记录？')) return;
     records.value = await deleteRecord(activePlatform.value, recordId);
     if (expandedRecordId.value === recordId) expandedRecordId.value = null;
 };
 
 const onClearPlatform = async () => {
     const label = PLATFORM_LABELS[activePlatform.value];
-    if (!confirm(`确定清空「${label}」的全部爬取记录？此操作不可恢复。`)) return;
+    if (!confirm(`确定清空「${label}」的全部抓取记录？此操作不可恢复。`)) return;
     await clearPlatformRecords(activePlatform.value);
     records.value = [];
     expandedRecordId.value = null;
@@ -202,7 +224,7 @@ const recordToTxt = (record) => {
     const lines = [
         `标题: ${record.title || '未命名页面'}`,
         `链接: ${record.url}`,
-        `爬取时间: ${formatTime(record.crawledAt)}`,
+        `抓取时间: ${formatTime(record.crawledAt)}`,
         `评论数: ${record.commentCount ?? record.comments?.length ?? 0}`,
     ];
     lines.push('');
@@ -217,7 +239,7 @@ const recordToTxt = (record) => {
         }
         lines.push('');
     };
-    appendInfoLines('视频信息', videoInfo, videoFields.value, isVideoFieldVisible);
+    appendInfoLines(`${workSectionLabel.value}信息`, videoInfo, videoFields.value, isVideoFieldVisible);
     appendInfoLines('作者信息', authorInfo, authorFields.value, isAuthorFieldVisible);
 
     /** @param {Record<string, unknown>} comment @param {string} [indent] */
@@ -355,9 +377,9 @@ onUnmounted(() => {
         <header class="header">
             <div class="header-row">
                 <div>
-                    <h1>爬取记录</h1>
+                    <h1>抓取记录</h1>
                     <p class="subtitle">
-                        共 {{ records.length }} 次爬取，{{ totalComments }} 条一级评论
+                        共 {{ records.length }} 次抓取，{{ totalComments }} 条一级评论
                     </p>
                 </div>
                 <div class="header-actions">
@@ -382,7 +404,7 @@ onUnmounted(() => {
             </nav>
             <div class="field-filters">
                 <div v-if="videoFields.length" class="field-filter">
-                    <span class="field-filter-label">视频 · 显示 / 导出</span>
+                    <span class="field-filter-label">{{ workSectionLabel }} · 显示 / 导出</span>
                     <label v-for="f in videoFields" :key="f.key" class="field-checkbox">
                         <input v-model="videoFieldVisibility[f.key]" type="checkbox" />
                         <span>{{ f.label }}</span>
@@ -406,7 +428,7 @@ onUnmounted(() => {
         </header>
 
         <main class="main">
-            <p v-if="!records.length" class="empty">暂无记录，在对应网站完成爬取后会自动保存到这里。</p>
+            <p v-if="!records.length" class="empty">暂无记录，在对应网站完成抓取后会自动保存到这里。</p>
 
             <article v-for="record in records" :key="record.id" class="record-card">
                 <div class="record-head" @click="toggleRecord(record.id)">
@@ -464,8 +486,19 @@ onUnmounted(() => {
                     @click.stop
                 >
                     <section v-if="hasVideoInfo(record)" class="meta-block">
-                        <h3 class="meta-block-title">视频</h3>
-                        <div class="meta-block-body">
+                        <h3
+                            class="meta-block-title collapsible"
+                            @click="toggleMetaSection(record.id, 'work')"
+                        >
+                            <span class="collapse-icon">{{
+                                isMetaSectionExpanded(record.id, 'work') ? '▾' : '▸'
+                            }}</span>
+                            {{ workSectionLabel }}
+                        </h3>
+                        <div
+                            v-show="isMetaSectionExpanded(record.id, 'work')"
+                            class="meta-block-body"
+                        >
                             <img
                                 v-if="
                                     isVideoFieldVisible('coverPic') &&
@@ -485,11 +518,39 @@ onUnmounted(() => {
                                             getRecordMeta(record).videoInfo[f.key]
                                         "
                                         class="meta-item"
+                                        :class="{ 'meta-item-wide': f.multiImage }"
                                     >
                                         <dt>{{ f.label }}</dt>
                                         <dd>
+                                            <div
+                                                v-if="
+                                                    f.multiImage &&
+                                                    pictureUrls(
+                                                        getRecordMeta(record).videoInfo[f.key],
+                                                    ).length
+                                                "
+                                                class="meta-image-list"
+                                            >
+                                                <a
+                                                    v-for="(img, pi) in pictureUrls(
+                                                        getRecordMeta(record).videoInfo[f.key],
+                                                    )"
+                                                    :key="pi"
+                                                    :href="img"
+                                                    target="_blank"
+                                                    rel="noopener"
+                                                    :title="`图片 ${pi + 1}`"
+                                                >
+                                                    <img
+                                                        class="meta-thumb"
+                                                        :src="img"
+                                                        alt=""
+                                                        loading="lazy"
+                                                    />
+                                                </a>
+                                            </div>
                                             <img
-                                                v-if="f.image"
+                                                v-else-if="f.image"
                                                 class="meta-thumb"
                                                 :src="getRecordMeta(record).videoInfo[f.key]"
                                                 alt=""
@@ -514,8 +575,19 @@ onUnmounted(() => {
                         </div>
                     </section>
                     <section v-if="hasAuthorInfo(record)" class="meta-block">
-                        <h3 class="meta-block-title">作者</h3>
-                        <div class="meta-block-body author-meta">
+                        <h3
+                            class="meta-block-title collapsible"
+                            @click="toggleMetaSection(record.id, 'author')"
+                        >
+                            <span class="collapse-icon">{{
+                                isMetaSectionExpanded(record.id, 'author') ? '▾' : '▸'
+                            }}</span>
+                            作者
+                        </h3>
+                        <div
+                            v-show="isMetaSectionExpanded(record.id, 'author')"
+                            class="meta-block-body author-meta"
+                        >
                             <img
                                 v-if="
                                     isAuthorFieldVisible('authorAvatar') &&
@@ -977,6 +1049,39 @@ h1 {
     color: #6b6b78;
 }
 
+.meta-block-title.collapsible {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.meta-block-title.collapsible:hover {
+    color: #a8a8b3;
+}
+
+.collapse-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.meta-item-wide {
+    grid-column: 1 / -1;
+}
+
+.meta-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.meta-image-list a {
+    display: block;
+    line-height: 0;
+}
+
 .comments-panel-title {
     padding: 12px 16px 0;
     margin: 0;
@@ -986,6 +1091,7 @@ h1 {
     display: flex;
     gap: 12px;
     align-items: flex-start;
+    margin-top: 8px;
 }
 
 .meta-block-body.author-meta {

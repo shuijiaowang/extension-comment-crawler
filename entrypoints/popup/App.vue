@@ -214,7 +214,7 @@ const onOpenRecords = () => {
             </button>
         </footer>
         <div class="records-link-wrap">
-            <button type="button" class="records-link" @click="onOpenRecords">查看爬取记录</button>
+            <button type="button" class="records-link" @click="onOpenRecords">查看抓取记录</button>
         </div>
     </div>
 </template>

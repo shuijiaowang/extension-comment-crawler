@@ -1,4 +1,4 @@
-/** @typedef {{ key: string, label: string, link?: boolean, suffix?: string, image?: boolean }} RecordFieldDef */
+/** @typedef {{ key: string, label: string, link?: boolean, suffix?: string, image?: boolean, multiImage?: boolean }} RecordFieldDef */
 
 /** @type {Record<string, RecordFieldDef[]>} */
 export const PLATFORM_VIDEO_FIELDS = {
@@ -23,7 +23,22 @@ export const PLATFORM_VIDEO_FIELDS = {
         { key: 'danmakuCount', label: '弹幕' },
     ],
     douyin: [],
-    xiaohongshu: [],
+    xiaohongshu: [
+        { key: 'noteTitle', label: '标题' },
+        { key: 'noteId', label: '笔记ID' },
+        { key: 'noteType', label: '类型' },
+        { key: 'coverPic', label: '封面', link: true, image: true },
+        { key: 'images', label: '图文', link: true, multiImage: true },
+        { key: 'desc', label: '正文' },
+        { key: 'publishTime', label: '发布时间' },
+        { key: 'updateTime', label: '更新时间' },
+        { key: 'ipLocation', label: 'IP属地' },
+        { key: 'tags', label: '话题' },
+        { key: 'likeCount', label: '点赞' },
+        { key: 'collectCount', label: '收藏' },
+        { key: 'shareCount', label: '分享' },
+        { key: 'commentCount', label: '评论数' },
+    ],
     zhihu: [],
 };
 
@@ -45,7 +60,14 @@ export const PLATFORM_AUTHOR_FIELDS = {
         { key: 'nameplate', label: '勋章' },
     ],
     douyin: [],
-    xiaohongshu: [],
+    xiaohongshu: [
+        { key: 'authorName', label: '昵称' },
+        { key: 'authorId', label: '用户ID' },
+        { key: 'authorAvatar', label: '头像', link: true, image: true },
+        { key: 'authorLink', label: '主页', link: true },
+        { key: 'followed', label: '已关注' },
+        { key: 'relation', label: '关系' },
+    ],
     zhihu: [],
 };
 
