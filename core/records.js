@@ -10,6 +10,8 @@ import { resolvePlatformTheme } from './config.js';
 /** @typedef {{
  *   id: string, url: string, title: string, crawledAt: string,
  *   commentCount: number, comments: CommentItem[],
+ *   videoInfo?: Record<string, string>,
+ *   authorInfo?: Record<string, string>,
  *   pageInfo?: Record<string, string>
  * }} CrawlRecord */
 
@@ -46,9 +48,9 @@ function cloneComments(comments) {
 /**
  * 爬取完成后追加一条记录（按平台独立、累计数组，新记录在前）
  * @param {string} hostname
- * @param {{ url: string, title?: string, comments: CommentItem[], pageInfo?: Record<string, string> }} payload
+ * @param {{ url: string, title?: string, comments: CommentItem[], videoInfo?: Record<string, string>, authorInfo?: Record<string, string> }} payload
  */
-export async function appendCrawlRecord(hostname, { url, title = '', comments, pageInfo }) {
+export async function appendCrawlRecord(hostname, { url, title = '', comments, videoInfo, authorInfo }) {
     const platformId = resolvePlatformId(hostname);
     if (!platformId || !comments?.length) return null;
 
@@ -62,7 +64,8 @@ export async function appendCrawlRecord(hostname, { url, title = '', comments, p
         crawledAt: new Date().toISOString(),
         commentCount: comments.length,
         comments: cloneComments(comments),
-        ...(pageInfo && Object.keys(pageInfo).length ? { pageInfo } : {}),
+        ...(videoInfo && Object.keys(videoInfo).length ? { videoInfo } : {}),
+        ...(authorInfo && Object.keys(authorInfo).length ? { authorInfo } : {}),
     };
     list.unshift(record);
     await item.setValue(list);
@@ -70,13 +73,15 @@ export async function appendCrawlRecord(hostname, { url, title = '', comments, p
 }
 
 /** content script 爬取完成后调用 */
-export async function saveCrawlResults(hostname, results, pageInfo) {
+export async function saveCrawlResults(hostname, results, meta = {}) {
     if (!results?.length) return null;
+    const { videoInfo = {}, authorInfo = {} } = meta;
     return appendCrawlRecord(hostname, {
         url: globalThis.location.href,
         title: globalThis.document.title,
         comments: results,
-        pageInfo,
+        videoInfo,
+        authorInfo,
     });
 }
 

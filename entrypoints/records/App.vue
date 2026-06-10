@@ -7,9 +7,13 @@ import {
     migrateLegacyFieldVisibility,
 } from '@/core/comment-fields.js';
 import {
-    getPlatformPageMetaFields,
-    getPlatformPageStatFields,
-} from '@/core/page-fields.js';
+    formatRecordFieldValue,
+    getAuthorFieldVisibilityStorage,
+    getPlatformAuthorFields,
+    getPlatformVideoFields,
+    getVideoFieldVisibilityStorage,
+    resolveRecordMeta,
+} from '@/core/record-fields.js';
 import {
     PLATFORM_IDS,
     PLATFORM_LABELS,
@@ -25,26 +29,43 @@ const records = ref([]);
 const expandedRecordId = ref(null);
 const editing = ref(null);
 const editForm = reactive({});
-const fieldVisibility = reactive({});
+const commentFieldVisibility = reactive({});
+const videoFieldVisibility = reactive({});
+const authorFieldVisibility = reactive({});
 /** @type {import('vue').Ref<(() => void) | null>} */
 const unwatchRef = ref(null);
 
 const commentFields = computed(() => getPlatformCommentFields(activePlatform.value));
-const pageMetaFields = computed(() => getPlatformPageMetaFields(activePlatform.value));
-const pageStatFields = computed(() => getPlatformPageStatFields(activePlatform.value));
+const videoFields = computed(() => getPlatformVideoFields(activePlatform.value));
+const authorFields = computed(() => getPlatformAuthorFields(activePlatform.value));
 
-const isFieldVisible = (key) => fieldVisibility[key] === true;
+const isCommentFieldVisible = (key) => commentFieldVisibility[key] === true;
+const isVideoFieldVisible = (key) => videoFieldVisibility[key] === true;
+const isAuthorFieldVisible = (key) => authorFieldVisibility[key] === true;
 
-const loadFieldVisibility = async (platformId) => {
-    const fields = getPlatformCommentFields(platformId);
-    const saved = await getFieldVisibilityStorage(platformId).getValue();
-    for (const key of Object.keys(fieldVisibility)) {
-        if (!fields.some((f) => f.key === key)) {
-            delete fieldVisibility[key];
-        }
+const loadSectionVisibility = async (platformId) => {
+    const [commentSaved, videoSaved, authorSaved] = await Promise.all([
+        getFieldVisibilityStorage(platformId).getValue(),
+        getVideoFieldVisibilityStorage(platformId).getValue(),
+        getAuthorFieldVisibilityStorage(platformId).getValue(),
+    ]);
+    for (const key of Object.keys(commentFieldVisibility)) {
+        if (!commentFields.value.some((f) => f.key === key)) delete commentFieldVisibility[key];
     }
-    for (const f of fields) {
-        fieldVisibility[f.key] = saved[f.key] ?? true;
+    for (const f of commentFields.value) {
+        commentFieldVisibility[f.key] = commentSaved[f.key] ?? true;
+    }
+    for (const key of Object.keys(videoFieldVisibility)) {
+        if (!videoFields.value.some((f) => f.key === key)) delete videoFieldVisibility[key];
+    }
+    for (const f of videoFields.value) {
+        videoFieldVisibility[f.key] = videoSaved[f.key] ?? true;
+    }
+    for (const key of Object.keys(authorFieldVisibility)) {
+        if (!authorFields.value.some((f) => f.key === key)) delete authorFieldVisibility[key];
+    }
+    for (const f of authorFields.value) {
+        authorFieldVisibility[f.key] = authorSaved[f.key] ?? true;
     }
 };
 
@@ -71,21 +92,19 @@ const pictureUrls = (picture) =>
         .map((s) => s.trim())
         .filter((s) => /^https?:\/\//i.test(s));
 
-/** @param {import('@/core/page-fields.js').PageFieldDef} field @param {string} value */
-const formatPageFieldValue = (field, value) => `${value}${field.suffix ?? ''}`;
+/** @param {import('@/core/records.js').CrawlRecord} record */
+const getRecordMeta = (record) => resolveRecordMeta(record);
 
 /** @param {import('@/core/records.js').CrawlRecord} record */
-const hasPageInfo = (record) => {
-    const info = record.pageInfo;
-    if (!info) return false;
-    return Boolean(
-        info.videoTitle ||
-            info.coverPic ||
-            info.authorName ||
-            info.bvid ||
-            pageMetaFields.value.some((f) => info[f.key]) ||
-            pageStatFields.value.some((f) => info[f.key]),
-    );
+const hasVideoInfo = (record) => {
+    const { videoInfo } = getRecordMeta(record);
+    return videoFields.value.some((f) => videoInfo[f.key]);
+};
+
+/** @param {import('@/core/records.js').CrawlRecord} record */
+const hasAuthorInfo = (record) => {
+    const { authorInfo } = getRecordMeta(record);
+    return authorFields.value.some((f) => authorInfo[f.key]);
 };
 
 const loadRecords = async () => {
@@ -104,7 +123,7 @@ const switchPlatform = async (id) => {
     activePlatform.value = id;
     expandedRecordId.value = null;
     editing.value = null;
-    await loadFieldVisibility(id);
+    await loadSectionVisibility(id);
     await loadRecords();
     setupWatch();
 };
@@ -127,12 +146,22 @@ const onClearPlatform = async () => {
     expandedRecordId.value = null;
 };
 
+/** @param {Record<string, string>} info @param {import('@/core/record-fields.js').RecordFieldDef[]} fields @param {(key: string) => boolean} isVisible */
+const filterInfoForExport = (info, fields, isVisible) => {
+    /** @type {Record<string, string>} */
+    const filtered = {};
+    for (const f of fields) {
+        if (isVisible(f.key) && info[f.key]) filtered[f.key] = info[f.key];
+    }
+    return filtered;
+};
+
 /** @param {Record<string, unknown>} comment */
 const filterCommentForExport = (comment) => {
     /** @type {Record<string, unknown>} */
     const filtered = {};
     for (const f of commentFields.value) {
-        if (fieldVisibility[f.key]) {
+        if (isCommentFieldVisible(f.key)) {
             filtered[f.key] = comment[f.key] ?? '';
         }
     }
@@ -143,14 +172,19 @@ const filterCommentForExport = (comment) => {
 };
 
 /** @param {import('@/core/records.js').CrawlRecord} record */
-const filterRecordForExport = (record) => ({
-    id: record.id,
-    url: record.url,
-    title: record.title,
-    crawledAt: record.crawledAt,
-    commentCount: record.commentCount ?? record.comments?.length ?? 0,
-    comments: (record.comments ?? []).map(filterCommentForExport),
-});
+const filterRecordForExport = (record) => {
+    const { videoInfo, authorInfo } = getRecordMeta(record);
+    return {
+        id: record.id,
+        url: record.url,
+        title: record.title,
+        crawledAt: record.crawledAt,
+        commentCount: record.commentCount ?? record.comments?.length ?? 0,
+        videoInfo: filterInfoForExport(videoInfo, videoFields.value, isVideoFieldVisible),
+        authorInfo: filterInfoForExport(authorInfo, authorFields.value, isAuthorFieldVisible),
+        comments: (record.comments ?? []).map(filterCommentForExport),
+    };
+};
 
 /** @param {string} content @param {string} filename @param {string} mimeType */
 const downloadFile = (content, filename, mimeType) => {
@@ -173,10 +207,23 @@ const recordToTxt = (record) => {
     ];
     lines.push('');
 
+    const { videoInfo, authorInfo } = getRecordMeta(record);
+    const appendInfoLines = (title, info, fields, isVisible) => {
+        const entries = fields.filter((f) => isVisible(f.key) && info[f.key]);
+        if (!entries.length) return;
+        lines.push(`======== ${title} ========`);
+        for (const f of entries) {
+            lines.push(`${f.label}: ${formatRecordFieldValue(f, info[f.key])}`);
+        }
+        lines.push('');
+    };
+    appendInfoLines('视频信息', videoInfo, videoFields.value, isVideoFieldVisible);
+    appendInfoLines('作者信息', authorInfo, authorFields.value, isAuthorFieldVisible);
+
     /** @param {Record<string, unknown>} comment @param {string} [indent] */
     const appendCommentLines = (comment, indent = '') => {
         for (const f of commentFields.value) {
-            if (!fieldVisibility[f.key]) continue;
+            if (!isCommentFieldVisible(f.key)) continue;
             const val = comment[f.key];
             if (val != null && val !== '') {
                 lines.push(`${indent}${f.label}: ${val}`);
@@ -271,15 +318,29 @@ const onDeleteComment = async (recordId, commentIndex, replyIndex = null) => {
 
 onMounted(async () => {
     await migrateLegacyFieldVisibility();
-    await loadFieldVisibility(activePlatform.value);
+    await loadSectionVisibility(activePlatform.value);
     await loadRecords();
     setupWatch();
 });
 
 watch(
-    fieldVisibility,
+    commentFieldVisibility,
     () => {
-        getFieldVisibilityStorage(activePlatform.value).setValue({ ...fieldVisibility });
+        getFieldVisibilityStorage(activePlatform.value).setValue({ ...commentFieldVisibility });
+    },
+    { deep: true },
+);
+watch(
+    videoFieldVisibility,
+    () => {
+        getVideoFieldVisibilityStorage(activePlatform.value).setValue({ ...videoFieldVisibility });
+    },
+    { deep: true },
+);
+watch(
+    authorFieldVisibility,
+    () => {
+        getAuthorFieldVisibilityStorage(activePlatform.value).setValue({ ...authorFieldVisibility });
     },
     { deep: true },
 );
@@ -319,12 +380,28 @@ onUnmounted(() => {
                     <span v-if="activePlatform === id" class="tab-count">{{ records.length }}</span>
                 </button>
             </nav>
-            <div class="field-filter">
-                <span class="field-filter-label">显示 / 导出字段</span>
-                <label v-for="f in commentFields" :key="f.key" class="field-checkbox">
-                    <input v-model="fieldVisibility[f.key]" type="checkbox" />
-                    <span>{{ f.label }}</span>
-                </label>
+            <div class="field-filters">
+                <div v-if="videoFields.length" class="field-filter">
+                    <span class="field-filter-label">视频 · 显示 / 导出</span>
+                    <label v-for="f in videoFields" :key="f.key" class="field-checkbox">
+                        <input v-model="videoFieldVisibility[f.key]" type="checkbox" />
+                        <span>{{ f.label }}</span>
+                    </label>
+                </div>
+                <div v-if="authorFields.length" class="field-filter">
+                    <span class="field-filter-label">作者 · 显示 / 导出</span>
+                    <label v-for="f in authorFields" :key="f.key" class="field-checkbox">
+                        <input v-model="authorFieldVisibility[f.key]" type="checkbox" />
+                        <span>{{ f.label }}</span>
+                    </label>
+                </div>
+                <div class="field-filter">
+                    <span class="field-filter-label">评论 · 显示 / 导出</span>
+                    <label v-for="f in commentFields" :key="f.key" class="field-checkbox">
+                        <input v-model="commentFieldVisibility[f.key]" type="checkbox" />
+                        <span>{{ f.label }}</span>
+                    </label>
+                </div>
             </div>
         </header>
 
@@ -344,73 +421,6 @@ onUnmounted(() => {
                             <span>{{ formatTime(record.crawledAt) }}</span>
                             <span>{{ record.commentCount ?? record.comments?.length ?? 0 }} 条评论</span>
                         </p>
-                        <div
-                            v-if="hasPageInfo(record)"
-                            class="video-summary"
-                            @click.stop
-                        >
-                            <img
-                                v-if="record.pageInfo.coverPic"
-                                class="video-cover"
-                                :src="record.pageInfo.coverPic"
-                                alt="封面"
-                                loading="lazy"
-                            />
-                            <div class="video-summary-body">
-                                <div
-                                    v-if="record.pageInfo.authorName || record.pageInfo.authorAvatar"
-                                    class="video-author"
-                                >
-                                    <img
-                                        v-if="record.pageInfo.authorAvatar"
-                                        class="author-avatar"
-                                        :src="record.pageInfo.authorAvatar"
-                                        alt=""
-                                        loading="lazy"
-                                    />
-                                    <div class="author-text">
-                                        <a
-                                            v-if="record.pageInfo.authorLink"
-                                            class="author-name"
-                                            :href="record.pageInfo.authorLink"
-                                            target="_blank"
-                                            rel="noopener"
-                                        >{{ record.pageInfo.authorName || record.pageInfo.authorId }}</a>
-                                        <span v-else class="author-name">{{
-                                            record.pageInfo.authorName || record.pageInfo.authorId
-                                        }}</span>
-                                        <span v-if="record.pageInfo.authorId" class="author-id"
-                                            >mid {{ record.pageInfo.authorId }}</span
-                                        >
-                                    </div>
-                                </div>
-                                <p v-if="record.pageInfo.videoTitle" class="video-title">
-                                    {{ record.pageInfo.videoTitle }}
-                                </p>
-                                <p
-                                    v-if="record.pageInfo.bvid || record.pageInfo.avid || record.pageInfo.category"
-                                    class="video-ids"
-                                >
-                                    <span v-if="record.pageInfo.bvid">{{ record.pageInfo.bvid }}</span>
-                                    <span v-if="record.pageInfo.avid">av{{ record.pageInfo.avid }}</span>
-                                    <span v-if="record.pageInfo.category">{{ record.pageInfo.category }}</span>
-                                </p>
-                                <p v-if="pageMetaFields.some((f) => record.pageInfo[f.key])" class="video-meta">
-                                    <span
-                                        v-for="f in pageMetaFields"
-                                        :key="f.key"
-                                        v-show="record.pageInfo[f.key]"
-                                    >{{ f.label }} {{ formatPageFieldValue(f, record.pageInfo[f.key]) }}</span>
-                                </p>
-                                <p v-if="pageStatFields.some((f) => record.pageInfo[f.key])" class="video-stats">
-                                    <span
-                                        v-for="f in pageStatFields"
-                                        :key="f.key"
-                                        v-show="record.pageInfo[f.key]"
-                                    >{{ f.label }} {{ record.pageInfo[f.key] }}</span>
-                                </p>
-                            </div>
-                        </div>
                     </div>
                     <div class="record-actions" @click.stop>
                         <button
@@ -448,7 +458,115 @@ onUnmounted(() => {
                     </div>
                 </div>
 
+                <div
+                    v-if="hasVideoInfo(record) || hasAuthorInfo(record)"
+                    class="meta-row"
+                    @click.stop
+                >
+                    <section v-if="hasVideoInfo(record)" class="meta-block">
+                        <h3 class="meta-block-title">视频</h3>
+                        <div class="meta-block-body">
+                            <img
+                                v-if="
+                                    isVideoFieldVisible('coverPic') &&
+                                    getRecordMeta(record).videoInfo.coverPic
+                                "
+                                class="video-cover"
+                                :src="getRecordMeta(record).videoInfo.coverPic"
+                                alt="封面"
+                                loading="lazy"
+                            />
+                            <dl class="meta-fields">
+                                <template v-for="f in videoFields" :key="f.key">
+                                    <div
+                                        v-if="
+                                            isVideoFieldVisible(f.key) &&
+                                            f.key !== 'coverPic' &&
+                                            getRecordMeta(record).videoInfo[f.key]
+                                        "
+                                        class="meta-item"
+                                    >
+                                        <dt>{{ f.label }}</dt>
+                                        <dd>
+                                            <img
+                                                v-if="f.image"
+                                                class="meta-thumb"
+                                                :src="getRecordMeta(record).videoInfo[f.key]"
+                                                alt=""
+                                                loading="lazy"
+                                            />
+                                            <a
+                                                v-else-if="f.link"
+                                                :href="getRecordMeta(record).videoInfo[f.key]"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >{{ getRecordMeta(record).videoInfo[f.key] }}</a>
+                                            <span v-else>{{
+                                                formatRecordFieldValue(
+                                                    f,
+                                                    getRecordMeta(record).videoInfo[f.key],
+                                                )
+                                            }}</span>
+                                        </dd>
+                                    </div>
+                                </template>
+                            </dl>
+                        </div>
+                    </section>
+                    <section v-if="hasAuthorInfo(record)" class="meta-block">
+                        <h3 class="meta-block-title">作者</h3>
+                        <div class="meta-block-body author-meta">
+                            <img
+                                v-if="
+                                    isAuthorFieldVisible('authorAvatar') &&
+                                    getRecordMeta(record).authorInfo.authorAvatar
+                                "
+                                class="author-avatar-lg"
+                                :src="getRecordMeta(record).authorInfo.authorAvatar"
+                                alt=""
+                                loading="lazy"
+                            />
+                            <dl class="meta-fields">
+                                <template v-for="f in authorFields" :key="f.key">
+                                    <div
+                                        v-if="
+                                            isAuthorFieldVisible(f.key) &&
+                                            f.key !== 'authorAvatar' &&
+                                            getRecordMeta(record).authorInfo[f.key]
+                                        "
+                                        class="meta-item"
+                                    >
+                                        <dt>{{ f.label }}</dt>
+                                        <dd>
+                                            <img
+                                                v-if="f.image"
+                                                class="meta-thumb round"
+                                                :src="getRecordMeta(record).authorInfo[f.key]"
+                                                alt=""
+                                                loading="lazy"
+                                            />
+                                            <a
+                                                v-else-if="f.link"
+                                                :href="getRecordMeta(record).authorInfo[f.key]"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >{{ getRecordMeta(record).authorInfo[f.key] }}</a>
+                                            <span v-else>{{
+                                                formatRecordFieldValue(
+                                                    f,
+                                                    getRecordMeta(record).authorInfo[f.key],
+                                                )
+                                            }}</span>
+                                        </dd>
+                                    </div>
+                                </template>
+                            </dl>
+                        </div>
+                    </section>
+                </div>
+
                 <div v-if="expandedRecordId === record.id" class="comments-panel">
+                    <h3 class="meta-block-title comments-panel-title">评论</h3>
                     <div
                         v-for="(comment, ci) in record.comments"
                         :key="ci"
@@ -457,15 +575,15 @@ onUnmounted(() => {
                         <div class="comment-row">
                             <div class="comment-main">
                                 <div class="comment-header">
-                                    <strong v-if="isFieldVisible('userName')">{{
+                                    <strong v-if="isCommentFieldVisible('userName')">{{
                                         comment.userName || '匿名'
                                     }}</strong>
                                     <span
-                                        v-if="isFieldVisible('userId') && comment.userId"
+                                        v-if="isCommentFieldVisible('userId') && comment.userId"
                                         class="muted"
                                     >ID: {{ comment.userId }}</span>
                                     <a
-                                        v-if="isFieldVisible('userLink') && comment.userLink"
+                                        v-if="isCommentFieldVisible('userLink') && comment.userLink"
                                         class="user-link"
                                         :href="comment.userLink"
                                         target="_blank"
@@ -473,37 +591,37 @@ onUnmounted(() => {
                                         @click.stop
                                     >主页</a>
                                     <span
-                                        v-if="isFieldVisible('isAuthor') && comment.isAuthor"
+                                        v-if="isCommentFieldVisible('isAuthor') && comment.isAuthor"
                                         class="badge"
                                     >{{ comment.isAuthor }}</span>
                                     <span
-                                        v-if="isFieldVisible('tag') && comment.tag"
+                                        v-if="isCommentFieldVisible('tag') && comment.tag"
                                         class="badge tag"
                                     >{{ comment.tag }}</span>
                                     <span
-                                        v-if="isFieldVisible('vip') && comment.vip"
+                                        v-if="isCommentFieldVisible('vip') && comment.vip"
                                         class="badge"
                                     >{{ comment.vip }}</span>
                                     <span
-                                        v-if="isFieldVisible('level') && comment.level"
+                                        v-if="isCommentFieldVisible('level') && comment.level"
                                         class="badge"
                                     >{{ comment.level }}</span>
-                                    <span v-if="isFieldVisible('time')" class="muted">{{
+                                    <span v-if="isCommentFieldVisible('time')" class="muted">{{
                                         comment.time
                                     }}</span>
                                     <span
-                                        v-if="isFieldVisible('location') && comment.location"
+                                        v-if="isCommentFieldVisible('location') && comment.location"
                                         class="muted"
                                     >{{ comment.location }}</span>
-                                    <span v-if="isFieldVisible('like')" class="like"
+                                    <span v-if="isCommentFieldVisible('like')" class="like"
                                         >♥ {{ comment.like }}</span
                                     >
                                 </div>
-                                <p v-if="isFieldVisible('content')" class="comment-content">
+                                <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                     {{ comment.content }}
                                 </p>
                                 <p
-                                    v-if="isFieldVisible('picture') && pictureUrls(comment.picture).length"
+                                    v-if="isCommentFieldVisible('picture') && pictureUrls(comment.picture).length"
                                     class="comment-pictures"
                                 >
                                     <a
@@ -542,15 +660,15 @@ onUnmounted(() => {
                             >
                                 <div class="comment-main">
                                     <div class="comment-header">
-                                        <strong v-if="isFieldVisible('userName')">{{
+                                        <strong v-if="isCommentFieldVisible('userName')">{{
                                             reply.userName || '匿名'
                                         }}</strong>
                                         <span
-                                            v-if="isFieldVisible('userId') && reply.userId"
+                                            v-if="isCommentFieldVisible('userId') && reply.userId"
                                             class="muted"
                                         >ID: {{ reply.userId }}</span>
                                         <a
-                                            v-if="isFieldVisible('userLink') && reply.userLink"
+                                            v-if="isCommentFieldVisible('userLink') && reply.userLink"
                                             class="user-link"
                                             :href="reply.userLink"
                                             target="_blank"
@@ -558,33 +676,33 @@ onUnmounted(() => {
                                             @click.stop
                                         >主页</a>
                                         <span
-                                            v-if="isFieldVisible('tag') && reply.tag"
+                                            v-if="isCommentFieldVisible('tag') && reply.tag"
                                             class="badge tag"
                                         >{{ reply.tag }}</span>
                                         <span
-                                            v-if="isFieldVisible('vip') && reply.vip"
+                                            v-if="isCommentFieldVisible('vip') && reply.vip"
                                             class="badge"
                                         >{{ reply.vip }}</span>
                                         <span
-                                            v-if="isFieldVisible('level') && reply.level"
+                                            v-if="isCommentFieldVisible('level') && reply.level"
                                             class="badge"
                                         >{{ reply.level }}</span>
-                                        <span v-if="isFieldVisible('time')" class="muted">{{
+                                        <span v-if="isCommentFieldVisible('time')" class="muted">{{
                                             reply.time
                                         }}</span>
                                         <span
-                                            v-if="isFieldVisible('location') && reply.location"
+                                            v-if="isCommentFieldVisible('location') && reply.location"
                                             class="muted"
                                         >{{ reply.location }}</span>
-                                        <span v-if="isFieldVisible('like')" class="like"
+                                        <span v-if="isCommentFieldVisible('like')" class="like"
                                             >♥ {{ reply.like }}</span
                                         >
                                     </div>
-                                    <p v-if="isFieldVisible('content')" class="comment-content">
+                                    <p v-if="isCommentFieldVisible('content')" class="comment-content">
                                         {{ reply.content }}
                                     </p>
                                     <p
-                                        v-if="isFieldVisible('picture') && pictureUrls(reply.picture).length"
+                                        v-if="isCommentFieldVisible('picture') && pictureUrls(reply.picture).length"
                                         class="comment-pictures"
                                     >
                                         <a
@@ -718,14 +836,6 @@ h1 {
     border-radius: 999px;
 }
 
-.field-filter {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px 14px;
-    padding: 14px 0 16px;
-}
-
 .field-filter-label {
     flex-shrink: 0;
     font-size: 0.78rem;
@@ -760,7 +870,6 @@ h1 {
 
 .main {
     padding: 24px 40px 48px;
-    max-width: 960px;
 }
 
 .empty {
@@ -824,14 +933,114 @@ h1 {
     color: #6b6b78;
 }
 
-.video-summary {
+.field-filters {
     display: flex;
-    gap: 12px;
-    margin: 10px 0 0;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 0 16px;
+}
+
+.field-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
     padding: 10px 12px;
-    font-size: 0.78rem;
     background: #1f1f26;
     border-radius: 8px;
+}
+
+.meta-row {
+    display: flex;
+    gap: 12px;
+    padding: 0 16px 14px;
+    border-top: 1px solid #2a2a32;
+}
+
+.meta-row > .meta-block {
+    flex: 1;
+}
+
+.meta-block {
+    padding: 10px 12px;
+    background: #1f1f26;
+    border-radius: 8px;
+    min-width: 0;
+}
+
+.meta-block-title {
+    margin: 0 0 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6b6b78;
+}
+
+.comments-panel-title {
+    padding: 12px 16px 0;
+    margin: 0;
+}
+
+.meta-block-body {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.meta-block-body.author-meta {
+    align-items: center;
+}
+
+.meta-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 6px 16px;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.meta-item dt {
+    margin: 0;
+    font-size: 0.72rem;
+    color: #6b6b78;
+}
+
+.meta-item dd {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #c4c4ce;
+    word-break: break-word;
+}
+
+.meta-item a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.meta-item a:hover {
+    text-decoration: underline;
+}
+
+.meta-thumb {
+    max-width: 120px;
+    max-height: 68px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.meta-thumb.round {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .video-cover {
@@ -843,71 +1052,13 @@ h1 {
     background: #2a2a32;
 }
 
-.video-summary-body {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.video-author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.author-avatar {
-    width: 28px;
-    height: 28px;
+.author-avatar-lg {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
+    flex-shrink: 0;
     background: #2a2a32;
-}
-
-.author-text {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 6px;
-    min-width: 0;
-}
-
-.author-name {
-    color: #e8e8ee;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-a.author-name:hover {
-    color: var(--accent);
-}
-
-.author-id {
-    color: #6b6b78;
-    font-size: 0.72rem;
-}
-
-.video-title {
-    margin: 0;
-    color: #c4c4ce;
-    line-height: 1.4;
-    word-break: break-word;
-}
-
-.video-ids,
-.video-meta,
-.video-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 14px;
-    margin: 0;
-    color: #888894;
-    line-height: 1.4;
-}
-
-.video-stats {
-    color: #a8a8b4;
 }
 
 .record-actions {
@@ -919,6 +1070,12 @@ a.author-name:hover {
 .comments-panel {
     padding: 0 16px 14px;
     border-top: 1px solid #2a2a32;
+}
+
+@media (max-width: 900px) {
+    .meta-row {
+        flex-direction: column;
+    }
 }
 
 .comment-block {

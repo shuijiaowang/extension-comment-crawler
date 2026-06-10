@@ -8243,3 +8243,5704 @@ https://api.bilibili.com/x/web-interface/view?bvid=BV1EDbfzsE7k
 }
 }
 
+window.__INITIAL_STATE__
+{
+    "spmidPrefix": "333.788",
+    "inWechat": false,
+    "isClient": false,
+    "isPrVideo": false,
+    "isModern": true,
+    "error": {},
+    "pageTheme": "",
+    "defaultWbiKey": {
+        "wbiImgKey": "2590160e9f5142d4a501feda0490f3bd",
+        "wbiSubKey": "34ba9c5c4a824b368e9c053be34016bd"
+    },
+    "urlRuleKv": {
+        "whitelist": {
+            "domain": [
+                "bilibili.com",
+                "biligame.com",
+                "b23.tv",
+                "esheep.com",
+                "aikobo.cn",
+                "mhyurl.cn/dtiiFBAL",
+                "missevan.com",
+                "infinitynikki.nuanpaper.com/SeaofStars_bilibili",
+                "www.huasheng.cn",
+                "www.updream.cn"
+            ],
+            "rex": []
+        },
+        "blacklist": {
+            "domain": [],
+            "rex": []
+        }
+    },
+    "channelKv": [
+        {
+            "channelId": 25,
+            "tid": 1011,
+            "route": "ai",
+            "name": "人工智能",
+            "tkey": "CommonChannel:ai",
+            "url": "//www.bilibili.com/c/ai/",
+            "icon": "homeicon/ai/1",
+            "sub": [
+                {
+                    "subChannelId": 250001,
+                    "tid": 2096,
+                    "route": "tutorial",
+                    "name": "AI学习",
+                    "tkey": "CommonChannel:aiTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 250002,
+                    "tid": 2097,
+                    "route": "information",
+                    "name": "AI资讯",
+                    "tkey": "CommonChannel:aiInfo",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 250003,
+                    "tid": 2098,
+                    "route": "other",
+                    "name": "AI杂谈",
+                    "tkey": "CommonChannel:aiOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 22,
+            "tid": 1024,
+            "route": "animal",
+            "name": "动物",
+            "tkey": "CommonChannel:animal",
+            "url": "//www.bilibili.com/c/animal/",
+            "icon": "homeicon/animal/1",
+            "sub": [
+                {
+                    "subChannelId": 220001,
+                    "tid": 2167,
+                    "route": "cat",
+                    "name": "猫",
+                    "tkey": "CommonChannel:animalCat",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 220002,
+                    "tid": 2168,
+                    "route": "dog",
+                    "name": "狗",
+                    "tkey": "CommonChannel:animalDog",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 220003,
+                    "tid": 2169,
+                    "route": "reptiles",
+                    "name": "小宠异宠",
+                    "tkey": "CommonChannel:animalReptiles",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 220004,
+                    "tid": 2170,
+                    "route": "science",
+                    "name": "野生动物·动物解说科普",
+                    "tkey": "CommonChannel:animalScience",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 220005,
+                    "tid": 2171,
+                    "route": "other",
+                    "name": "动物综合·二创",
+                    "tkey": "CommonChannel:animalOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 19,
+            "tid": 1013,
+            "route": "car",
+            "name": "汽车",
+            "tkey": "CommonChannel:car",
+            "url": "//www.bilibili.com/c/car",
+            "icon": "homeicon/car/1",
+            "sub": [
+                {
+                    "subChannelId": 190001,
+                    "tid": 2106,
+                    "route": "commentary",
+                    "name": "汽车测评",
+                    "tkey": "CommonChannel:carComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 190002,
+                    "tid": 2107,
+                    "route": "culture",
+                    "name": "汽车文化",
+                    "tkey": "CommonChannel:carCulture",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 190003,
+                    "tid": 2108,
+                    "route": "life",
+                    "name": "汽车生活",
+                    "tkey": "CommonChannel:carLife",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 190004,
+                    "tid": 2109,
+                    "route": "tech",
+                    "name": "汽车技术",
+                    "tkey": "CommonChannel:carTech",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 190005,
+                    "tid": 2110,
+                    "route": "other",
+                    "name": "汽车综合",
+                    "tkey": "CommonChannel:carOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 12,
+            "tid": 1001,
+            "route": "cinephile",
+            "name": "影视",
+            "tkey": "CommonChannel:cinephile",
+            "url": "//www.bilibili.com/c/cinephile/",
+            "icon": "homeicon/cinephile/1",
+            "sub": [
+                {
+                    "subChannelId": 120001,
+                    "tid": 2001,
+                    "route": "commentary",
+                    "name": "影视解读",
+                    "tkey": "CommonChannel:cineComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120002,
+                    "tid": 2002,
+                    "route": "montage",
+                    "name": "影视剪辑",
+                    "tkey": "CommonChannel:cineMontage",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120003,
+                    "tid": 2003,
+                    "route": "information",
+                    "name": "影视资讯",
+                    "tkey": "CommonChannel:cineInfo",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120004,
+                    "tid": 2004,
+                    "route": "porterage",
+                    "name": "影视正片搬运",
+                    "tkey": "CommonChannel:cinePorterage",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120005,
+                    "tid": 2005,
+                    "route": "shortfilm",
+                    "name": "短剧短片",
+                    "tkey": "CommonChannel:cineShortfilm",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120006,
+                    "tid": 2006,
+                    "route": "ai",
+                    "name": "AI影视",
+                    "tkey": "CommonChannel:cineAi",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120007,
+                    "tid": 2007,
+                    "route": "reaction",
+                    "name": "影视reaction",
+                    "tkey": "CommonChannel:cineReaction",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 120008,
+                    "tid": 2008,
+                    "route": "other",
+                    "name": "影视综合",
+                    "tkey": "CommonChannel:cineOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 11,
+            "tid": 1004,
+            "route": "dance",
+            "name": "舞蹈",
+            "tkey": "CommonChannel:dance",
+            "url": "//www.bilibili.com/c/dance/",
+            "icon": "homeicon/dance/1",
+            "sub": [
+                {
+                    "subChannelId": 110001,
+                    "tid": 2028,
+                    "route": "otaku",
+                    "name": "宅舞",
+                    "tkey": "CommonChannel:danOtaku",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110002,
+                    "tid": 2029,
+                    "route": "hiphop",
+                    "name": "街舞",
+                    "tkey": "CommonChannel:danHiphop",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110003,
+                    "tid": 2030,
+                    "route": "gestures",
+                    "name": "颜值·网红舞",
+                    "tkey": "CommonChannel:danGestures",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110004,
+                    "tid": 2031,
+                    "route": "star",
+                    "name": "明星舞蹈",
+                    "tkey": "CommonChannel:danStar",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110005,
+                    "tid": 2032,
+                    "route": "china",
+                    "name": "国风舞蹈",
+                    "tkey": "CommonChannel:danChina",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110006,
+                    "tid": 2033,
+                    "route": "tutorial",
+                    "name": "舞蹈教学",
+                    "tkey": "CommonChannel:danTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110007,
+                    "tid": 2034,
+                    "route": "ballet",
+                    "name": "芭蕾舞",
+                    "tkey": "CommonChannel:danBallet",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110008,
+                    "tid": 2035,
+                    "route": "wota",
+                    "name": "wota艺",
+                    "tkey": "CommonChannel:danWota",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 110009,
+                    "tid": 2036,
+                    "route": "other",
+                    "name": "舞蹈综合",
+                    "tkey": "CommonChannel:danOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 7,
+            "tid": 1005,
+            "route": "douga",
+            "name": "动画",
+            "tkey": "CommonChannel:douga",
+            "url": "//www.bilibili.com/c/douga/",
+            "icon": "homeicon/douga/1",
+            "sub": [
+                {
+                    "subChannelId": 70001,
+                    "tid": 2037,
+                    "route": "fan_anime",
+                    "name": "同人动画",
+                    "tkey": "CommonChannel:dgFanAnime",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70002,
+                    "tid": 2038,
+                    "route": "garage_kit",
+                    "name": "模玩周边",
+                    "tkey": "CommonChannel:dgGarageKit",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70003,
+                    "tid": 2039,
+                    "route": "cosplay",
+                    "name": "cosplay",
+                    "tkey": "CommonChannel:dgCos",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70004,
+                    "tid": 2040,
+                    "route": "offline",
+                    "name": "二次元线下",
+                    "tkey": "CommonChannel:dgOffline",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70005,
+                    "tid": 2041,
+                    "route": "editing",
+                    "name": "动漫剪辑",
+                    "tkey": "CommonChannel:dgEditing",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70006,
+                    "tid": 2042,
+                    "route": "commentary",
+                    "name": "动漫评论",
+                    "tkey": "CommonChannel:dgComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70007,
+                    "tid": 2043,
+                    "route": "quick_view",
+                    "name": "动漫速读",
+                    "tkey": "CommonChannel:dgQuickView",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70008,
+                    "tid": 2044,
+                    "route": "voice",
+                    "name": "动漫配音",
+                    "tkey": "CommonChannel:dgVoice",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70009,
+                    "tid": 2045,
+                    "route": "information",
+                    "name": "动漫资讯",
+                    "tkey": "CommonChannel:dgInfo",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70010,
+                    "tid": 2046,
+                    "route": "interpret",
+                    "name": "网文解读",
+                    "tkey": "CommonChannel:dgInterpret",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70011,
+                    "tid": 2047,
+                    "route": "vup",
+                    "name": "虚拟up主",
+                    "tkey": "CommonChannel:dgVup",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70012,
+                    "tid": 2048,
+                    "route": "tokusatsu",
+                    "name": "特摄",
+                    "tkey": "CommonChannel:dgTokusatsu",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70013,
+                    "tid": 2049,
+                    "route": "puppetry",
+                    "name": "布袋戏",
+                    "tkey": "CommonChannel:dgPuppetry",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70014,
+                    "tid": 2050,
+                    "route": "comic",
+                    "name": "漫画·动态漫",
+                    "tkey": "CommonChannel:dgComic",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70015,
+                    "tid": 2051,
+                    "route": "motion",
+                    "name": "广播剧",
+                    "tkey": "CommonChannel:dgMotion",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70016,
+                    "tid": 2052,
+                    "route": "reaction",
+                    "name": "动漫reaction",
+                    "tkey": "CommonChannel:dgReaction",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70017,
+                    "tid": 2053,
+                    "route": "tutorial",
+                    "name": "动漫教学",
+                    "tkey": "CommonChannel:dgTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 70018,
+                    "tid": 2054,
+                    "route": "other",
+                    "name": "二次元其他",
+                    "tkey": "CommonChannel:dgOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 34,
+            "tid": 1027,
+            "route": "emotion",
+            "name": "情感",
+            "tkey": "CommonChannel:emotion",
+            "url": "//www.bilibili.com/c/emotion/",
+            "icon": "homeicon/emotion/1",
+            "sub": [
+                {
+                    "subChannelId": 340001,
+                    "tid": 2185,
+                    "route": "family",
+                    "name": "家庭关系",
+                    "tkey": "CommonChannel:emoFamily",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 340002,
+                    "tid": 2186,
+                    "route": "romantic",
+                    "name": "恋爱关系",
+                    "tkey": "CommonChannel:emoRomantic",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 340003,
+                    "tid": 2187,
+                    "route": "interpersonal",
+                    "name": "人际关系",
+                    "tkey": "CommonChannel:emoInter",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 340004,
+                    "tid": 2188,
+                    "route": "growth",
+                    "name": "自我成长",
+                    "tkey": "CommonChannel:emoGrowth",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 13,
+            "tid": 1002,
+            "route": "ent",
+            "name": "娱乐",
+            "tkey": "CommonChannel:ent",
+            "url": "//www.bilibili.com/c/ent/",
+            "icon": "homeicon/entertainment/1",
+            "sub": [
+                {
+                    "subChannelId": 130001,
+                    "tid": 2009,
+                    "route": "commentary",
+                    "name": "娱乐评论",
+                    "tkey": "CommonChannel:entComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130002,
+                    "tid": 2010,
+                    "route": "montage",
+                    "name": "明星剪辑",
+                    "tkey": "CommonChannel:entMontage",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130003,
+                    "tid": 2011,
+                    "route": "fans_video",
+                    "name": "娱乐饭拍&现场",
+                    "tkey": "CommonChannel:entFan",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130004,
+                    "tid": 2012,
+                    "route": "information",
+                    "name": "娱乐资讯",
+                    "tkey": "CommonChannel:entInfo",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130005,
+                    "tid": 2013,
+                    "route": "reaction",
+                    "name": "娱乐reaction",
+                    "tkey": "CommonChannel:entReaction",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130006,
+                    "tid": 2014,
+                    "route": "variety",
+                    "name": "娱乐综艺正片",
+                    "tkey": "CommonChannel:entVariety",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 130007,
+                    "tid": 2015,
+                    "route": "other",
+                    "name": "娱乐综合",
+                    "tkey": "CommonChannel:entOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 20,
+            "tid": 1014,
+            "route": "fashion",
+            "name": "时尚美妆",
+            "tkey": "CommonChannel:fashion",
+            "url": "//www.bilibili.com/c/fashion/",
+            "icon": "homeicon/fashion/1",
+            "sub": [
+                {
+                    "subChannelId": 200001,
+                    "tid": 2111,
+                    "route": "makeup",
+                    "name": "美妆",
+                    "tkey": "CommonChannel:fasMakeup",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200002,
+                    "tid": 2112,
+                    "route": "skincare",
+                    "name": "护肤",
+                    "tkey": "CommonChannel:fasSkincare",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200003,
+                    "tid": 2113,
+                    "route": "cos",
+                    "name": "仿装cos",
+                    "tkey": "CommonChannel:fasCos",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200004,
+                    "tid": 2114,
+                    "route": "outfits",
+                    "name": "鞋服穿搭",
+                    "tkey": "CommonChannel:fasOutfits",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200005,
+                    "tid": 2115,
+                    "route": "accessories",
+                    "name": "箱包配饰",
+                    "tkey": "CommonChannel:fasAccessories",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200006,
+                    "tid": 2116,
+                    "route": "jewelry",
+                    "name": "珠宝首饰",
+                    "tkey": "CommonChannel:fasJewelry",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200007,
+                    "tid": 2117,
+                    "route": "trick",
+                    "name": "三坑",
+                    "tkey": "CommonChannel:fasTrick",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200008,
+                    "tid": 2118,
+                    "route": "commentary",
+                    "name": "时尚解读",
+                    "tkey": "CommonChannel:fasComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 200009,
+                    "tid": 2119,
+                    "route": "other",
+                    "name": "时尚综合",
+                    "tkey": "CommonChannel:fasOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 17,
+            "tid": 1020,
+            "route": "food",
+            "name": "美食",
+            "tkey": "CommonChannel:food",
+            "url": "//www.bilibili.com/c/food/",
+            "icon": "homeicon/food/1",
+            "sub": [
+                {
+                    "subChannelId": 170001,
+                    "tid": 2149,
+                    "route": "make",
+                    "name": "美食制作",
+                    "tkey": "CommonChannel:foodMake",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 170002,
+                    "tid": 2150,
+                    "route": "detective",
+                    "name": "美食探店",
+                    "tkey": "CommonChannel:foodDetective",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 170003,
+                    "tid": 2151,
+                    "route": "commentary",
+                    "name": "美食测评",
+                    "tkey": "CommonChannel:foodComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 170004,
+                    "tid": 2152,
+                    "route": "record",
+                    "name": "美食记录",
+                    "tkey": "CommonChannel:foodRecord",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 170005,
+                    "tid": 2153,
+                    "route": "other",
+                    "name": "美食综合",
+                    "tkey": "CommonChannel:foodOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 8,
+            "tid": 1008,
+            "route": "game",
+            "name": "游戏",
+            "tkey": "CommonChannel:game",
+            "url": "//www.bilibili.com/c/game/",
+            "icon": "homeicon/game/1",
+            "sub": [
+                {
+                    "subChannelId": 80001,
+                    "tid": 2064,
+                    "route": "rpg",
+                    "name": "单人RPG游戏",
+                    "tkey": "CommonChannel:gameRpg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80002,
+                    "tid": 2065,
+                    "route": "mmorpg",
+                    "name": "MMORPG游戏",
+                    "tkey": "CommonChannel:gameMmorpg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80003,
+                    "tid": 2066,
+                    "route": "stand_alone",
+                    "name": "单机主机类游戏",
+                    "tkey": "CommonChannel:gameStandAlone",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80004,
+                    "tid": 2067,
+                    "route": "slg",
+                    "name": "SLG游戏",
+                    "tkey": "CommonChannel:gameSlg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80005,
+                    "tid": 2068,
+                    "route": "tbs",
+                    "name": "回合制策略游戏",
+                    "tkey": "CommonChannel:gameTbs",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80006,
+                    "tid": 2069,
+                    "route": "rts",
+                    "name": "即时策略游戏",
+                    "tkey": "CommonChannel:gameRts",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80007,
+                    "tid": 2070,
+                    "route": "moba",
+                    "name": "MOBA游戏",
+                    "tkey": "CommonChannel:gameMoba",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80008,
+                    "tid": 2071,
+                    "route": "stg",
+                    "name": "射击游戏",
+                    "tkey": "CommonChannel:gameStg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80009,
+                    "tid": 2072,
+                    "route": "spg",
+                    "name": "体育竞速游戏",
+                    "tkey": "CommonChannel:gameSpg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80010,
+                    "tid": 2073,
+                    "route": "act",
+                    "name": "动作竞技游戏",
+                    "tkey": "CommonChannel:gameAct",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80011,
+                    "tid": 2074,
+                    "route": "msc",
+                    "name": "音游舞游",
+                    "tkey": "CommonChannel:gameMsc",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80012,
+                    "tid": 2075,
+                    "route": "sim",
+                    "name": "模拟经营游戏",
+                    "tkey": "CommonChannel:gameSim",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80013,
+                    "tid": 2076,
+                    "route": "otome",
+                    "name": "女性向游戏",
+                    "tkey": "CommonChannel:gameOtome",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80014,
+                    "tid": 2077,
+                    "route": "puz",
+                    "name": "休闲/小游戏",
+                    "tkey": "CommonChannel:gamePuz",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80015,
+                    "tid": 2078,
+                    "route": "sandbox",
+                    "name": "沙盒类",
+                    "tkey": "CommonChannel:gameSandbox",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 80016,
+                    "tid": 2079,
+                    "route": "other",
+                    "name": "其他游戏",
+                    "tkey": "CommonChannel:gameOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 28,
+            "tid": 1017,
+            "route": "gym",
+            "name": "健身",
+            "tkey": "CommonChannel:gym",
+            "url": "//www.bilibili.com/c/gym/",
+            "icon": "homeicon/gym/1",
+            "sub": [
+                {
+                    "subChannelId": 280001,
+                    "tid": 2128,
+                    "route": "science",
+                    "name": "健身科普",
+                    "tkey": "CommonChannel:gymScience",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 280002,
+                    "tid": 2129,
+                    "route": "tutorial",
+                    "name": "健身跟练教学",
+                    "tkey": "CommonChannel:gymTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 280003,
+                    "tid": 2130,
+                    "route": "record",
+                    "name": "健身记录",
+                    "tkey": "CommonChannel:gymRecord",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 280004,
+                    "tid": 2131,
+                    "route": "figure",
+                    "name": "健身身材展示",
+                    "tkey": "CommonChannel:gymFigure",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 280005,
+                    "tid": 2132,
+                    "route": "other",
+                    "name": "健身综合",
+                    "tkey": "CommonChannel:gymOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 29,
+            "tid": 1019,
+            "route": "handmake",
+            "name": "手工",
+            "tkey": "CommonChannel:handmake",
+            "url": "//www.bilibili.com/c/handmake/",
+            "icon": "homeicon/handmake/1",
+            "sub": [
+                {
+                    "subChannelId": 290001,
+                    "tid": 2143,
+                    "route": "handbook",
+                    "name": "文具手帐",
+                    "tkey": "CommonChannel:hmHandbook",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 290002,
+                    "tid": 2144,
+                    "route": "light",
+                    "name": "轻手作",
+                    "tkey": "CommonChannel:hmLight",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 290003,
+                    "tid": 2145,
+                    "route": "traditional",
+                    "name": "传统手工艺",
+                    "tkey": "CommonChannel:hmTraditional",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 290004,
+                    "tid": 2146,
+                    "route": "relief",
+                    "name": "解压手工",
+                    "tkey": "CommonChannel:hmRelief",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 290005,
+                    "tid": 2147,
+                    "route": "diy",
+                    "name": "DIY玩具",
+                    "tkey": "CommonChannel:hmDiy",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 290006,
+                    "tid": 2148,
+                    "route": "other",
+                    "name": "其他手工",
+                    "tkey": "CommonChannel:hmOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 33,
+            "tid": 1026,
+            "route": "health",
+            "name": "健康",
+            "tkey": "CommonChannel:health",
+            "url": "//www.bilibili.com/c/health/",
+            "icon": "homeicon/health/1",
+            "sub": [
+                {
+                    "subChannelId": 330001,
+                    "tid": 2179,
+                    "route": "science",
+                    "name": "健康科普",
+                    "tkey": "CommonChannel:healthScience",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 330002,
+                    "tid": 2180,
+                    "route": "regimen",
+                    "name": "养生",
+                    "tkey": "CommonChannel:healthRegimen",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 330003,
+                    "tid": 2181,
+                    "route": "sexes",
+                    "name": "两性知识",
+                    "tkey": "CommonChannel:healthSex",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 330004,
+                    "tid": 2182,
+                    "route": "psychology",
+                    "name": "心理健康",
+                    "tkey": "CommonChannel:healthPsychology",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 330005,
+                    "tid": 2183,
+                    "route": "asmr",
+                    "name": "助眠视频·ASMR",
+                    "tkey": "CommonChannel:healthAsmr",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 330006,
+                    "tid": 2184,
+                    "route": "other",
+                    "name": "医疗保健综合",
+                    "tkey": "CommonChannel:healthOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 26,
+            "tid": 1015,
+            "route": "home",
+            "name": "家装房产",
+            "tkey": "CommonChannel:home",
+            "url": "//www.bilibili.com/c/home/",
+            "icon": "homeicon/home/1",
+            "sub": [
+                {
+                    "subChannelId": 260001,
+                    "tid": 2120,
+                    "route": "trade",
+                    "name": "买房租房",
+                    "tkey": "CommonChannel:homeTrade",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 260002,
+                    "tid": 2121,
+                    "route": "renovation",
+                    "name": "家庭装修",
+                    "tkey": "CommonChannel:homeRenovation",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 260003,
+                    "tid": 2122,
+                    "route": "furniture",
+                    "name": "家居展示",
+                    "tkey": "CommonChannel:homeFurniture",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 260004,
+                    "tid": 2123,
+                    "route": "appliances",
+                    "name": "家用电器",
+                    "tkey": "CommonChannel:homeAppliances",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 16,
+            "tid": 1009,
+            "route": "information",
+            "name": "资讯",
+            "tkey": "CommonChannel:information",
+            "url": "//www.bilibili.com/c/information/",
+            "icon": "homeicon/information/1",
+            "sub": [
+                {
+                    "subChannelId": 160001,
+                    "tid": 2080,
+                    "route": "politics",
+                    "name": "时政资讯",
+                    "tkey": "CommonChannel:infoPolitics",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 160002,
+                    "tid": 2081,
+                    "route": "overseas",
+                    "name": "海外资讯",
+                    "tkey": "CommonChannel:infoOverseas",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 160003,
+                    "tid": 2082,
+                    "route": "social",
+                    "name": "社会资讯",
+                    "tkey": "CommonChannel:infoSocial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 160004,
+                    "tid": 2083,
+                    "route": "other",
+                    "name": "综合资讯",
+                    "tkey": "CommonChannel:infoOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 9,
+            "tid": 1007,
+            "route": "kichiku",
+            "name": "鬼畜",
+            "tkey": "CommonChannel:kichiku",
+            "url": "//www.bilibili.com/c/kichiku/",
+            "icon": "homeicon/kichiku/1",
+            "sub": [
+                {
+                    "subChannelId": 90001,
+                    "tid": 2059,
+                    "route": "guide",
+                    "name": "鬼畜调教",
+                    "tkey": "CommonChannel:kckGuide",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 90002,
+                    "tid": 2060,
+                    "route": "theatre",
+                    "name": "鬼畜剧场",
+                    "tkey": "CommonChannel:kckTheatre",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 90003,
+                    "tid": 2061,
+                    "route": "manual_vocaloid",
+                    "name": "人力VOCALOID",
+                    "tkey": "CommonChannel:kckVocaloid",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 90004,
+                    "tid": 2062,
+                    "route": "mad",
+                    "name": "音MAD",
+                    "tkey": "CommonChannel:kckMad",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 90005,
+                    "tid": 2063,
+                    "route": "other",
+                    "name": "鬼畜综合",
+                    "tkey": "CommonChannel:kckOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 14,
+            "tid": 1010,
+            "route": "knowledge",
+            "name": "知识",
+            "tkey": "CommonChannel:knowledge",
+            "url": "//www.bilibili.com/c/knowledge/",
+            "icon": "homeicon/knowledge/1",
+            "sub": [
+                {
+                    "subChannelId": 140001,
+                    "tid": 2084,
+                    "route": "exam",
+                    "name": "应试教育",
+                    "tkey": "CommonChannel:knowExam",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140002,
+                    "tid": 2085,
+                    "route": "lang_skill",
+                    "name": "非应试语言学习",
+                    "tkey": "CommonChannel:knowLang",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140003,
+                    "tid": 2086,
+                    "route": "campus",
+                    "name": "大学专业知识",
+                    "tkey": "CommonChannel:knowCampus",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140004,
+                    "tid": 2087,
+                    "route": "business",
+                    "name": "商业财经",
+                    "tkey": "CommonChannel:knowBusiness",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140005,
+                    "tid": 2088,
+                    "route": "social_observation",
+                    "name": "社会观察",
+                    "tkey": "CommonChannel:knowSocial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140006,
+                    "tid": 2089,
+                    "route": "politics",
+                    "name": "时政解读",
+                    "tkey": "CommonChannel:knowPolitics",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140007,
+                    "tid": 2090,
+                    "route": "humanity_history",
+                    "name": "人文历史",
+                    "tkey": "CommonChannel:knowHumanity",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140008,
+                    "tid": 2091,
+                    "route": "design",
+                    "name": "设计艺术",
+                    "tkey": "CommonChannel:knowDesign",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140009,
+                    "tid": 2092,
+                    "route": "psychology",
+                    "name": "心理杂谈",
+                    "tkey": "CommonChannel:knowPsychology",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140010,
+                    "tid": 2093,
+                    "route": "career",
+                    "name": "职场发展",
+                    "tkey": "CommonChannel:knowCareer",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140011,
+                    "tid": 2094,
+                    "route": "science",
+                    "name": "科学科普",
+                    "tkey": "CommonChannel:knowScience",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 140012,
+                    "tid": 2095,
+                    "route": "other",
+                    "name": "其他知识杂谈",
+                    "tkey": "CommonChannel:knowOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 36,
+            "tid": 1031,
+            "route": "life_experience",
+            "name": "生活经验",
+            "tkey": "CommonChannel:lifeExperience",
+            "url": "//www.bilibili.com/c/life_experience/",
+            "icon": "homeicon/life_experience/1",
+            "sub": [
+                {
+                    "subChannelId": 360001,
+                    "tid": 2203,
+                    "route": "skills",
+                    "name": "生活技能",
+                    "tkey": "CommonChannel:lexpSkills",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 360002,
+                    "tid": 2204,
+                    "route": "procedures",
+                    "name": "办事流程",
+                    "tkey": "CommonChannel:lexpProcedure",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 360003,
+                    "tid": 2205,
+                    "route": "marriage",
+                    "name": "婚嫁",
+                    "tkey": "CommonChannel:lexpMarriage",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 35,
+            "tid": 1030,
+            "route": "life_joy",
+            "name": "生活兴趣",
+            "tkey": "CommonChannel:lifeJoy",
+            "url": "//www.bilibili.com/c/life_joy/",
+            "icon": "homeicon/life_joy/1",
+            "sub": [
+                {
+                    "subChannelId": 350001,
+                    "tid": 2198,
+                    "route": "leisure",
+                    "name": "休闲玩乐",
+                    "tkey": "CommonChannel:ljoyLeisure",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 350002,
+                    "tid": 2199,
+                    "route": "on_site",
+                    "name": "线下演出",
+                    "tkey": "CommonChannel:ljoyOnSite",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 350003,
+                    "tid": 2200,
+                    "route": "artistic_products",
+                    "name": "文玩文创",
+                    "tkey": "CommonChannel:ljoyArtistic",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 350004,
+                    "tid": 2201,
+                    "route": "trendy_toys",
+                    "name": "潮玩玩具",
+                    "tkey": "CommonChannel:ljoyToy",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 350005,
+                    "tid": 2202,
+                    "route": "other",
+                    "name": "兴趣综合",
+                    "tkey": "CommonChannel:ljoyOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 10,
+            "tid": 1003,
+            "route": "music",
+            "name": "音乐",
+            "tkey": "CommonChannel:music",
+            "url": "//www.bilibili.com/c/music/",
+            "icon": "homeicon/music/1",
+            "sub": [
+                {
+                    "subChannelId": 100001,
+                    "tid": 2016,
+                    "route": "original",
+                    "name": "原创音乐",
+                    "tkey": "CommonChannel:musOriginal",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100002,
+                    "tid": 2017,
+                    "route": "mv",
+                    "name": "MV",
+                    "tkey": "CommonChannel:musMv",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100003,
+                    "tid": 2018,
+                    "route": "live",
+                    "name": "音乐现场",
+                    "tkey": "CommonChannel:musLive",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100004,
+                    "tid": 2019,
+                    "route": "fan_videos",
+                    "name": "乐迷饭拍",
+                    "tkey": "CommonChannel:musFan",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100005,
+                    "tid": 2020,
+                    "route": "cover",
+                    "name": "翻唱",
+                    "tkey": "CommonChannel:musCover",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100006,
+                    "tid": 2021,
+                    "route": "perform",
+                    "name": "演奏",
+                    "tkey": "CommonChannel:musPerform",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100007,
+                    "tid": 2022,
+                    "route": "vocaloid",
+                    "name": "VOCALOID",
+                    "tkey": "CommonChannel:musVocaloid",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100008,
+                    "tid": 2023,
+                    "route": "ai_music",
+                    "name": "AI音乐",
+                    "tkey": "CommonChannel:musAi",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100009,
+                    "tid": 2024,
+                    "route": "radio",
+                    "name": "电台·歌单",
+                    "tkey": "CommonChannel:musRadio",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100010,
+                    "tid": 2025,
+                    "route": "tutorial",
+                    "name": "音乐教学",
+                    "tkey": "CommonChannel:musTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100011,
+                    "tid": 2026,
+                    "route": "commentary",
+                    "name": "乐评盘点",
+                    "tkey": "CommonChannel:musComment",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 100012,
+                    "tid": 2027,
+                    "route": "other",
+                    "name": "音乐综合",
+                    "tkey": "CommonChannel:musOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 44,
+            "tid": 1028,
+            "route": "mysticism",
+            "name": "神秘学",
+            "tkey": "CommonChannel:mysticism",
+            "url": "//www.bilibili.com/c/mysticism/",
+            "icon": "",
+            "sub": [
+                {
+                    "subChannelId": 440001,
+                    "tid": 2189,
+                    "route": "tarot",
+                    "name": "塔罗占卜",
+                    "tkey": "CommonChannel:mythTarot",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 440002,
+                    "tid": 2190,
+                    "route": "horoscope",
+                    "name": "星座占星",
+                    "tkey": "CommonChannel:mythHoros",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 440003,
+                    "tid": 2191,
+                    "route": "metaphysics",
+                    "name": "传统玄学",
+                    "tkey": "CommonChannel:mythMeta",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 440004,
+                    "tid": 2192,
+                    "route": "healing",
+                    "name": "疗愈成长",
+                    "tkey": "CommonChannel:mythHeal",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 440005,
+                    "tid": 2193,
+                    "route": "other",
+                    "name": "其他神秘学",
+                    "tkey": "CommonChannel:mythOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 27,
+            "tid": 1016,
+            "route": "outdoors",
+            "name": "户外潮流",
+            "tkey": "CommonChannel:outdoors",
+            "url": "//www.bilibili.com/c/outdoors/",
+            "icon": "homeicon/outdoors/1",
+            "sub": [
+                {
+                    "subChannelId": 270001,
+                    "tid": 2124,
+                    "route": "camping",
+                    "name": "露营",
+                    "tkey": "CommonChannel:outCamping",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 270002,
+                    "tid": 2125,
+                    "route": "hiking",
+                    "name": "徒步",
+                    "tkey": "CommonChannel:outHiking",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 270003,
+                    "tid": 2126,
+                    "route": "explore",
+                    "name": "户外探秘",
+                    "tkey": "CommonChannel:outExplore",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 270004,
+                    "tid": 2127,
+                    "route": "other",
+                    "name": "户外综合",
+                    "tkey": "CommonChannel:outOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 24,
+            "tid": 1006,
+            "route": "painting",
+            "name": "绘画",
+            "tkey": "CommonChannel:painting",
+            "url": "//www.bilibili.com/c/painting/",
+            "icon": "homeicon/painting/1",
+            "sub": [
+                {
+                    "subChannelId": 240001,
+                    "tid": 2055,
+                    "route": "acg",
+                    "name": "二次元绘画",
+                    "tkey": "CommonChannel:paintAcg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 240002,
+                    "tid": 2056,
+                    "route": "none_acg",
+                    "name": "非二次元绘画",
+                    "tkey": "CommonChannel:paintNotAcg",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 240003,
+                    "tid": 2057,
+                    "route": "tutorial",
+                    "name": "绘画学习",
+                    "tkey": "CommonChannel:paintTutorial",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 240004,
+                    "tid": 2058,
+                    "route": "other",
+                    "name": "绘画综合",
+                    "tkey": "CommonChannel:paintOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 32,
+            "tid": 1025,
+            "route": "parenting",
+            "name": "亲子",
+            "tkey": "CommonChannel:parenting",
+            "url": "//www.bilibili.com/c/parenting/",
+            "icon": "homeicon/parenting/1",
+            "sub": [
+                {
+                    "subChannelId": 320001,
+                    "tid": 2172,
+                    "route": "pregnant_care",
+                    "name": "孕产护理",
+                    "tkey": "CommonChannel:parentPregnant",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320002,
+                    "tid": 2173,
+                    "route": "infant_care",
+                    "name": "婴幼护理",
+                    "tkey": "CommonChannel:parentInfant",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320003,
+                    "tid": 2174,
+                    "route": "talent",
+                    "name": "儿童才艺",
+                    "tkey": "CommonChannel:parentTalent",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320004,
+                    "tid": 2175,
+                    "route": "cute",
+                    "name": "萌娃",
+                    "tkey": "CommonChannel:parentCute",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320005,
+                    "tid": 2176,
+                    "route": "interaction",
+                    "name": "亲子互动",
+                    "tkey": "CommonChannel:parentInteract",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320006,
+                    "tid": 2177,
+                    "route": "education",
+                    "name": "亲子教育",
+                    "tkey": "CommonChannel:parentEdu",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 320007,
+                    "tid": 2178,
+                    "route": "other",
+                    "name": "亲子综合",
+                    "tkey": "CommonChannel:parentOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 31,
+            "tid": 1023,
+            "route": "rural",
+            "name": "三农",
+            "tkey": "CommonChannel:rural",
+            "url": "//www.bilibili.com/c/rural/",
+            "icon": "homeicon/rural/2",
+            "sub": [
+                {
+                    "subChannelId": 310001,
+                    "tid": 2162,
+                    "route": "planting",
+                    "name": "农村种植",
+                    "tkey": "CommonChannel:ruralPlant",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 310002,
+                    "tid": 2163,
+                    "route": "fishing",
+                    "name": "赶海捕鱼",
+                    "tkey": "CommonChannel:ruralFish",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 310003,
+                    "tid": 2164,
+                    "route": "harvest",
+                    "name": "打野采摘",
+                    "tkey": "CommonChannel:ruralHarvest",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 310004,
+                    "tid": 2165,
+                    "route": "tech",
+                    "name": "农业技术",
+                    "tkey": "CommonChannel:ruralTech",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 310005,
+                    "tid": 2166,
+                    "route": "life",
+                    "name": "农村生活",
+                    "tkey": "CommonChannel:ruralLife",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 18,
+            "tid": 1021,
+            "route": "shortplay",
+            "name": "小剧场",
+            "tkey": "CommonChannel:shortplay",
+            "url": "//www.bilibili.com/c/shortplay/",
+            "icon": "homeicon/shortplay/1",
+            "sub": [
+                {
+                    "subChannelId": 180001,
+                    "tid": 2154,
+                    "route": "plot",
+                    "name": "剧情演绎",
+                    "tkey": "CommonChannel:spPlot",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 180001,
+                    "tid": 2155,
+                    "route": "lang",
+                    "name": "语言类小剧场",
+                    "tkey": "CommonChannel:spLang",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 180001,
+                    "tid": 2156,
+                    "route": "up_variety",
+                    "name": "UP主小综艺",
+                    "tkey": "CommonChannel:spUpVariety",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 180001,
+                    "tid": 2157,
+                    "route": "interview",
+                    "name": "街头采访",
+                    "tkey": "CommonChannel:spInterview",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 21,
+            "tid": 1018,
+            "route": "sports",
+            "name": "体育运动",
+            "tkey": "CommonChannel:sports",
+            "url": "//www.bilibili.com/c/sports/",
+            "icon": "homeicon/sports/1",
+            "sub": [
+                {
+                    "subChannelId": 210001,
+                    "tid": 2133,
+                    "route": "trend",
+                    "name": "潮流运动",
+                    "tkey": "CommonChannel:spoTrend",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210002,
+                    "tid": 2134,
+                    "route": "football",
+                    "name": "足球",
+                    "tkey": "CommonChannel:spoFootball",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210003,
+                    "tid": 2135,
+                    "route": "basketball",
+                    "name": "篮球",
+                    "tkey": "CommonChannel:spoBasketball",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210004,
+                    "tid": 2136,
+                    "route": "running",
+                    "name": "跑步",
+                    "tkey": "CommonChannel:spoRun",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210005,
+                    "tid": 2137,
+                    "route": "kungfu",
+                    "name": "武术",
+                    "tkey": "CommonChannel:spoKungfu",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210006,
+                    "tid": 2138,
+                    "route": "fighting",
+                    "name": "格斗",
+                    "tkey": "CommonChannel:spoFight",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210007,
+                    "tid": 2139,
+                    "route": "badminton",
+                    "name": "羽毛球",
+                    "tkey": "CommonChannel:spoBadminton",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210008,
+                    "tid": 2140,
+                    "route": "information",
+                    "name": "体育资讯",
+                    "tkey": "CommonChannel:spoInfo",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210009,
+                    "tid": 2141,
+                    "route": "match",
+                    "name": "体育赛事",
+                    "tkey": "CommonChannel:spoMatch",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 210010,
+                    "tid": 2142,
+                    "route": "other",
+                    "name": "体育综合",
+                    "tkey": "CommonChannel:spoOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 15,
+            "tid": 1012,
+            "route": "tech",
+            "name": "科技数码",
+            "tkey": "CommonChannel:tech",
+            "url": "//www.bilibili.com/c/tech/",
+            "icon": "homeicon/tech/1",
+            "sub": [
+                {
+                    "subChannelId": 150001,
+                    "tid": 2099,
+                    "route": "computer",
+                    "name": "电脑",
+                    "tkey": "CommonChannel:techComputer",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150002,
+                    "tid": 2100,
+                    "route": "phone",
+                    "name": "手机",
+                    "tkey": "CommonChannel:techPhone",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150003,
+                    "tid": 2101,
+                    "route": "pad",
+                    "name": "平板电脑",
+                    "tkey": "CommonChannel:techPad",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150004,
+                    "tid": 2102,
+                    "route": "photography",
+                    "name": "摄影摄像",
+                    "tkey": "CommonChannel:techPhoto",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150005,
+                    "tid": 2103,
+                    "route": "machine",
+                    "name": "工程机械",
+                    "tkey": "CommonChannel:techMachine",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150006,
+                    "tid": 2104,
+                    "route": "create",
+                    "name": "自制发明/设备",
+                    "tkey": "CommonChannel:techCreate",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 150007,
+                    "tid": 2105,
+                    "route": "other",
+                    "name": "科技数码综合",
+                    "tkey": "CommonChannel:techOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 30,
+            "tid": 1022,
+            "route": "travel",
+            "name": "旅游出行",
+            "tkey": "CommonChannel:travel",
+            "url": "//www.bilibili.com/c/travel/",
+            "icon": "homeicon/travel/1",
+            "sub": [
+                {
+                    "subChannelId": 300001,
+                    "tid": 2158,
+                    "route": "record",
+                    "name": "旅游记录",
+                    "tkey": "CommonChannel:travelRecord",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 300002,
+                    "tid": 2159,
+                    "route": "strategy",
+                    "name": "旅游攻略",
+                    "tkey": "CommonChannel:travelStrategy",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 300003,
+                    "tid": 2160,
+                    "route": "city",
+                    "name": "城市出行",
+                    "tkey": "CommonChannel:travelCity",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 300004,
+                    "tid": 2161,
+                    "route": "transport",
+                    "name": "公共交通",
+                    "tkey": "CommonChannel:travelTransport",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        },
+        {
+            "channelId": 23,
+            "tid": 1029,
+            "route": "vlog",
+            "name": "vlog",
+            "tkey": "CommonChannel:vlog",
+            "url": "//www.bilibili.com/c/vlog/",
+            "icon": "homeicon/vlog/1",
+            "sub": [
+                {
+                    "subChannelId": 230001,
+                    "tid": 2194,
+                    "route": "life",
+                    "name": "中外生活vlog",
+                    "tkey": "CommonChannel:vlogLife",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 230002,
+                    "tid": 2195,
+                    "route": "student",
+                    "name": "学生vlog",
+                    "tkey": "CommonChannel:vlogStudent",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 230003,
+                    "tid": 2196,
+                    "route": "career",
+                    "name": "职业vlog",
+                    "tkey": "CommonChannel:vlogCareer",
+                    "url": ""
+                },
+                {
+                    "subChannelId": 230004,
+                    "tid": 2197,
+                    "route": "other",
+                    "name": "其他vlog",
+                    "tkey": "CommonChannel:vlogOther",
+                    "url": ""
+                }
+            ],
+            "config": {
+                "enableSub": 0
+            }
+        }
+    ],
+    "ugcUnloginKv": {
+        "play_limit": {
+            "threshold": 900,
+            "abtest": {
+                "V_VT_1": 30,
+                "V_VT_2": 60
+            }
+        }
+    },
+    "aid": 116706424985820,
+    "bvid": "BV1r2Es6XETu",
+    "cid": 38922487681,
+    "p": 1,
+    "cidMap": {
+        "116706424985820": {
+            "aid": 116706424985820,
+            "bvid": "BV1r2Es6XETu",
+            "cids": {
+                "1": 38922487681
+            }
+        },
+        "BV1r2Es6XETu": {
+            "aid": 116706424985820,
+            "bvid": "BV1r2Es6XETu",
+            "cids": {
+                "1": 38922487681
+            }
+        }
+    },
+    "premiereInfo": null,
+    "user": {
+        "isLogin": true,
+        "email_verified": 0,
+        "face": "https://i2.hdslb.com/bfs/face/864abd5236b60a81a44323884ffe4fc88c815eea.jpg",
+        "face_nft": 0,
+        "face_nft_type": 0,
+        "level_info": {
+            "current_level": 6,
+            "current_min": 28800,
+            "current_exp": 32075,
+            "next_exp": "--"
+        },
+        "mid": 456524807,
+        "mobile_verified": 1,
+        "money": 1043,
+        "moral": 70,
+        "official": {
+            "role": 0,
+            "title": "",
+            "desc": "",
+            "type": -1
+        },
+        "officialVerify": {
+            "type": -1,
+            "desc": ""
+        },
+        "pendant": {
+            "pid": 0,
+            "name": "",
+            "image": "",
+            "expire": 0,
+            "image_enhance": "",
+            "image_enhance_frame": "",
+            "n_pid": 0
+        },
+        "scores": 0,
+        "uname": "睡觉王y",
+        "vipDueDate": 1754496000000,
+        "vipStatus": 0,
+        "vipType": 1,
+        "vip_pay_type": 0,
+        "vip_theme_type": 0,
+        "vip_label": {
+            "path": "",
+            "text": "",
+            "label_theme": "",
+            "text_color": "",
+            "bg_style": 0,
+            "bg_color": "",
+            "border_color": "",
+            "use_img_label": true,
+            "img_label_uri_hans": "",
+            "img_label_uri_hant": "",
+            "img_label_uri_hans_static": "https://i0.hdslb.com/bfs/vip/d7b702ef65a976b20ed854cbd04cb9e27341bb79.png",
+            "img_label_uri_hant_static": "https://i0.hdslb.com/bfs/activity-plat/static/20220614/e369244d0b14644f5e1a06431e22a4d5/KJunwh19T5.png",
+            "label_id": 0,
+            "label_goto": null,
+            "img_label_uri_i18n": "",
+            "img_label_uri_i18n_static": "",
+            "label_type": 0
+        },
+        "vip_avatar_subscript": 0,
+        "vip_nickname_color": "",
+        "vip": {
+            "type": 1,
+            "status": 0,
+            "due_date": 1754496000000,
+            "vip_pay_type": 0,
+            "theme_type": 0,
+            "label": {
+                "path": "",
+                "text": "",
+                "label_theme": "",
+                "text_color": "",
+                "bg_style": 0,
+                "bg_color": "",
+                "border_color": "",
+                "use_img_label": true,
+                "img_label_uri_hans": "",
+                "img_label_uri_hant": "",
+                "img_label_uri_hans_static": "https://i0.hdslb.com/bfs/vip/d7b702ef65a976b20ed854cbd04cb9e27341bb79.png",
+                "img_label_uri_hant_static": "https://i0.hdslb.com/bfs/activity-plat/static/20220614/e369244d0b14644f5e1a06431e22a4d5/KJunwh19T5.png",
+                "label_id": 0,
+                "label_goto": null,
+                "img_label_uri_i18n": "",
+                "img_label_uri_i18n_static": "",
+                "label_type": 0
+            },
+            "avatar_subscript": 0,
+            "nickname_color": "",
+            "role": 0,
+            "avatar_subscript_url": "",
+            "tv_vip_status": 0,
+            "tv_vip_pay_type": 0,
+            "tv_due_date": 0,
+            "avatar_icon": {
+                "icon_resource": {}
+            },
+            "ott_info": {
+                "vip_type": 1,
+                "pay_type": 0,
+                "pay_channel_id": "",
+                "status": 0,
+                "overdue_time": 1683302400
+            },
+            "super_vip": {
+                "is_super_vip": false
+            }
+        },
+        "wallet": {
+            "mid": 456524807,
+            "bcoin_balance": 0,
+            "coupon_balance": 0,
+            "coupon_due_time": 0
+        },
+        "has_shop": false,
+        "shop_url": "",
+        "answer_status": 0,
+        "is_senior_member": 0,
+        "wbi_img": {
+            "img_url": "https://i0.hdslb.com/bfs/wbi/7cd084941338484aae1ad9425b84077c.png",
+            "sub_url": "https://i0.hdslb.com/bfs/wbi/4932caff0ff746eab6f01bf08b70ac45.png"
+        },
+        "is_jury": false,
+        "name_render": null,
+        "legal_region": "CN",
+        "ip_region": "CN"
+    },
+    "videoData": {
+        "bvid": "BV1r2Es6XETu",
+        "aid": 116706424985820,
+        "videos": 1,
+        "tid": 95,
+        "tid_v2": 2006,
+        "tname": "",
+        "tname_v2": "",
+        "copyright": 1,
+        "pic": "http://i2.hdslb.com/bfs/archive/92501c71fde10e52e4943b10f9f6029c9467e0e0.jpg",
+        "title": "AI还是真的？连特效师也看不出来？",
+        "pubdate": 1780801595,
+        "ctime": 1780799058,
+        "desc": "网上那些真假难辨的视频，你一定刷到过很多。想一眼分清实拍还是AI，真没那么简单。这次，我们请来了资深特效师008，和你一起看看这些视频。如果你喜欢这期视频，请多多支持我们，并把视频分享给你的朋友们一起看看～",
+        "desc_v2": [
+            {
+                "raw_text": "网上那些真假难辨的视频，你一定刷到过很多。想一眼分清实拍还是AI，真没那么简单。这次，我们请来了资深特效师008，和你一起看看这些视频。如果你喜欢这期视频，请多多支持我们，并把视频分享给你的朋友们一起看看～",
+                "type": 1,
+                "biz_id": 0
+            }
+        ],
+        "state": 0,
+        "duration": 683,
+        "mission_id": 4064796,
+        "rights": {
+            "bp": 0,
+            "elec": 0,
+            "download": 1,
+            "movie": 0,
+            "pay": 0,
+            "hd5": 0,
+            "no_reprint": 1,
+            "autoplay": 1,
+            "ugc_pay": 0,
+            "is_cooperation": 0,
+            "ugc_pay_preview": 0,
+            "no_background": 0,
+            "clean_mode": 0,
+            "is_stein_gate": 0,
+            "is_360": 0,
+            "no_share": 0,
+            "arc_pay": 0,
+            "free_watch": 0
+        },
+        "owner": {
+            "mid": 946974,
+            "name": "影视飓风",
+            "face": "https://i0.hdslb.com/bfs/face/c1733474892caa45952b2c09a89323157df7129a.jpg"
+        },
+        "stat": {
+            "aid": 116706424985820,
+            "view": 3622427,
+            "danmaku": 12313,
+            "reply": 2566,
+            "favorite": 28069,
+            "coin": 15344,
+            "share": 3363,
+            "now_rank": 0,
+            "his_rank": 0,
+            "like": 101578,
+            "dislike": 0,
+            "evaluation": "",
+            "vt": 0
+        },
+        "argue_info": {
+            "argue_msg": "",
+            "argue_type": 0,
+            "argue_link": ""
+        },
+        "dynamic": "你能猜对几个？",
+        "cid": 38922487681,
+        "dimension": {
+            "width": 3840,
+            "height": 2160,
+            "rotate": 0
+        },
+        "premiere": null,
+        "teenage_mode": 1,
+        "is_chargeable_season": false,
+        "is_story": false,
+        "is_upower_exclusive": false,
+        "is_upower_play": false,
+        "is_upower_preview": false,
+        "enable_vt": 0,
+        "vt_display": "",
+        "is_upower_exclusive_with_qa": false,
+        "no_cache": false,
+        "pages": [
+            {
+                "cid": 38922487681,
+                "page": 1,
+                "from": "vupload",
+                "part": "AI还是真的？连特效师也看不出来？",
+                "duration": 683,
+                "vid": "",
+                "weblink": "",
+                "dimension": {
+                    "width": 3840,
+                    "height": 2160,
+                    "rotate": 0
+                },
+                "first_frame": "http://i0.hdslb.com/bfs/storyff/_00000verbhi5bdpqc2n6ldm7nl8az2b_firsti.jpg",
+                "ctime": 1780799058
+            }
+        ],
+        "subtitle": {
+            "allow_submit": false,
+            "list": [
+                {
+                    "id": 2035484676272995300,
+                    "lan": "ai-zh",
+                    "lan_doc": "中文",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2035484676272995328",
+                    "ai_type": 0,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                },
+                {
+                    "id": 2036491086582643200,
+                    "lan": "ai-en",
+                    "lan_doc": "English",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2036491086582643200",
+                    "ai_type": 1,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                },
+                {
+                    "id": 2036491265184488400,
+                    "lan": "ai-ja",
+                    "lan_doc": "日本語",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2036491265184488448",
+                    "ai_type": 1,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                },
+                {
+                    "id": 2036491250437318000,
+                    "lan": "ai-es",
+                    "lan_doc": "Español",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2036491250437317888",
+                    "ai_type": 1,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                },
+                {
+                    "id": 2036491338718968600,
+                    "lan": "ai-ar",
+                    "lan_doc": "العربية",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2036491338718968576",
+                    "ai_type": 1,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                },
+                {
+                    "id": 2036491122737614300,
+                    "lan": "ai-pt",
+                    "lan_doc": "Português",
+                    "is_lock": false,
+                    "subtitle_url": "",
+                    "type": 1,
+                    "id_str": "2036491122737614336",
+                    "ai_type": 1,
+                    "ai_status": 2,
+                    "subtitle_height": null,
+                    "author": {
+                        "mid": 0,
+                        "name": "",
+                        "sex": "",
+                        "face": "",
+                        "sign": "",
+                        "rank": 0,
+                        "birthday": 0,
+                        "is_fake_account": 0,
+                        "is_deleted": 0,
+                        "in_reg_audit": 0,
+                        "is_senior_member": 0,
+                        "name_render": null,
+                        "handle": ""
+                    }
+                }
+            ]
+        },
+        "is_season_display": false,
+        "user_garb": {
+            "url_image_ani_cut": ""
+        },
+        "honor_reply": {
+            "honor": [
+                {
+                    "aid": 116706424985820,
+                    "type": 7,
+                    "desc": "热门收录",
+                    "weekly_recommend_num": 0
+                }
+            ]
+        },
+        "like_icon": "",
+        "need_jump_bv": false,
+        "disable_show_up_info": false,
+        "is_story_play": 1,
+        "is_view_self": false,
+        "embedPlayer": {
+            "p": 1,
+            "aid": 116706424985820,
+            "bvid": "BV1r2Es6XETu",
+            "cid": 38922487681,
+            "vid": "",
+            "vtype": "vupload",
+            "stats": {
+                "spmId": "333.788.0.0",
+                "spmIdFrom": "333.788.0.0",
+                "trackId": ""
+            },
+            "t": 0,
+            "fromDid": null,
+            "featureList": {}
+        }
+    },
+    "availableVideoList": [
+        {
+            "aid": 116706424985820,
+            "bvid": "BV1r2Es6XETu",
+            "cid": 38922487681,
+            "title": "AI还是真的？连特效师也看不出来？",
+            "cover": "http://i2.hdslb.com/bfs/archive/92501c71fde10e52e4943b10f9f6029c9467e0e0.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116706424985820,
+                    "bvid": "BV1r2Es6XETu",
+                    "cid": 38922487681,
+                    "p": 1,
+                    "title": "AI还是真的？连特效师也看不出来？"
+                }
+            ]
+        },
+        {
+            "aid": 116262214572069,
+            "bvid": "BV1drAHzyEtS",
+            "cid": 36846963537,
+            "title": "AI成本挺高的，为了这几个镜头，花了80多块",
+            "cover": "http://i0.hdslb.com/bfs/archive/2a201edf9d5ea96ea25098a5c856f22d869c2b6a.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116262214572069,
+                    "bvid": "BV1drAHzyEtS",
+                    "cid": 36846963537,
+                    "p": 1,
+                    "title": "AI成本挺高的，为了这几个镜头，花了80多块"
+                }
+            ]
+        },
+        {
+            "aid": 116634249336876,
+            "bvid": "BV1z5Gd6WEST",
+            "cid": 38600049754,
+            "title": "你被AI内容骗过吗？",
+            "cover": "http://i2.hdslb.com/bfs/archive/74545e6684110f92d8aabcff4a00fb1118f3dce1.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116634249336876,
+                    "bvid": "BV1z5Gd6WEST",
+                    "cid": 38600049754,
+                    "p": 1,
+                    "title": "你被AI内容骗过吗？"
+                }
+            ]
+        },
+        {
+            "aid": 116295047647157,
+            "bvid": "BV1zRXsBTEBG",
+            "cid": 36997105119,
+            "title": "这广告是真人实拍的你敢信？？？这年头，这能看到这质量的广告真的太奢侈了......",
+            "cover": "http://i2.hdslb.com/bfs/archive/ea148a4c490c7781fccb9d5510fbc223d1791161.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116295047647157,
+                    "bvid": "BV1zRXsBTEBG",
+                    "cid": 36997105119,
+                    "p": 1,
+                    "title": "这广告是真人实拍的你敢信？？？这年头，这能看到这质量的广告真的太奢侈了......"
+                }
+            ]
+        },
+        {
+            "aid": 901414084,
+            "bvid": "BV1zN4y1A7Ct",
+            "cid": 857110387,
+            "title": "太真实了！当你家网卡了……",
+            "cover": "http://i0.hdslb.com/bfs/archive/2c8f1012d84977354241872cf8ae7b76b797f52e.png",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 901414084,
+                    "bvid": "BV1zN4y1A7Ct",
+                    "cid": 857110387,
+                    "p": 1,
+                    "title": "太真实了！当你家网卡了……"
+                }
+            ]
+        },
+        {
+            "aid": 115747238057758,
+            "bvid": "BV15bBwBdEzc",
+            "cid": 34849554823,
+            "title": "炒股不要用曲面屏手机",
+            "cover": "http://i1.hdslb.com/bfs/archive/480c03f8f8faa47544700627d284548e4dd94dc1.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115747238057758,
+                    "bvid": "BV15bBwBdEzc",
+                    "cid": 34849554823,
+                    "p": 1,
+                    "title": "炒股不要用曲面屏手机"
+                }
+            ]
+        },
+        {
+            "aid": 116471359412318,
+            "bvid": "BV18movB4E6y",
+            "cid": 37853724766,
+            "title": "那些行业不会被AI替代？",
+            "cover": "http://i2.hdslb.com/bfs/archive/9a58c10c4b6b7e5308b15f69216c5cef88e27db6.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116471359412318,
+                    "bvid": "BV18movB4E6y",
+                    "cid": 37853724766,
+                    "p": 1,
+                    "title": "那些行业不会被AI替代？"
+                }
+            ]
+        },
+        {
+            "aid": 100092877,
+            "bvid": "BV137411X7kZ",
+            "cid": 170762400,
+            "title": "在5g时代再看2g广告。。",
+            "cover": "http://i0.hdslb.com/bfs/archive/635cceffd3c856ee4a3dcb3abae2ab9c13029c0f.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 100092877,
+                    "bvid": "BV137411X7kZ",
+                    "cid": 170762400,
+                    "p": 1,
+                    "title": "在5g时代再看2g广告。。"
+                }
+            ]
+        },
+        {
+            "aid": 1755813812,
+            "bvid": "BV1w4421X76x",
+            "cid": 1589339945,
+            "title": "“我被人机验证给气炸了”",
+            "cover": "http://i1.hdslb.com/bfs/archive/82ec154335362d45fbefac7b445c07b2b3ee0eb4.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 1755813812,
+                    "bvid": "BV1w4421X76x",
+                    "cid": 1589339945,
+                    "p": 1,
+                    "title": "“我被人机验证给气炸了”"
+                }
+            ]
+        },
+        {
+            "aid": 114155247894710,
+            "bvid": "BV1VcQNYuE3A",
+            "cid": 28847050197,
+            "title": "DeepSeek出来后，AI公司现状",
+            "cover": "http://i1.hdslb.com/bfs/archive/8b3900a32058f49272793a23f861431bff59b645.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 114155247894710,
+                    "bvid": "BV1VcQNYuE3A",
+                    "cid": 28847050197,
+                    "p": 1,
+                    "title": "DeepSeek出来后，AI公司现状"
+                }
+            ]
+        },
+        {
+            "aid": 112874861233028,
+            "bvid": "BV16WvrewERe",
+            "cid": 500001632507390,
+            "title": "看吧，我就说AI取代不了人类吧",
+            "cover": "http://i1.hdslb.com/bfs/archive/8d00a470aed8f11eb946240b4fcf45b355e858e8.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 112874861233028,
+                    "bvid": "BV16WvrewERe",
+                    "cid": 500001632507390,
+                    "p": 1,
+                    "title": "看吧，我就说AI取代不了人类吧"
+                }
+            ]
+        },
+        {
+            "aid": 114759982651904,
+            "bvid": "BV13JK2zmEYL",
+            "cid": 30740709440,
+            "title": "ai刚发明时:真不敢想以后的人会用这个做什么呢？😂😂",
+            "cover": "http://i2.hdslb.com/bfs/archive/b70cc8b7e44e87ec65eeb02c63c452a35a6db22a.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 114759982651904,
+                    "bvid": "BV13JK2zmEYL",
+                    "cid": 30740709440,
+                    "p": 1,
+                    "title": "ai刚发明时:真不敢想以后的人会用这个做什么呢？😂😂"
+                }
+            ]
+        },
+        {
+            "aid": 115943413908615,
+            "bvid": "BV1yczKBWEhb",
+            "cid": 35560688714,
+            "title": "威尔史密斯吃面条 2023 vs 2026",
+            "cover": "http://i2.hdslb.com/bfs/archive/64936ae821f796da153cb1bac75057dde7deb515.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115943413908615,
+                    "bvid": "BV1yczKBWEhb",
+                    "cid": 35560688714,
+                    "p": 1,
+                    "title": "威尔史密斯吃面条 2023 vs 2026"
+                }
+            ]
+        },
+        {
+            "aid": 116656781135697,
+            "bvid": "BV1fqVh6sEaF",
+            "cid": 38721359431,
+            "title": "我们做了个神奇外卖柜...",
+            "cover": "http://i1.hdslb.com/bfs/archive/73d481f0ce240f7b7c82e3cda208aeb8ae524fe4.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116656781135697,
+                    "bvid": "BV1fqVh6sEaF",
+                    "cid": 38721359431,
+                    "p": 1,
+                    "title": "我们做了个神奇外卖柜..."
+                }
+            ]
+        },
+        {
+            "aid": 116700519337657,
+            "bvid": "BV1uf726cEbm",
+            "cid": 38895028223,
+            "title": "ai 永远取代不了人类",
+            "cover": "http://i1.hdslb.com/bfs/archive/fa69be63e6f050091c47d16661bf404fee3c309c.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116700519337657,
+                    "bvid": "BV1uf726cEbm",
+                    "cid": 38895028223,
+                    "p": 1,
+                    "title": "ai 永远取代不了人类"
+                }
+            ]
+        },
+        {
+            "aid": 116424483799241,
+            "bvid": "BV1YydJBJEuF",
+            "cid": 37604492685,
+            "title": "【何同学】为了随地大小坐，我们做了这个…",
+            "cover": "http://i2.hdslb.com/bfs/archive/ad0860c2e3a4178c0f19a6c6bf8823262264c9a7.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116424483799241,
+                    "bvid": "BV1YydJBJEuF",
+                    "cid": 37604492685,
+                    "p": 1,
+                    "title": "【何同学】为了随地大小坐，我们做了这个…"
+                }
+            ]
+        },
+        {
+            "aid": 116703488968552,
+            "bvid": "BV1GaEJ6ZEkk",
+            "cid": 38912788597,
+            "title": "第一次见小米2万元的环绕屏手机！？？？",
+            "cover": "http://i0.hdslb.com/bfs/archive/4b537e6819a94efa0571cf69500f13daf40e2755.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116703488968552,
+                    "bvid": "BV1GaEJ6ZEkk",
+                    "cid": 38912788597,
+                    "p": 1,
+                    "title": "第一次见小米2万元的环绕屏手机！？？？"
+                }
+            ]
+        },
+        {
+            "aid": 116238726529515,
+            "bvid": "BV16RwjzqE5s",
+            "cid": 36742238088,
+            "title": "👽：看下地球机器人发展到什么程度了",
+            "cover": "http://i0.hdslb.com/bfs/archive/bd89bd31d23aec767b2b2f2b6dac6215c4fc5027.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116238726529515,
+                    "bvid": "BV16RwjzqE5s",
+                    "cid": 36742238088,
+                    "p": 1,
+                    "title": "👽：看下地球机器人发展到什么程度了"
+                }
+            ]
+        },
+        {
+            "aid": 115205702944318,
+            "bvid": "BV1rZpNztE6W",
+            "cid": 32388745439,
+            "title": "老板说要紧跟AI时代",
+            "cover": "http://i1.hdslb.com/bfs/archive/ee9e8e2909b5a33606b2037c358ae2bc5e7fdcea.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115205702944318,
+                    "bvid": "BV1rZpNztE6W",
+                    "cid": 32388745439,
+                    "p": 1,
+                    "title": "老板说要紧跟AI时代"
+                }
+            ]
+        },
+        {
+            "aid": 115728648837721,
+            "bvid": "BV1hJqhBhEVZ",
+            "cid": 25930767660,
+            "title": "小米以为的巅峰之作，小米实际的巅峰之作",
+            "cover": "http://i2.hdslb.com/bfs/archive/d5d7ff54b1106982d56b6bd2f27928e0f62f7f76.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115728648837721,
+                    "bvid": "BV1hJqhBhEVZ",
+                    "cid": 25930767660,
+                    "p": 1,
+                    "title": "小米以为的巅峰之作，小米实际的巅峰之作"
+                }
+            ]
+        },
+        {
+            "aid": 116219181013991,
+            "bvid": "BV1W9c2zdE64",
+            "cid": 36658611964,
+            "title": "这打印质量可还行？？？",
+            "cover": "http://i0.hdslb.com/bfs/archive/4294e959f513c61276a447e9217b07d5feb684ae.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116219181013991,
+                    "bvid": "BV1W9c2zdE64",
+                    "cid": 36658611964,
+                    "p": 1,
+                    "title": "这打印质量可还行？？？"
+                }
+            ]
+        },
+        {
+            "aid": 116464648587999,
+            "bvid": "BV1reoXBFERQ",
+            "cid": 37814667405,
+            "title": "“眼见为实的时代结束了”",
+            "cover": "http://i0.hdslb.com/bfs/archive/5bec5df11ab6ff0d87c1b47376e9672cea4401f4.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116464648587999,
+                    "bvid": "BV1reoXBFERQ",
+                    "cid": 37814667405,
+                    "p": 1,
+                    "title": "“眼见为实的时代结束了”"
+                }
+            ]
+        },
+        {
+            "aid": 115984652375736,
+            "bvid": "BV1NQ6zBpER8",
+            "cid": 35715222758,
+            "title": "被员工骗去搞AI，结果对方掏出了......",
+            "cover": "http://i2.hdslb.com/bfs/archive/6d22d2cf026c1a55094587af66d403fdeac205e5.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115984652375736,
+                    "bvid": "BV1NQ6zBpER8",
+                    "cid": 35715222758,
+                    "p": 1,
+                    "title": "被员工骗去搞AI，结果对方掏出了......"
+                }
+            ]
+        },
+        {
+            "aid": 116069863787717,
+            "bvid": "BV1i3ZJBfEuS",
+            "cid": 36066297819,
+            "title": "秦始皇统一相机接口",
+            "cover": "http://i1.hdslb.com/bfs/archive/c963654ede0a691e57ba7665481adcdd387c4053.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116069863787717,
+                    "bvid": "BV1i3ZJBfEuS",
+                    "cid": 36066297819,
+                    "p": 1,
+                    "title": "秦始皇统一相机接口"
+                }
+            ]
+        },
+        {
+            "aid": 115734386579629,
+            "bvid": "BV1Cyq5BuErz",
+            "cid": 34797585713,
+            "title": "当AI得知自己是AI",
+            "cover": "http://i1.hdslb.com/bfs/archive/a172d2fc3e78fcf03024be6640a23d3596f8c034.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115734386579629,
+                    "bvid": "BV1Cyq5BuErz",
+                    "cid": 34797585713,
+                    "p": 1,
+                    "title": "当AI得知自己是AI"
+                }
+            ]
+        },
+        {
+            "aid": 114501177311331,
+            "bvid": "BV19GEwzoEkK",
+            "cid": 29945103896,
+            "title": "AI眼中的电脑",
+            "cover": "http://i0.hdslb.com/bfs/archive/95d1cf4d2e0633cb18b4c79835bfc75339b589d1.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 114501177311331,
+                    "bvid": "BV19GEwzoEkK",
+                    "cid": 29945103896,
+                    "p": 1,
+                    "title": "AI眼中的电脑"
+                }
+            ]
+        },
+        {
+            "aid": 1050838405,
+            "bvid": "BV1wH4y1J7BG",
+            "cid": 1445140831,
+            "title": "威尔史密斯 模仿 AI生成吃意面视频，笑死我了哈哈哈哈",
+            "cover": "http://i1.hdslb.com/bfs/archive/7b123c899e71f1845280172d63f56aa88bb35d0c.png",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 1050838405,
+                    "bvid": "BV1wH4y1J7BG",
+                    "cid": 1445140831,
+                    "p": 1,
+                    "title": "威尔史密斯 模仿 AI生成吃意面视频，笑死我了哈哈哈哈"
+                }
+            ]
+        },
+        {
+            "aid": 1153491243,
+            "bvid": "BV1EZ421n7Rz",
+            "cid": 1514271484,
+            "title": "让你原地隐身的罩子，400块，现在已经开卖了 🤯",
+            "cover": "http://i2.hdslb.com/bfs/archive/8a0ed9705875369f4981a974782f4ca548990e47.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 1153491243,
+                    "bvid": "BV1EZ421n7Rz",
+                    "cid": 1514271484,
+                    "p": 1,
+                    "title": "让你原地隐身的罩子，400块，现在已经开卖了 🤯"
+                }
+            ]
+        },
+        {
+            "aid": 116696912369911,
+            "bvid": "BV1rg7C6TEUm",
+            "cid": 38880087615,
+            "title": "一句“一氧化二氢”能钓出多少“读稿机”？",
+            "cover": "http://i1.hdslb.com/bfs/archive/1081ed32a36e81bee443915a997ed5f2bd56badd.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116696912369911,
+                    "bvid": "BV1rg7C6TEUm",
+                    "cid": 38880087615,
+                    "p": 1,
+                    "title": "一句“一氧化二氢”能钓出多少“读稿机”？"
+                }
+            ]
+        },
+        {
+            "aid": 116050603611989,
+            "bvid": "BV1ABcsztEcY",
+            "cid": 35980968674,
+            "title": "能卖上亿美金？国产短剧如何征服世界？",
+            "cover": "http://i0.hdslb.com/bfs/archive/679d4004a51cdc87c25d3ba933de1d6dbea3c52c.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116050603611989,
+                    "bvid": "BV1ABcsztEcY",
+                    "cid": 35980968674,
+                    "p": 1,
+                    "title": "能卖上亿美金？国产短剧如何征服世界？"
+                }
+            ]
+        },
+        {
+            "aid": 785966460,
+            "bvid": "BV1P14y197Ga",
+            "cid": 1198432722,
+            "title": "【AI生成】巨石强森吃石头 高清重制！！",
+            "cover": "http://i1.hdslb.com/bfs/archive/65a7ab2e9524ffb7285743750b266c6aa0c25a81.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 785966460,
+                    "bvid": "BV1P14y197Ga",
+                    "cid": 1198432722,
+                    "p": 1,
+                    "title": "【AI生成】巨石强森吃石头 高清重制！！"
+                }
+            ]
+        },
+        {
+            "aid": 114979780958179,
+            "bvid": "BV1y1tFzfEUh",
+            "cid": 31515607748,
+            "title": "外卖店用AI实现“换头术”，实景一看差点报警",
+            "cover": "http://i1.hdslb.com/bfs/archive/1ec20b4d76e838ec8fa98ff1059420c0d409ab9c.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 114979780958179,
+                    "bvid": "BV1y1tFzfEUh",
+                    "cid": 31515607748,
+                    "p": 1,
+                    "title": "外卖店用AI实现“换头术”，实景一看差点报警"
+                }
+            ]
+        },
+        {
+            "aid": 116502716024520,
+            "bvid": "BV1qjR5BgEyR",
+            "cid": 38023791967,
+            "title": "2个AI混入人类聊天群，能成功吗？【卧底游戏】",
+            "cover": "http://i2.hdslb.com/bfs/archive/82a6693737824aaf033603b4df0cc3613125c060.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116502716024520,
+                    "bvid": "BV1qjR5BgEyR",
+                    "cid": 38023791967,
+                    "p": 1,
+                    "title": "2个AI混入人类聊天群，能成功吗？【卧底游戏】"
+                }
+            ]
+        },
+        {
+            "aid": 115214259324296,
+            "bvid": "BV1rgp2zrEDx",
+            "cid": 32424591642,
+            "title": "50年后，曾经辱骂过AI的人类：",
+            "cover": "http://i1.hdslb.com/bfs/archive/65391bf3377972971c329782b41bac0204d6d365.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115214259324296,
+                    "bvid": "BV1rgp2zrEDx",
+                    "cid": 32424591642,
+                    "p": 1,
+                    "title": "50年后，曾经辱骂过AI的人类："
+                }
+            ]
+        },
+        {
+            "aid": 113764758192478,
+            "bvid": "BV1mE6UYxEy6",
+            "cid": 27683326195,
+            "title": "吐槽离谱AI",
+            "cover": "http://i0.hdslb.com/bfs/archive/1189e65f4db80f4b8928c0cc8df382c225386ff2.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 113764758192478,
+                    "bvid": "BV1mE6UYxEy6",
+                    "cid": 27683326195,
+                    "p": 1,
+                    "title": "吐槽离谱AI"
+                }
+            ]
+        },
+        {
+            "aid": 116695469463690,
+            "bvid": "BV1df7r6REpB",
+            "cid": 38871305206,
+            "title": "如何在家制造浓汤宝",
+            "cover": "http://i2.hdslb.com/bfs/archive/94c85d2ebad9002fcbad0c7ef2f3c8a3f1ec6768.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116695469463690,
+                    "bvid": "BV1df7r6REpB",
+                    "cid": 38871305206,
+                    "p": 1,
+                    "title": "如何在家制造浓汤宝"
+                }
+            ]
+        },
+        {
+            "aid": 116576451890984,
+            "bvid": "BV1MD5Y6EEfu",
+            "cid": 38343868805,
+            "title": "怕AI抢饭碗的美国人，在机器人身上发泄",
+            "cover": "http://i2.hdslb.com/bfs/archive/28bb37a03f4997531e24d7837902aa49ed2681fc.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116576451890984,
+                    "bvid": "BV1MD5Y6EEfu",
+                    "cid": 38343868805,
+                    "p": 1,
+                    "title": "怕AI抢饭碗的美国人，在机器人身上发泄"
+                }
+            ]
+        },
+        {
+            "aid": 115881975743832,
+            "bvid": "BV1X3rYBEEc8",
+            "cid": 35342060988,
+            "title": "我们能否分辨出现实与AI?",
+            "cover": "http://i1.hdslb.com/bfs/archive/517d5c4ae65fc5d8d087fd5650948f7926802dc0.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 115881975743832,
+                    "bvid": "BV1X3rYBEEc8",
+                    "cid": 35342060988,
+                    "p": 1,
+                    "title": "我们能否分辨出现实与AI?"
+                }
+            ]
+        },
+        {
+            "aid": 116334054806690,
+            "bvid": "BV1R2XZBQEio",
+            "cid": 37171822677,
+            "title": "随身带80元一张的纸？2026影视飓风员工包里有什么！",
+            "cover": "http://i1.hdslb.com/bfs/archive/b98f80f02c6d5fbb9cf0ab2ca0ef0b54e3a1b1ad.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116334054806690,
+                    "bvid": "BV1R2XZBQEio",
+                    "cid": 37171822677,
+                    "p": 1,
+                    "title": "随身带80元一张的纸？2026影视飓风员工包里有什么！"
+                }
+            ]
+        },
+        {
+            "aid": 116708404629872,
+            "bvid": "BV1WSEb6TE9L",
+            "cid": 38932712918,
+            "title": "当2026年，把一张GTX 1080递到老黄面前...",
+            "cover": "http://i2.hdslb.com/bfs/archive/0513ab4f9e6dccd3ed4459c5c9225b1a0aa50a8a.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 116708404629872,
+                    "bvid": "BV1WSEb6TE9L",
+                    "cid": 38932712918,
+                    "p": 1,
+                    "title": "当2026年，把一张GTX 1080递到老黄面前..."
+                }
+            ]
+        },
+        {
+            "aid": 113101135479564,
+            "bvid": "BV1uRpveYESi",
+            "cid": 25786977211,
+            "title": "deepfake深度伪造技术有多可怕？",
+            "cover": "http://i1.hdslb.com/bfs/archive/4ddd1e8b816600460ca090075c1839585b6fb9a1.jpg",
+            "redirect_url": "",
+            "list": [
+                {
+                    "aid": 113101135479564,
+                    "bvid": "BV1uRpveYESi",
+                    "cid": 25786977211,
+                    "p": 1,
+                    "title": "deepfake深度伪造技术有多可怕？"
+                }
+            ]
+        }
+    ],
+    "upData": {
+        "mid": "946974",
+        "name": "影视飓风",
+        "approve": false,
+        "sex": "男",
+        "rank": "10000",
+        "face": "https://i0.hdslb.com/bfs/face/c1733474892caa45952b2c09a89323157df7129a.jpg",
+        "face_nft": 0,
+        "face_nft_type": 0,
+        "DisplayRank": "0",
+        "regtime": 0,
+        "spacesta": 0,
+        "birthday": "",
+        "place": "",
+        "description": "",
+        "article": 0,
+        "attentions": [],
+        "fans": 16383632,
+        "friend": 676,
+        "attention": 676,
+        "sign": "无限进步！｜商务合作请联系邮箱：bd@ysjf.com（邮件中麻烦备注公司、咨询内容）｜店铺名：影视飓风",
+        "level_info": {
+            "current_level": 6,
+            "current_min": 0,
+            "current_exp": 0,
+            "next_exp": 0
+        },
+        "pendant": {
+            "pid": 0,
+            "name": "",
+            "image": "",
+            "expire": 0,
+            "image_enhance": "",
+            "image_enhance_frame": "",
+            "n_pid": 0
+        },
+        "nameplate": {
+            "nid": 89,
+            "name": "2020百大UP主",
+            "image": "https://i1.hdslb.com/bfs/face/dbc78ef8c88f15171f0d12587fb2731f999483a6.png",
+            "image_small": "https://i1.hdslb.com/bfs/face/0d7fc500803d66b8ac4f6c74c10f1adda5c58624.png",
+            "level": "稀有勋章",
+            "condition": "2020年在创作力、影响力、口碑力等维度综合数据出色的UP主"
+        },
+        "Official": {
+            "role": 7,
+            "title": "2025百大UP主、2023年度最高人气奖UP主、课堂优质讲师",
+            "desc": "",
+            "type": 0
+        },
+        "official_verify": {
+            "type": 0,
+            "desc": "2025百大UP主、2023年度最高人气奖UP主、课堂优质讲师"
+        },
+        "vip": {
+            "type": 2,
+            "status": 1,
+            "due_date": 2071152000000,
+            "vip_pay_type": 1,
+            "theme_type": 0,
+            "label": {
+                "path": "http://i0.hdslb.com/bfs/vip/label_annual.png",
+                "text": "十年大会员",
+                "label_theme": "ten_annual_vip",
+                "text_color": "#FFFFFF",
+                "bg_style": 1,
+                "bg_color": "#FB7299",
+                "border_color": "",
+                "use_img_label": true,
+                "img_label_uri_hans": "https://i0.hdslb.com/bfs/activity-plat/static/20220608/e369244d0b14644f5e1a06431e22a4d5/wltavwHAkL.gif",
+                "img_label_uri_hant": "",
+                "img_label_uri_hans_static": "https://i0.hdslb.com/bfs/vip/802418ff03911645648b63aa193ba67997b5a0bc.png",
+                "img_label_uri_hant_static": "https://i0.hdslb.com/bfs/activity-plat/static/20220614/e369244d0b14644f5e1a06431e22a4d5/8u7iRTPE7N.png",
+                "label_id": -22,
+                "label_goto": {
+                    "mobile": "https://big.bilibili.com/mobile/index?navhide=1&from_spmid=vipicon",
+                    "pc_web": "https://account.bilibili.com/big?from_spmid=vipicon"
+                },
+                "img_label_uri_i18n": "",
+                "img_label_uri_i18n_static": "",
+                "label_type": 2
+            },
+            "avatar_subscript": 1,
+            "nickname_color": "#FB7299",
+            "role": 7,
+            "avatar_subscript_url": "",
+            "tv_vip_status": 1,
+            "tv_vip_pay_type": 1,
+            "tv_due_date": 1795536000,
+            "avatar_icon": {
+                "icon_type": 1,
+                "icon_resource": {}
+            },
+            "ott_info": {
+                "vip_type": 1,
+                "pay_type": 1,
+                "pay_channel_id": "wechat",
+                "status": 1,
+                "overdue_time": 1795536000
+            },
+            "super_vip": {
+                "is_super_vip": true
+            },
+            "vipType": 2,
+            "vipStatus": 1
+        },
+        "is_senior_member": 0,
+        "name_render": null,
+        "archiveCount": 915
+    },
+    "staffData": [],
+    "elecFullInfo": {
+        "show_info": {
+            "show": true,
+            "state": 2,
+            "title": "充电",
+            "jump_url": "https://member.bilibili.com/mall/upower-pay?mid=946974&prePage=video&oid=116706424985820",
+            "icon": "https://i0.hdslb.com/bfs/garb/item/33e2e72d9a0c855f036b4cb55448f44af67a0635.png",
+            "high_level": {
+                "privilege_type": 0,
+                "title": "",
+                "sub_title": "",
+                "show_button": false,
+                "button_text": "",
+                "jump_url": {
+                    "up_link": "",
+                    "paywall_link": "",
+                    "previewbar_link": ""
+                },
+                "intro": "",
+                "open": false,
+                "new": false,
+                "question_text": "",
+                "qa_detail_link": ""
+            },
+            "with_qa_id": 0,
+            "jump_url_web": "https://member.bilibili.com/mall/upower-pay?mid=946974&prePage=video"
+        },
+        "av_count": 0,
+        "count": 0,
+        "total_count": 25906,
+        "special_day": 0,
+        "display_num": 0,
+        "cnt_priv_type": 0,
+        "list": [
+            {
+                "mid": 946974,
+                "pay_mid": 1213241720,
+                "rank": 1,
+                "uname": "栖云hurricane",
+                "avatar": "https://i2.hdslb.com/bfs/face/0cb99aab2ce545e68f9c8c7ffcb4fc9a46785fc4.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 0,
+                    "vipDueMsec": 0,
+                    "vipStatus": 0
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 489190068,
+                "rank": 2,
+                "uname": "崽崽の小鹿",
+                "avatar": "https://i0.hdslb.com/bfs/face/54823d309a7a5750237071ea99f0a89a3a0dc8a6.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 0,
+                    "vipDueMsec": 0,
+                    "vipStatus": 0
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 3286990,
+                "rank": 3,
+                "uname": "Andy_粥",
+                "avatar": "https://i1.hdslb.com/bfs/face/546c91de2e7a948d7bef0c3a899a5e2e9b3f1471.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 0,
+                    "vipDueMsec": 0,
+                    "vipStatus": 0
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 359387597,
+                "rank": 4,
+                "uname": "奶思盖",
+                "avatar": "https://i2.hdslb.com/bfs/baselabs/a43b9dd283ac899742f52e9aa6c1421e3d369d83.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 0,
+                    "vipDueMsec": 0,
+                    "vipStatus": 0
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 489910614,
+                "rank": 5,
+                "uname": "Admire潇胤",
+                "avatar": "https://i0.hdslb.com/bfs/face/ca38c19e9d216ab4b115b36443ac2d444b823888.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 513762297,
+                "rank": 6,
+                "uname": "花入局局长",
+                "avatar": "https://i0.hdslb.com/bfs/face/317a0c8ca66fcc3b60d25ab74c6fb60e03388402.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 1,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 472360151,
+                "rank": 7,
+                "uname": "Elvin_Li007",
+                "avatar": "https://i2.hdslb.com/bfs/face/a11bd8f8e1dbf63f2095eb8343aff84e69f8332a.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 3493295697169053,
+                "rank": 8,
+                "uname": "LiningsJC",
+                "avatar": "https://i0.hdslb.com/bfs/face/63805a70d75419d2628c6bf40e61d217a41023c2.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 53165775,
+                "rank": 9,
+                "uname": "C-Leclers",
+                "avatar": "https://i0.hdslb.com/bfs/face/be927cef985132837a6b5cc2e0d333300a6ba8f6.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 1861545602,
+                "rank": 10,
+                "uname": "LIU888622",
+                "avatar": "https://i2.hdslb.com/bfs/face/0e36fca25d4de048dd913658b39ff8f720347d0a.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 1,
+                    "vipDueMsec": 0,
+                    "vipStatus": 0
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 321576882,
+                "rank": 11,
+                "uname": "亲爱的JJY",
+                "avatar": "https://i0.hdslb.com/bfs/face/eb29bfcf6de7e2103f332095680214226811d18c.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 3493275306560179,
+                "rank": 12,
+                "uname": "Letutakoff",
+                "avatar": "https://i1.hdslb.com/bfs/face/15847ef56aee14baa469d55730ed8a91647bf0a6.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 697222098,
+                "rank": 13,
+                "uname": "一条小蔡蔡",
+                "avatar": "https://i0.hdslb.com/bfs/face/c06073ed6a2411272eb42f62d5929be957afc49f.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 23145,
+                "rank": 14,
+                "uname": "二月山_Estrella",
+                "avatar": "https://i0.hdslb.com/bfs/face/98fae1f378ac2399b462c6d32974445855b37d76.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 1621863306,
+                "rank": 15,
+                "uname": "仲栀",
+                "avatar": "https://i0.hdslb.com/bfs/face/77e5ec352525de3d5166275983476287e6415290.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 403890026,
+                "rank": 16,
+                "uname": "招笑挑战吗那你赢了",
+                "avatar": "https://i2.hdslb.com/bfs/face/2aea44ac8eae1126eac9d2f29fe090cca1d9fcf9.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 1481767443,
+                "rank": 17,
+                "uname": "AT_Field_Un",
+                "avatar": "https://i0.hdslb.com/bfs/face/4105aa4635524a9af9d5f7ea0ffb9be8cc000973.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 1787602481,
+                "rank": 18,
+                "uname": "艾梦云兮",
+                "avatar": "https://i2.hdslb.com/bfs/face/4c1ff66497e2d8e7a386b1f01972626e1f3d403c.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 1457119036,
+                "rank": 19,
+                "uname": "欣慰不欣慰",
+                "avatar": "https://i1.hdslb.com/bfs/face/1f7975233f979d6cc0f4e0f5f984825726204ffb.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 36235683,
+                "rank": 20,
+                "uname": "熊猫先生640",
+                "avatar": "https://i0.hdslb.com/bfs/face/0e9cf774fc1422c293a36ab2737c3e841aa26ecf.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 153516379,
+                "rank": 21,
+                "uname": "别慌是朕",
+                "avatar": "http://i1.hdslb.com/bfs/face/68694b595b96b5606a1796f69ff95302f3ae9de8.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 415270806,
+                "rank": 22,
+                "uname": "Littleluck_ly",
+                "avatar": "https://i0.hdslb.com/bfs/face/69cfb51a88eb15abc6594b245aa6bf8882f41037.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 406062918,
+                "rank": 23,
+                "uname": "开大车赚大钱",
+                "avatar": "https://i0.hdslb.com/bfs/face/59fda35457e02362682c0b4d26cb86e48ca9b297.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 702061352,
+                "rank": 24,
+                "uname": "执笔皆是你",
+                "avatar": "https://i2.hdslb.com/bfs/face/29741d08eb6727652df520b0900d94e64ec9ef8c.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 404452897,
+                "rank": 25,
+                "uname": "倪青一",
+                "avatar": "https://i1.hdslb.com/bfs/face/f7cd78d85a5bb23c25df0fb8a1a94607d2518c90.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 40101589,
+                "rank": 26,
+                "uname": "BuziSuei_",
+                "avatar": "https://i1.hdslb.com/bfs/face/a452f95425d6b79e740173731e40f4ed304fa087.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 351331996,
+                "rank": 27,
+                "uname": "吐水的火娃",
+                "avatar": "https://i1.hdslb.com/bfs/face/69dea8c49c633f5b0feb680d8cfade5df5cb6410.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 413313288,
+                "rank": 28,
+                "uname": "大庞_",
+                "avatar": "https://i0.hdslb.com/bfs/face/0d69a31973adaab92063fe4fbe0ac6f4a5cae65f.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 11990706,
+                "rank": 29,
+                "uname": "虚假多变的世界",
+                "avatar": "http://i0.hdslb.com/bfs/face/10f54963d9c464f6a13f732d7ddc857b0cc3501f.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            },
+            {
+                "mid": 946974,
+                "pay_mid": 491063207,
+                "rank": 30,
+                "uname": "四是就试试",
+                "avatar": "https://i2.hdslb.com/bfs/face/cf0057c094dfc74f7016242158e6bbd967874bf3.jpg",
+                "message": "",
+                "msg_deleted": 0,
+                "vip_info": {
+                    "vipType": 2,
+                    "vipDueMsec": 0,
+                    "vipStatus": 1
+                },
+                "trend_type": 0
+            }
+        ]
+    },
+    "hasShowedOldFan": false,
+    "oldFanContract": {},
+    "sectionsFavState": false,
+    "sectionsInfo": {},
+    "tags": [
+        {
+            "tag_id": 3447,
+            "tag_name": "科技猎手",
+            "music_id": "",
+            "tag_type": "topic",
+            "jump_url": "https://m.bilibili.com/topic-detail?topic_id=3447&topic_name=%E7%A7%91%E6%8A%80%E7%8C%8E%E6%89%8B",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 926,
+            "tag_name": "技术",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 6149,
+            "tag_name": "特效",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 54148,
+            "tag_name": "AI",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 89875259,
+            "tag_name": "老板AI大吸力油烟机",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 91555606,
+            "tag_name": "U2小猎豹",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 95950369,
+            "tag_name": "老板双超薄U2油烟机",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 1218171,
+            "tag_name": "鉴别",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 22554,
+            "tag_name": "实拍",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        },
+        {
+            "tag_id": 7429645,
+            "tag_name": "AI生成",
+            "music_id": "",
+            "tag_type": "old_channel",
+            "jump_url": "",
+            "showDetail": false,
+            "showReport": false,
+            "timeOut": null
+        }
+    ],
+    "queryTags": [],
+    "related": [
+        {
+            "aid": 116262214572069,
+            "cid": 36846963537,
+            "bvid": "BV1drAHzyEtS",
+            "duration": 16,
+            "pic": "http://i0.hdslb.com/bfs/archive/2a201edf9d5ea96ea25098a5c856f22d869c2b6a.jpg",
+            "title": "AI成本挺高的，为了这几个镜头，花了80多块",
+            "ai_rcmd": {
+                "id": 116262214572069,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "新梦Mirage",
+                "mid": 294177165
+            },
+            "stat": {
+                "danmaku": 64,
+                "view": 574542,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116262214572069
+            }
+        },
+        {
+            "aid": 116634249336876,
+            "cid": 38600049754,
+            "bvid": "BV1z5Gd6WEST",
+            "duration": 433,
+            "pic": "http://i2.hdslb.com/bfs/archive/74545e6684110f92d8aabcff4a00fb1118f3dce1.jpg",
+            "title": "你被AI内容骗过吗？",
+            "ai_rcmd": {
+                "id": 116634249336876,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "影视飓风",
+                "mid": 946974
+            },
+            "stat": {
+                "danmaku": 4891,
+                "view": 4516391,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116634249336876
+            }
+        },
+        {
+            "aid": 116295047647157,
+            "cid": 36997105119,
+            "bvid": "BV1zRXsBTEBG",
+            "duration": 191,
+            "pic": "http://i2.hdslb.com/bfs/archive/ea148a4c490c7781fccb9d5510fbc223d1791161.jpg",
+            "title": "这广告是真人实拍的你敢信？？？这年头，这能看到这质量的广告真的太奢侈了......",
+            "ai_rcmd": {
+                "id": 116295047647157,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "广告圈poor猴",
+                "mid": 324188834
+            },
+            "stat": {
+                "danmaku": 420,
+                "view": 388856,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116295047647157
+            }
+        },
+        {
+            "aid": 901414084,
+            "cid": 857110387,
+            "bvid": "BV1zN4y1A7Ct",
+            "duration": 61,
+            "pic": "http://i0.hdslb.com/bfs/archive/2c8f1012d84977354241872cf8ae7b76b797f52e.png",
+            "title": "太真实了！当你家网卡了……",
+            "ai_rcmd": {
+                "id": 901414084,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "4A广告提案网",
+                "mid": 43707221
+            },
+            "stat": {
+                "danmaku": 640,
+                "view": 1373796,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 901414084
+            }
+        },
+        {
+            "aid": 115747238057758,
+            "cid": 34849554823,
+            "bvid": "BV15bBwBdEzc",
+            "duration": 14,
+            "pic": "http://i1.hdslb.com/bfs/archive/480c03f8f8faa47544700627d284548e4dd94dc1.jpg",
+            "title": "炒股不要用曲面屏手机",
+            "ai_rcmd": {
+                "id": 115747238057758,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "笑傲龙虎榜",
+                "mid": 485384079
+            },
+            "stat": {
+                "danmaku": 296,
+                "view": 1448540,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115747238057758
+            }
+        },
+        {
+            "aid": 116471359412318,
+            "cid": 37853724766,
+            "bvid": "BV18movB4E6y",
+            "duration": 65,
+            "pic": "http://i2.hdslb.com/bfs/archive/9a58c10c4b6b7e5308b15f69216c5cef88e27db6.jpg",
+            "title": "那些行业不会被AI替代？",
+            "ai_rcmd": {
+                "id": 116471359412318,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "云篆写空山",
+                "mid": 3546864601270901
+            },
+            "stat": {
+                "danmaku": 189,
+                "view": 3284538,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116471359412318
+            }
+        },
+        {
+            "aid": 100092877,
+            "cid": 170762400,
+            "bvid": "BV137411X7kZ",
+            "duration": 28,
+            "pic": "http://i0.hdslb.com/bfs/archive/635cceffd3c856ee4a3dcb3abae2ab9c13029c0f.jpg",
+            "title": "在5g时代再看2g广告。。",
+            "ai_rcmd": {
+                "id": 100092877,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "橘子不不不咸",
+                "mid": 522225381
+            },
+            "stat": {
+                "danmaku": 10047,
+                "view": 20596161,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 100092877
+            }
+        },
+        {
+            "aid": 1755813812,
+            "cid": 1589339945,
+            "bvid": "BV1w4421X76x",
+            "duration": 36,
+            "pic": "http://i1.hdslb.com/bfs/archive/82ec154335362d45fbefac7b445c07b2b3ee0eb4.jpg",
+            "title": "“我被人机验证给气炸了”",
+            "ai_rcmd": {
+                "id": 1755813812,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "黄老虎大魔术师",
+                "mid": 3546679223519926
+            },
+            "stat": {
+                "danmaku": 933,
+                "view": 1170338,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 1755813812
+            }
+        },
+        {
+            "aid": 114155247894710,
+            "cid": 28847050197,
+            "bvid": "BV1VcQNYuE3A",
+            "duration": 45,
+            "pic": "http://i1.hdslb.com/bfs/archive/8b3900a32058f49272793a23f861431bff59b645.jpg",
+            "title": "DeepSeek出来后，AI公司现状",
+            "ai_rcmd": {
+                "id": 114155247894710,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "海外脱口秀z",
+                "mid": 3546840819566702
+            },
+            "stat": {
+                "danmaku": 16,
+                "view": 194370,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 114155247894710
+            }
+        },
+        {
+            "aid": 112874861233028,
+            "cid": 500001632507390,
+            "bvid": "BV16WvrewERe",
+            "duration": 18,
+            "pic": "http://i1.hdslb.com/bfs/archive/8d00a470aed8f11eb946240b4fcf45b355e858e8.jpg",
+            "title": "看吧，我就说AI取代不了人类吧",
+            "ai_rcmd": {
+                "id": 112874861233028,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "小画生xxxl",
+                "mid": 471686396
+            },
+            "stat": {
+                "danmaku": 90,
+                "view": 1277434,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 112874861233028
+            }
+        },
+        {
+            "aid": 114759982651904,
+            "cid": 30740709440,
+            "bvid": "BV13JK2zmEYL",
+            "duration": 31,
+            "pic": "http://i2.hdslb.com/bfs/archive/b70cc8b7e44e87ec65eeb02c63c452a35a6db22a.jpg",
+            "title": "ai刚发明时:真不敢想以后的人会用这个做什么呢？😂😂",
+            "ai_rcmd": {
+                "id": 114759982651904,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "三国爱好者sp",
+                "mid": 408494821
+            },
+            "stat": {
+                "danmaku": 18,
+                "view": 327682,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 114759982651904
+            }
+        },
+        {
+            "aid": 115943413908615,
+            "cid": 35560688714,
+            "bvid": "BV1yczKBWEhb",
+            "duration": 24,
+            "pic": "http://i2.hdslb.com/bfs/archive/64936ae821f796da153cb1bac75057dde7deb515.jpg",
+            "title": "威尔史密斯吃面条 2023 vs 2026",
+            "ai_rcmd": {
+                "id": 115943413908615,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "4A广告提案网",
+                "mid": 43707221
+            },
+            "stat": {
+                "danmaku": 51,
+                "view": 739572,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115943413908615
+            }
+        },
+        {
+            "aid": 116656781135697,
+            "cid": 38721359431,
+            "bvid": "BV1fqVh6sEaF",
+            "duration": 233,
+            "pic": "http://i1.hdslb.com/bfs/archive/73d481f0ce240f7b7c82e3cda208aeb8ae524fe4.jpg",
+            "title": "我们做了个神奇外卖柜...",
+            "ai_rcmd": {
+                "id": 116656781135697,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "老师好我叫何同学",
+                "mid": 163637592
+            },
+            "stat": {
+                "danmaku": 4422,
+                "view": 6521290,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116656781135697
+            }
+        },
+        {
+            "aid": 116700519337657,
+            "cid": 38895028223,
+            "bvid": "BV1uf726cEbm",
+            "duration": 53,
+            "pic": "http://i1.hdslb.com/bfs/archive/fa69be63e6f050091c47d16661bf404fee3c309c.jpg",
+            "title": "ai 永远取代不了人类",
+            "ai_rcmd": {
+                "id": 116700519337657,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "大犬二",
+                "mid": 1808793529
+            },
+            "stat": {
+                "danmaku": 55,
+                "view": 214720,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116700519337657
+            }
+        },
+        {
+            "aid": 116424483799241,
+            "cid": 37604492685,
+            "bvid": "BV1YydJBJEuF",
+            "duration": 736,
+            "pic": "http://i2.hdslb.com/bfs/archive/ad0860c2e3a4178c0f19a6c6bf8823262264c9a7.jpg",
+            "title": "【何同学】为了随地大小坐，我们做了这个…",
+            "ai_rcmd": {
+                "id": 116424483799241,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "老师好我叫何同学",
+                "mid": 163637592
+            },
+            "stat": {
+                "danmaku": 5365,
+                "view": 6986151,
+                "vt": 0
+            },
+            "season_id": 7928619,
+            "season_type": 1,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116424483799241
+            }
+        },
+        {
+            "aid": 116703488968552,
+            "cid": 38912788597,
+            "bvid": "BV1GaEJ6ZEkk",
+            "duration": 133,
+            "pic": "http://i0.hdslb.com/bfs/archive/4b537e6819a94efa0571cf69500f13daf40e2755.jpg",
+            "title": "第一次见小米2万元的环绕屏手机！？？？",
+            "ai_rcmd": {
+                "id": 116703488968552,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "收手机的CC",
+                "mid": 1873295428
+            },
+            "stat": {
+                "danmaku": 366,
+                "view": 344121,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116703488968552
+            }
+        },
+        {
+            "aid": 116238726529515,
+            "cid": 36742238088,
+            "bvid": "BV16RwjzqE5s",
+            "duration": 63,
+            "pic": "http://i0.hdslb.com/bfs/archive/bd89bd31d23aec767b2b2f2b6dac6215c4fc5027.jpg",
+            "title": "👽：看下地球机器人发展到什么程度了",
+            "ai_rcmd": {
+                "id": 116238726529515,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "千秋燃剪",
+                "mid": 67688108
+            },
+            "stat": {
+                "danmaku": 1413,
+                "view": 7385006,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116238726529515
+            }
+        },
+        {
+            "aid": 115205702944318,
+            "cid": 32388745439,
+            "bvid": "BV1rZpNztE6W",
+            "duration": 245,
+            "pic": "http://i1.hdslb.com/bfs/archive/ee9e8e2909b5a33606b2037c358ae2bc5e7fdcea.jpg",
+            "title": "老板说要紧跟AI时代",
+            "ai_rcmd": {
+                "id": 115205702944318,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "-显眼宝-",
+                "mid": 34009507
+            },
+            "stat": {
+                "danmaku": 2781,
+                "view": 4019473,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115205702944318
+            }
+        },
+        {
+            "aid": 115728648837721,
+            "cid": 25930767660,
+            "bvid": "BV1hJqhBhEVZ",
+            "duration": 33,
+            "pic": "http://i2.hdslb.com/bfs/archive/d5d7ff54b1106982d56b6bd2f27928e0f62f7f76.jpg",
+            "title": "小米以为的巅峰之作，小米实际的巅峰之作",
+            "ai_rcmd": {
+                "id": 115728648837721,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "把爱留在澎湃OS",
+                "mid": 1453639297
+            },
+            "stat": {
+                "danmaku": 91,
+                "view": 336509,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115728648837721
+            }
+        },
+        {
+            "aid": 116219181013991,
+            "cid": 36658611964,
+            "bvid": "BV1W9c2zdE64",
+            "duration": 56,
+            "pic": "http://i0.hdslb.com/bfs/archive/4294e959f513c61276a447e9217b07d5feb684ae.jpg",
+            "title": "这打印质量可还行？？？",
+            "ai_rcmd": {
+                "id": 116219181013991,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "雪暮须臾",
+                "mid": 14949255
+            },
+            "stat": {
+                "danmaku": 341,
+                "view": 879752,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116219181013991
+            }
+        },
+        {
+            "aid": 116464648587999,
+            "cid": 37814667405,
+            "bvid": "BV1reoXBFERQ",
+            "duration": 97,
+            "pic": "http://i0.hdslb.com/bfs/archive/5bec5df11ab6ff0d87c1b47376e9672cea4401f4.jpg",
+            "title": "“眼见为实的时代结束了”",
+            "ai_rcmd": {
+                "id": 116464648587999,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "优雅爱温柔Q",
+                "mid": 419222712
+            },
+            "stat": {
+                "danmaku": 1323,
+                "view": 1707821,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116464648587999
+            }
+        },
+        {
+            "aid": 115984652375736,
+            "cid": 35715222758,
+            "bvid": "BV1NQ6zBpER8",
+            "duration": 283,
+            "pic": "http://i2.hdslb.com/bfs/archive/6d22d2cf026c1a55094587af66d403fdeac205e5.jpg",
+            "title": "被员工骗去搞AI，结果对方掏出了......",
+            "ai_rcmd": {
+                "id": 115984652375736,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "叫兽易小星",
+                "mid": 2233459
+            },
+            "stat": {
+                "danmaku": 941,
+                "view": 486450,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115984652375736
+            }
+        },
+        {
+            "aid": 116069863787717,
+            "cid": 36066297819,
+            "bvid": "BV1i3ZJBfEuS",
+            "duration": 31,
+            "pic": "http://i1.hdslb.com/bfs/archive/c963654ede0a691e57ba7665481adcdd387c4053.jpg",
+            "title": "秦始皇统一相机接口",
+            "ai_rcmd": {
+                "id": 116069863787717,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "狼子的野心_Official",
+                "mid": 401831344
+            },
+            "stat": {
+                "danmaku": 98,
+                "view": 232924,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116069863787717
+            }
+        },
+        {
+            "aid": 115734386579629,
+            "cid": 34797585713,
+            "bvid": "BV1Cyq5BuErz",
+            "duration": 81,
+            "pic": "http://i1.hdslb.com/bfs/archive/a172d2fc3e78fcf03024be6640a23d3596f8c034.jpg",
+            "title": "当AI得知自己是AI",
+            "ai_rcmd": {
+                "id": 115734386579629,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "是蒋先生哇",
+                "mid": 233474257
+            },
+            "stat": {
+                "danmaku": 339,
+                "view": 979627,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115734386579629
+            }
+        },
+        {
+            "aid": 114501177311331,
+            "cid": 29945103896,
+            "bvid": "BV19GEwzoEkK",
+            "duration": 61,
+            "pic": "http://i0.hdslb.com/bfs/archive/95d1cf4d2e0633cb18b4c79835bfc75339b589d1.jpg",
+            "title": "AI眼中的电脑",
+            "ai_rcmd": {
+                "id": 114501177311331,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "计算机考古工程厮",
+                "mid": 645953302
+            },
+            "stat": {
+                "danmaku": 101,
+                "view": 180563,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 114501177311331
+            }
+        },
+        {
+            "aid": 1050838405,
+            "cid": 1445140831,
+            "bvid": "BV1wH4y1J7BG",
+            "duration": 24,
+            "pic": "http://i1.hdslb.com/bfs/archive/7b123c899e71f1845280172d63f56aa88bb35d0c.png",
+            "title": "威尔史密斯 模仿 AI生成吃意面视频，笑死我了哈哈哈哈",
+            "ai_rcmd": {
+                "id": 1050838405,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "4A广告提案网",
+                "mid": 43707221
+            },
+            "stat": {
+                "danmaku": 120,
+                "view": 1689102,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 1050838405
+            }
+        },
+        {
+            "aid": 1153491243,
+            "cid": 1514271484,
+            "bvid": "BV1EZ421n7Rz",
+            "duration": 68,
+            "pic": "http://i2.hdslb.com/bfs/archive/8a0ed9705875369f4981a974782f4ca548990e47.jpg",
+            "title": "让你原地隐身的罩子，400块，现在已经开卖了 🤯",
+            "ai_rcmd": {
+                "id": 1153491243,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "蜗牛的科技笔记",
+                "mid": 867413
+            },
+            "stat": {
+                "danmaku": 255,
+                "view": 3004986,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 1153491243
+            }
+        },
+        {
+            "aid": 116696912369911,
+            "cid": 38880087615,
+            "bvid": "BV1rg7C6TEUm",
+            "duration": 291,
+            "pic": "http://i1.hdslb.com/bfs/archive/1081ed32a36e81bee443915a997ed5f2bd56badd.jpg",
+            "title": "一句“一氧化二氢”能钓出多少“读稿机”？",
+            "ai_rcmd": {
+                "id": 116696912369911,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "中国食品报融媒体",
+                "mid": 439478093
+            },
+            "stat": {
+                "danmaku": 7453,
+                "view": 5453044,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116696912369911
+            }
+        },
+        {
+            "aid": 116050603611989,
+            "cid": 35980968674,
+            "bvid": "BV1ABcsztEcY",
+            "duration": 679,
+            "pic": "http://i0.hdslb.com/bfs/archive/679d4004a51cdc87c25d3ba933de1d6dbea3c52c.jpg",
+            "title": "能卖上亿美金？国产短剧如何征服世界？",
+            "ai_rcmd": {
+                "id": 116050603611989,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "影视飓风",
+                "mid": 946974
+            },
+            "stat": {
+                "danmaku": 10932,
+                "view": 8553461,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116050603611989
+            }
+        },
+        {
+            "aid": 785966460,
+            "cid": 1198432722,
+            "bvid": "BV1P14y197Ga",
+            "duration": 42,
+            "pic": "http://i1.hdslb.com/bfs/archive/65a7ab2e9524ffb7285743750b266c6aa0c25a81.jpg",
+            "title": "【AI生成】巨石强森吃石头 高清重制！！",
+            "ai_rcmd": {
+                "id": 785966460,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "donald_doge",
+                "mid": 8168491
+            },
+            "stat": {
+                "danmaku": 826,
+                "view": 4028163,
+                "vt": 0
+            },
+            "season_id": 1526291,
+            "season_type": 1,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 785966460
+            }
+        },
+        {
+            "aid": 114979780958179,
+            "cid": 31515607748,
+            "bvid": "BV1y1tFzfEUh",
+            "duration": 41,
+            "pic": "http://i1.hdslb.com/bfs/archive/1ec20b4d76e838ec8fa98ff1059420c0d409ab9c.jpg",
+            "title": "外卖店用AI实现“换头术”，实景一看差点报警",
+            "ai_rcmd": {
+                "id": 114979780958179,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "黑猫投诉官方",
+                "mid": 3536994305050685
+            },
+            "stat": {
+                "danmaku": 11,
+                "view": 56728,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 114979780958179
+            }
+        },
+        {
+            "aid": 116502716024520,
+            "cid": 38023791967,
+            "bvid": "BV1qjR5BgEyR",
+            "duration": 1651,
+            "pic": "http://i2.hdslb.com/bfs/archive/82a6693737824aaf033603b4df0cc3613125c060.jpg",
+            "title": "2个AI混入人类聊天群，能成功吗？【卧底游戏】",
+            "ai_rcmd": {
+                "id": 116502716024520,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "今天没有故事",
+                "mid": 166788439
+            },
+            "stat": {
+                "danmaku": 11196,
+                "view": 1606455,
+                "vt": 0
+            },
+            "season_id": 1872931,
+            "season_type": 1,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116502716024520
+            }
+        },
+        {
+            "aid": 115214259324296,
+            "cid": 32424591642,
+            "bvid": "BV1rgp2zrEDx",
+            "duration": 339,
+            "pic": "http://i1.hdslb.com/bfs/archive/65391bf3377972971c329782b41bac0204d6d365.jpg",
+            "title": "50年后，曾经辱骂过AI的人类：",
+            "ai_rcmd": {
+                "id": 115214259324296,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "刘拖地",
+                "mid": 341069816
+            },
+            "stat": {
+                "danmaku": 2021,
+                "view": 1284141,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115214259324296
+            }
+        },
+        {
+            "aid": 113764758192478,
+            "cid": 27683326195,
+            "bvid": "BV1mE6UYxEy6",
+            "duration": 96,
+            "pic": "http://i0.hdslb.com/bfs/archive/1189e65f4db80f4b8928c0cc8df382c225386ff2.jpg",
+            "title": "吐槽离谱AI",
+            "ai_rcmd": {
+                "id": 113764758192478,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "会吐槽的明泽",
+                "mid": 383883840
+            },
+            "stat": {
+                "danmaku": 627,
+                "view": 252400,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 113764758192478
+            }
+        },
+        {
+            "aid": 116695469463690,
+            "cid": 38871305206,
+            "bvid": "BV1df7r6REpB",
+            "duration": 501,
+            "pic": "http://i2.hdslb.com/bfs/archive/94c85d2ebad9002fcbad0c7ef2f3c8a3f1ec6768.jpg",
+            "title": "如何在家制造浓汤宝",
+            "ai_rcmd": {
+                "id": 116695469463690,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "嘤武罗",
+                "mid": 349717298
+            },
+            "stat": {
+                "danmaku": 3912,
+                "view": 5346956,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116695469463690
+            }
+        },
+        {
+            "aid": 116576451890984,
+            "cid": 38343868805,
+            "bvid": "BV1MD5Y6EEfu",
+            "duration": 154,
+            "pic": "http://i2.hdslb.com/bfs/archive/28bb37a03f4997531e24d7837902aa49ed2681fc.jpg",
+            "title": "怕AI抢饭碗的美国人，在机器人身上发泄",
+            "ai_rcmd": {
+                "id": 116576451890984,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "晓白和林亦",
+                "mid": 289889915
+            },
+            "stat": {
+                "danmaku": 2320,
+                "view": 2816033,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116576451890984
+            }
+        },
+        {
+            "aid": 115881975743832,
+            "cid": 35342060988,
+            "bvid": "BV1X3rYBEEc8",
+            "duration": 64,
+            "pic": "http://i1.hdslb.com/bfs/archive/517d5c4ae65fc5d8d087fd5650948f7926802dc0.jpg",
+            "title": "我们能否分辨出现实与AI?",
+            "ai_rcmd": {
+                "id": 115881975743832,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "銀时-",
+                "mid": 487131326
+            },
+            "stat": {
+                "danmaku": 638,
+                "view": 2192229,
+                "vt": 0
+            },
+            "season_id": 8053325,
+            "season_type": 1,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 115881975743832
+            }
+        },
+        {
+            "aid": 116334054806690,
+            "cid": 37171822677,
+            "bvid": "BV1R2XZBQEio",
+            "duration": 859,
+            "pic": "http://i1.hdslb.com/bfs/archive/b98f80f02c6d5fbb9cf0ab2ca0ef0b54e3a1b1ad.jpg",
+            "title": "随身带80元一张的纸？2026影视飓风员工包里有什么！",
+            "ai_rcmd": {
+                "id": 116334054806690,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "影视飓风",
+                "mid": 946974
+            },
+            "stat": {
+                "danmaku": 19260,
+                "view": 3732541,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116334054806690
+            }
+        },
+        {
+            "aid": 116708404629872,
+            "cid": 38932712918,
+            "bvid": "BV1WSEb6TE9L",
+            "duration": 111,
+            "pic": "http://i2.hdslb.com/bfs/archive/0513ab4f9e6dccd3ed4459c5c9225b1a0aa50a8a.jpg",
+            "title": "当2026年，把一张GTX 1080递到老黄面前...",
+            "ai_rcmd": {
+                "id": 116708404629872,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "源计划喷",
+                "mid": 353731697
+            },
+            "stat": {
+                "danmaku": 755,
+                "view": 3191343,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 116708404629872
+            }
+        },
+        {
+            "aid": 113101135479564,
+            "cid": 25786977211,
+            "bvid": "BV1uRpveYESi",
+            "duration": 36,
+            "pic": "http://i1.hdslb.com/bfs/archive/4ddd1e8b816600460ca090075c1839585b6fb9a1.jpg",
+            "title": "deepfake深度伪造技术有多可怕？",
+            "ai_rcmd": {
+                "id": 113101135479564,
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62"
+            },
+            "owner": {
+                "name": "美丽浙江",
+                "mid": 3493122168326421
+            },
+            "stat": {
+                "danmaku": 10,
+                "view": 78195,
+                "vt": 0
+            },
+            "season_id": 0,
+            "season_type": 0,
+            "redirect_url": "",
+            "redirected_url": "",
+            "enable_vt": 0,
+            "reportParams": {
+                "goto": "av",
+                "trackid": "web_related_0.router-related-2479604-9kkcc.1781055578041.62",
+                "uniq_id": "",
+                "r_id": 113101135479564
+            }
+        }
+    ],
+    "moduleHiddenCtrl": {
+        "adRightTop": false,
+        "rcmdList": false,
+        "rcmdActivity": false,
+        "adLeftBanner": false,
+        "adRightBottom": false,
+        "rcmdLive": false
+    },
+    "spec": null,
+    "loadingRcmdTabData": false,
+    "rcmdTabData": {
+        "tab_name": "全部",
+        "archives": [],
+        "has_more": false
+    },
+    "rcmdTabNames": [
+        "技术",
+        "特效",
+        "AI",
+        "鉴别",
+        "实拍",
+        "AI生成"
+    ],
+    "currentRcmdTab": {
+        "tab_name": "全部",
+        "tab_order": 0,
+        "tab_type": 1
+    },
+    "adData": {
+        "2624": null,
+        "2625": [
+            {
+                "id": 0,
+                "contract_id": "",
+                "res_id": 0,
+                "asg_id": 0,
+                "pos_num": 1,
+                "name": "",
+                "pic": "https://i0.hdslb.com/bfs/sycp/sanlian/image/bc1c4864950c4c1ba5121041202b8f51.jpeg",
+                "image_urls": null,
+                "litpic": "",
+                "url": "https://www.oiioii.art/?track_id=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3Dccj_5vi04NmLW7zmV10mDEqBw8aAKurBKUX9YXSFLQ5lIZ2YR-1Q1ZqqldpPOb9ibFTHPX-8QnYGmDNFfA-j&ad_source=bilibili_1ed50c08-39f0-445c-8ad9-1c39f49e6d70&caid=__CAID__&resource_id=__RESOURCEID__&source_id=2629&from_spmid=__FROMSPMID__&request_id=1781055578084q10a88a48a75q2591&creative_id=1887400016&linked_creative_id=1927097667",
+                "style": 0,
+                "is_ad": true,
+                "agency": "",
+                "label": "",
+                "intro": "",
+                "creative_type": 2,
+                "request_id": "1781055578084q10a88a48a75q2591",
+                "creative_id": 1927097667,
+                "src_id": 2629,
+                "area": 1,
+                "is_ad_loc": true,
+                "ad_cb": "CKvl+hMQtJq0rQEYw9r0lgcgSSgBMKmW/AE4xRRCHjE3ODEwNTU1NzgwODRxMTBhODhhNDhhNzVxMjU5MUjkv7356jNSBua1juWNl1oG5bGx5LicYgbkuK3lm71oAXAAeICAgICgOYABAYgBAJIBJTI0MGU6MzQ2OjIyNDo1NDMxOjY2YjA6ZThmZjpmZWFjOmNiM2WgAe4BqAEGsgEgoIOdNxyobHg0w4kCT02c9IobT+pe7ENFj7TK4dtYTSW6Ac8DaHR0cHM6Ly93d3cub2lpb2lpLmFydC8/dHJhY2tfaWQ9cGJhZXMudEdlRFJQRElSNlpZVVQ1b3ZMUk1aaDRJOVlHRU9uSEdxNGt3S2RYYUZuTDZVSDNrWXlqeFdWVU9OWEw5VFI5VUIxRjFCbUpLcmtGVkgyOFNnQTV3RGJWdUlsVERFQ25SM0pLNXF6SnZJbzNEY2NqXzV2aTA0Tm1MVzd6bVYxMG1ERXFCdzhhQUt1ckJLVVg5WVhTRkxRNWxJWjJZUi0xUTFacXFsZHBQT2I5aWJGVEhQWC04UW5ZR21ETkZmQS1qJmFkX3NvdXJjZT1iaWxpYmlsaV8xZWQ1MGMwOC0zOWYwLTQ0NWMtOGFkOS0xYzM5ZjQ5ZTZkNzAmY2FpZD1fX0NBSURfXyZyZXNvdXJjZV9pZD1fX1JFU09VUkNFSURfXyZzb3VyY2VfaWQ9MjYyOSZmcm9tX3NwbWlkPV9fRlJPTVNQTUlEX18mcmVxdWVzdF9pZD0xNzgxMDU1NTc4MDg0cTEwYTg4YTQ4YTc1cTI1OTEmY3JlYXRpdmVfaWQ9MTg4NzQwMDAxNiZsaW5rZWRfY3JlYXRpdmVfaWQ9MTkyNzA5NzY2N8IBATHSAQDYAcoD4AGck+vcA+gBxvsB8AHcsYSozcQa+AFJgAIEiAKe5jmSAgCYAp7cB6ACNagC2C6wAgS4AgDAAoCU69wDyALiBeoCAPgCxPwCiAMFkgMAqAMAsAMAuAMAwgMMQlYxcjJFczZYRVR1yAMA0gPFAXsiMSI6IjE5MjcwOTc2NjciLCIxMiI6IjI2MjkiLCIxMyI6IjMyNzgzNzYiLCIxNiI6IjMyNzgzNzZfNDg3MDgiLCIyIjoiNDEzMTYyNSIsIjI0IjoiMSIsIjI1IjoiMTAzOCIsIjI2IjoiMjMxMSIsIjI4IjoiOTRiZjg5OWNhNTVkNjNkNDZhODQzN2RiYmM3NTJjZjkiLCIzIjoiNDEzMTYyNSIsIjQiOiIwIiwiNSI6IjAiLCI2IjoiNDEzMTYyNSJ94AMA6AMA8AMA+gMDdWdjggQ9dXBfbWlkOjk0Njk3NCxhdl9pZDoxMTY3MDY0MjQ5ODU4MjAsYnZfaWQ6QlYxcjJFczZYRVR1LGNfaWQ6MIgE7gGQBACYBAGgBAKqBAQIABAEqgQHCMfEx0wQAbgECsAEAsoEANAEANgEAOIEiwI1Ni57InBzSWQiOjEzMjA1OSwidjIiOiJISlVmbjh1Rnl0ODRHT3R5TVcwMlYtUUVCTWNwTVZrZldUdUNGd3B0dVg1NS1BdkNPd3JUWVlabXhGMlVFRGFvSWVqd2tpRmRXc2tKSDRoUFIzWkZvem9PVlVNc2VkdHdHdGgteHBBWWNmZmFzdVlzclk2QWlCUC16QllxNnJCVF9DMjIwZ2xqYlhaaS1RZ1NYNXkzWWJlMUI0dFlVMmRUWnhfVEFiYUlNeVRfR3AxcmJ1TXE4QSJ9OzYzLnsicHNJZCI6MTMyMDU4LCJ2MiI6IkhzQSJ9OzcwLnsicHNJZCI6MTE0NzgwLCJ2MiI6IkFBIn3oBADwBAD6BK8FeyJhY2NlbGVyYXRlX2ZhY3RvciI6MS4wLCJhY2NlbGVyYXRlX2lkIjowLCJhZF90eXBlX2ZpeCI6ImNwbSIsImFkdnZfaW5mbyI6IntcImFkanVzdF9iZWZvcmVfY29zdFwiOlwiNzMuMTgyXCIsXCJhZGp1c3RfcmF0aW9cIjpcIjEuMDAwXCIsXCJiYWxhbmNlcl9pZFwiOjAsXCJiYWxhbmNlcl9yYXRpb1wiOlwiMC4wMDBcIixcImNoYXJnZV9leHBfa2V5X2RlcHRoXCI6XCJcIixcImNoYXJnZV9leHBfa2V5X2xpZ2h0XCI6XCJfZmx5X2NwYV9vbmxpbmVfY2hhcmdlOFwiLFwiY29zdF9kaWZmXCI6XCIwLjAwMFwifSIsImJpZF90eXBlIjoxLCJiaXpfdHlwZSI6MTIsImJpel90eXBlX2ZpeCI6MywiY3BhIjoie1wiY3BhX2xldmVsXCI6OTksXCJjcGFfc2V0XCI6MH0iLCJjcGFUYXJnZXRUeXBlIjoyLCJmcm9tVHJhY2tpZCI6IiIsImlhYV9jaGVhdF9mbG93IjowLCJpbm5lciI6MCwiaXNfY29tbWVyY2UiOjEsImlzX29jcGNfYW50b3Vfb2NwbSI6MCwiaXNfdHJhY2tpbmdfdXJscyI6MCwibWluaV9nYW1lX2lkIjoiIiwibWluaV9nYW1lX3Bvc2l0aW9uX2lkIjoiIiwibW9kZWxTY29yZSI6IntcImN0clwiOlwiNi43MjIzNzZcIixcImN2cl9sMFwiOlwiNzM4LjI3MDU2OVwiLFwiZmluYWxfcGN0clwiOlwiNi43MjIzNzZcIixcImZpbmFsX3BjdnJcIjpcIjczOC4yNzA1NjlcIn0iLCJ2aWRlb191cF9taWQiOjB9gAUAkAUokAVDkAVJkAXXAZAFiQKQBY4CkAWaApAFqQKQBaoCkAXAApAFwgKQBcMCkAXFApAFywKQBc4CkAXTApAF1gKQBdcCkAXYApAF2QKQBdoCkAXbApAF3wKQBeECkAXjApAF5AKQBeUCkAXmApAF8AKQBfUCkAX7ApAF/wKQBY0DkAWUA5AFmAOQBZkDkAWaA5AFmwOQBaADkAWlA5AFpwOQBbADkAW2A5AFtwOQBcADkAXBA5AFzQOQBeADkAX1A5AF+AOQBf8DkAXGBZAF4QaQBcIHkAXEB5AF1AeQBfkHkAWBCJAFoRGQBZ8SkAWgEpAFoRKgBQC4BQLABaiMyAHIBQjgBQToBQDyBXxDQXdRQVRBQ1ZTOWRra0psVVpFNFJHMEFRQnhHZFFBQWdEK1ZBVkdST0VTZ0FaZjQ3cW9CcUFIUTRQMkRCN0FCQWNBQndBeklBUUx0QVFBQWdELzFBUUFBZ0QrZEFzM01qRCtsQWdBQWdEK3RBZ0FBZ0QrMUFnQUFnRDg9+AWX+O6qAYAG/5Pr3AOIBtDg/YMHkAYE",
+                "title": "",
+                "server_type": 1,
+                "cm_mark": 1,
+                "stime": 0,
+                "mid": "456524807",
+                "activity_type": 0,
+                "epid": 0,
+                "season": null,
+                "room": null,
+                "sub_title": "",
+                "ad_desc": "5000+人感兴趣",
+                "adver_name": "",
+                "null_frame": false,
+                "pic_main_color": "",
+                "card_type": 0,
+                "business_mark": {
+                    "bg_border_color": "#999999FF",
+                    "bg_color": "",
+                    "bg_color_night": "",
+                    "border_color": "#999999FF",
+                    "border_color_night": "#686868",
+                    "img_height": 0,
+                    "img_url": "",
+                    "img_width": 0,
+                    "text": "广告",
+                    "text_color": "#999999FF",
+                    "text_color_night": "#686868",
+                    "type": 2
+                },
+                "inline": {
+                    "inline_use_same": 0,
+                    "inline_type": 0,
+                    "inline_url": "",
+                    "inline_barrage_switch": 0
+                },
+                "operater": "",
+                "jump_target": 1,
+                "show_urls": null,
+                "click_urls": null,
+                "track_id": "pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3Dccj_5vi04NmLW7zmV10mDEqBw8aAKurBKUX9YXSFLQ5lIZ2YR-1Q1ZqqldpPOb9ibFTHPX-8QnYGmDNFfA-j",
+                "feedback_panel": {
+                    "close_rec_tips": "操作成功",
+                    "open_rec_tips": "将减少展示此类广告",
+                    "panel_type_text": "",
+                    "toast": "将减少相似广告推荐"
+                },
+                "sales_type": 11,
+                "quality_infos": [
+                    {
+                        "bg_style": 0,
+                        "border_color": "",
+                        "border_color_night": "",
+                        "icon_night": "",
+                        "is_bg": false,
+                        "text": "5000+人感兴趣",
+                        "text_color": "#9499A0FF",
+                        "text_color_night": "#757A81FF"
+                    }
+                ],
+                "wx_program_info": null,
+                "list_type": 0,
+                "crowd_id": 0,
+                "pc_style": 0
+            }
+        ],
+        "3038": [
+            {
+                "id": 1762933,
+                "contract_id": "",
+                "res_id": 3038,
+                "asg_id": 1707242,
+                "pos_num": 1,
+                "name": "终末地「寻遗散记」现已开启",
+                "pic": "http://i0.hdslb.com/bfs/banner/7118312aea8437cbac8ddfd67a148b233d24d42c.jpg",
+                "image_urls": null,
+                "litpic": "",
+                "url": "https://www.bilibili.com/blackboard/era/vuEW3nF9LdRaVWLW.html",
+                "style": 0,
+                "agency": "",
+                "label": "",
+                "intro": "",
+                "creative_type": 0,
+                "request_id": "1781055578",
+                "src_id": 3039,
+                "area": 1,
+                "is_ad_loc": false,
+                "ad_cb": "",
+                "title": "",
+                "server_type": 0,
+                "cm_mark": 0,
+                "stime": 1780632000,
+                "mid": "456524807",
+                "activity_type": 0,
+                "epid": 0,
+                "season": null,
+                "room": null,
+                "sub_title": "",
+                "ad_desc": "",
+                "adver_name": "",
+                "null_frame": false,
+                "pic_main_color": "",
+                "card_type": 0,
+                "business_mark": null,
+                "inline": {
+                    "inline_use_same": 1,
+                    "inline_type": 0,
+                    "inline_url": "",
+                    "inline_barrage_switch": 1
+                },
+                "operater": "manager_banner_10948",
+                "jump_target": 0,
+                "show_urls": null,
+                "click_urls": null,
+                "track_id": "",
+                "feedback_panel": null,
+                "sales_type": 0,
+                "wx_program_info": null,
+                "list_type": 0,
+                "crowd_id": 0,
+                "pc_style": 0
+            }
+        ],
+        "4330": [
+            {
+                "id": 0,
+                "contract_id": "",
+                "res_id": 0,
+                "asg_id": 0,
+                "pos_num": 1,
+                "name": "经典美学焕新，全武将3D沉浸式演绎！",
+                "pic": "https://i0.hdslb.com/bfs/sycp/mgk/collage/jpg/202606/1e3c91e2d2d0dfa7654a82ecfb8b746d.jpg",
+                "image_urls": null,
+                "litpic": "",
+                "url": "https://game.bilibili.com/sgz/?msource=1&source=trackadf_d3ea6c48298f4f638c989405868486d7&gameID=16499&from_bcg=bcg_12_1891497288&track_id=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&caid=__CAID__&resource_id=__RESOURCEID__&source_id=4331&request_id=1781055578084q10a88a48a75q2591&from_spmid=__FROMSPMID__&creative_id=1891497288&linked_creative_id=1894868878",
+                "style": 0,
+                "is_ad": true,
+                "agency": "",
+                "label": "",
+                "intro": "",
+                "creative_type": 2,
+                "request_id": "1781055578084q10a88a48a75q2591",
+                "creative_id": 1894868878,
+                "src_id": 4331,
+                "show_url": "https://impression.biligame.com/api/impression/bilibili?account_id=4064717&campaign_id=32990445&unit_id=359114153&creative_id=1891497288&supply_callback=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&callback_url=https%3a%2f%2fcm.bilibili.com%2fconv%2fapi%2fconversion%2fad%2fcb%2fv1%3ftrack_id%3dpbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&mid=__MID__&os=3&idfa=__IDFA__&buvid=__BUVID__&android_id=__ANDROIDID__&oaid=__OAID__&imei=__IMEI__&mac=__MAC__&duid=__DUID__&ip=240e:346:224:5431:66b0:e8ff:feac:cb3e&request_id=1781055578084q10a88a48a75q2591&ts=__TS__&ua=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F149.0.0.0+Safari%2F537.36+Edg%2F149.0.0.0&ad_channel_id=4&ad_f=d3ea6c48298f4f638c989405868486d7&game_id=16499",
+                "click_url": "https://game-data-api.biligame.com/v2/api/click/mobile_bili?account_id=4064717&campaign_id=32990445&unit_id=359114153&creative_id=1891497288&supply_callback=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&callback_url=https%3a%2f%2fcm.bilibili.com%2fconv%2fapi%2fconversion%2fad%2fcb%2fv1%3ftrack_id%3dpbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&mid=__MID__&os=3&idfa=__IDFA__&buvid=__BUVID__&android_id=__ANDROIDID__&oaid=__OAID__&imei=__IMEI__&mac=__MAC__&duid=__DUID__&ip=240e:346:224:5431:66b0:e8ff:feac:cb3e&request_id=1781055578084q10a88a48a75q2591&ts=__TS__&ua=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F149.0.0.0+Safari%2F537.36+Edg%2F149.0.0.0&caid=__CAID__&ad_channel_id=4&ad_f=d3ea6c48298f4f638c989405868486d7&game_id=16499",
+                "area": 1,
+                "is_ad_loc": true,
+                "ad_cb": "CO3J3Q8Q8cDSqwEYjs/FhwcgoQQoATDNi/gBOOshQh4xNzgxMDU1NTc4MDg0cTEwYTg4YTQ4YTc1cTI1OTFI5L+9+eozUgbmtY7ljZdaBuWxseS4nGIG5Lit5Zu9aAFwAHiAgICAoDmAAQOIAQCSASUyNDBlOjM0NjoyMjQ6NTQzMTo2NmIwOmU4ZmY6ZmVhYzpjYjNloAGnBKgBBbIBIDrXhOqqQeSm5jlKNa4zh4nrqA8Is9eDobdEvqltgE4QugGBBGh0dHBzOi8vZ2FtZS5iaWxpYmlsaS5jb20vc2d6Lz9tc291cmNlPTEmc291cmNlPXRyYWNrYWRmX2QzZWE2YzQ4Mjk4ZjRmNjM4Yzk4OTQwNTg2ODQ4NmQ3JmdhbWVJRD0xNjQ5OSZmcm9tX2JjZz1iY2dfMTJfMTg5MTQ5NzI4OCZ0cmFja19pZD1wYmFlcy50R2VEUlBESVI2WllVVDVvdkxSTVpoNEk5WUdFT25IR3E0a3dLZFhhRm5MNlVIM2tZeWp4V1ZVT05YTDlUUjlVQjFGMUJtSktya0ZWSDI4U2dBNXdEYlZ1SWxUREVDblIzSks1cXpKdklvM2N5bXRoN1BnOFpzYmFoWkFmZzYyTy1HXzdyc2Q4MjlyaEQ2aHdUQk9TZU1Jc2ROTmNPSDJsS2dCM0s2UGZNeUJ1MXVwSXpmN0NudnM2S3NJd1U2elUmY2FpZD1fX0NBSURfXyZyZXNvdXJjZV9pZD1fX1JFU09VUkNFSURfXyZzb3VyY2VfaWQ9NDMzMSZyZXF1ZXN0X2lkPTE3ODEwNTU1NzgwODRxMTBhODhhNDhhNzVxMjU5MSZmcm9tX3NwbWlkPV9fRlJPTVNQTUlEX18mY3JlYXRpdmVfaWQ9MTg5MTQ5NzI4OCZsaW5rZWRfY3JlYXRpdmVfaWQ9MTg5NDg2ODg3OMIBATHSAQDYAcoD4AGAreIE6AGokBLwAdyxhKjNxBr4AaEEgAICiAKe5jmSAgCYApCLwwGgAuoLqALinAOwAh+4AgDAAgDIApBO6gIA+AKagAOIAwWSAwCoAwCwAwC4AwDCAwxCVjFyMkVzNlhFVHXIAwDSA8UBeyIxIjoiMTg5NDg2ODg3OCIsIjEyIjoiNDMzMSIsIjEzIjoiMzE4MDgxMyIsIjE2IjoiMzE4MDgxM180OTE3OCIsIjIiOiI0MDY0NzE3IiwiMjQiOiIxIiwiMjUiOiIxMTQyIiwiMjYiOiIxMTU5IiwiMjgiOiJhOGZhNGY0NTQ1NTJhMWNlNzJhNTJhYmE3MzBmMjljYSIsIjMiOiI0MDY0NzE3IiwiNCI6IjAiLCI1IjoiMCIsIjYiOiI0MDY0NzE3In3gAwDoAwDwAwD6AwN1Z2OCBD11cF9taWQ6OTQ2OTc0LGF2X2lkOjExNjcwNjQyNDk4NTgyMCxidl9pZDpCVjFyMkVzNlhFVHUsY19pZDowiASnBJAEAJgEAaAEAaoEBwjOgpFMEASqBAcI2pbDTRABuAQKwAQAygQA0AQA2AQA4gSLAjU2LnsicHNJZCI6MTMyMDU5LCJ2MiI6IkhKVWZuOHVGeXQ4NEdPdHlNVzAyVi1RRUJNY3BNVmtmV1R1Q0Z3cHR1WDU1LUF2Q093clRZWVpteEYyVUVEYW9JZWp3a2lGZFdza0pINGhQUjNaRm96b09WVU1zZWR0d0d0aC14cEFZY2ZmYXN1WXNyWTZBaUJQLXpCWXE2ckJUX0MyMjBnbGpiWFppLVFnU1g1eTNZYmUxQjR0WVUyZFRaeF9UQWJhSU15VF9HcDFyYnVNcThBIn07NjMueyJwc0lkIjoxMzIwNTgsInYyIjoiSHNBIn07NzAueyJwc0lkIjoxMTQ3ODAsInYyIjoiQUEifegEAPAEAPoEogN7ImFjY2VsZXJhdGVfZmFjdG9yIjoxLjAsImFjY2VsZXJhdGVfaWQiOjAsImFkX3R5cGVfZml4IjoiY3BtIiwiYml6X3R5cGUiOjEyLCJiaXpfdHlwZV9maXgiOjMsImNwYSI6IntcImNwYV9sZXZlbFwiOjAsXCJjcGFfc2V0XCI6MH0iLCJjcGFUYXJnZXRUeXBlIjowLCJmcm9tVHJhY2tpZCI6IiIsImlhYV9jaGVhdF9mbG93IjowLCJpbm5lciI6MSwiaXNfY29tbWVyY2UiOjEsImlzX29jcGNfYW50b3Vfb2NwbSI6MCwiaXNfdHJhY2tpbmdfdXJscyI6MCwibWluaV9nYW1lX2lkIjoiIiwibWluaV9nYW1lX3Bvc2l0aW9uX2lkIjoiIiwibW9kZWxTY29yZSI6IntcImN0clwiOlwiNS42MDEzMzFcIixcImZpbmFsX3BjdHJcIjpcIjUuNjAxMzMxXCIsXCJmaW5hbF9wY3ZyXCI6XCIxMDAwMC4wMDAwMDBcIn0iLCJ2aWRlb191cF9taWQiOjB9gAUAkAUEkAUlkAUzkAU7kAVDkAVIkAVJkAWzAZAFjgKQBZoCkAXDApAFzgKQBdMCkAXWApAF1wKQBdgCkAXaApAF2wKQBd8CkAXwApAF+wKQBf8CkAWNA5AFlAOQBZgDkAWZA5AFmgOQBZsDkAWnA5AFsAOQBbcDkAXAA5AFwQOQBc0DkAXgA5AF9QOQBfgDkAX/A5AFxgWQBYAGkAWBBpAFggaQBaYGkAWNB5AFwgeQBfkHkAWBCJAFvQigBQC4BQDABY2SwgHIBQjgBQToBQDyBWBDQXhsQUVBY1JtMEFRQnhHZFFBQWdEK2dBYW5MbnFzQnFBSEk2dmVGQjdBQkFlMEJBQUNBUC9VQkFBQ0FQNTBDQUFDQVA2VUNBQUNBUDYwQ0FBQ0FQN1VDQUFDQVB3PT34BanLnqsBgAbgpxKIBsjq94UHkAYE",
+                "title": "经典美学焕新，全武将3D沉浸式演绎！",
+                "server_type": 1,
+                "cm_mark": 1,
+                "stime": 0,
+                "mid": "456524807",
+                "activity_type": 0,
+                "epid": 0,
+                "season": null,
+                "room": null,
+                "sub_title": "",
+                "ad_desc": "18万人感兴趣",
+                "adver_name": "",
+                "null_frame": false,
+                "pic_main_color": "",
+                "card_type": 0,
+                "business_mark": {
+                    "bg_border_color": "#999999FF",
+                    "bg_color": "",
+                    "bg_color_night": "",
+                    "border_color": "#999999FF",
+                    "border_color_night": "#686868",
+                    "img_height": 0,
+                    "img_url": "",
+                    "img_width": 0,
+                    "text": "广告",
+                    "text_color": "#999999FF",
+                    "text_color_night": "#686868",
+                    "type": 2
+                },
+                "inline": {
+                    "inline_use_same": 0,
+                    "inline_type": 0,
+                    "inline_url": "",
+                    "inline_barrage_switch": 0
+                },
+                "operater": "",
+                "jump_target": 1,
+                "show_urls": [
+                    "https://impression.biligame.com/api/impression/bilibili?account_id=4064717&campaign_id=32990445&unit_id=359114153&creative_id=1891497288&supply_callback=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&callback_url=https%3a%2f%2fcm.bilibili.com%2fconv%2fapi%2fconversion%2fad%2fcb%2fv1%3ftrack_id%3dpbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&mid=__MID__&os=3&idfa=__IDFA__&buvid=__BUVID__&android_id=__ANDROIDID__&oaid=__OAID__&imei=__IMEI__&mac=__MAC__&duid=__DUID__&ip=240e:346:224:5431:66b0:e8ff:feac:cb3e&request_id=1781055578084q10a88a48a75q2591&ts=__TS__&ua=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F149.0.0.0+Safari%2F537.36+Edg%2F149.0.0.0&ad_channel_id=4&ad_f=d3ea6c48298f4f638c989405868486d7&game_id=16499"
+                ],
+                "click_urls": [
+                    "https://game-data-api.biligame.com/v2/api/click/mobile_bili?account_id=4064717&campaign_id=32990445&unit_id=359114153&creative_id=1891497288&supply_callback=pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&callback_url=https%3a%2f%2fcm.bilibili.com%2fconv%2fapi%2fconversion%2fad%2fcb%2fv1%3ftrack_id%3dpbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU&mid=__MID__&os=3&idfa=__IDFA__&buvid=__BUVID__&android_id=__ANDROIDID__&oaid=__OAID__&imei=__IMEI__&mac=__MAC__&duid=__DUID__&ip=240e:346:224:5431:66b0:e8ff:feac:cb3e&request_id=1781055578084q10a88a48a75q2591&ts=__TS__&ua=Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F149.0.0.0+Safari%2F537.36+Edg%2F149.0.0.0&caid=__CAID__&ad_channel_id=4&ad_f=d3ea6c48298f4f638c989405868486d7&game_id=16499"
+                ],
+                "track_id": "pbaes.tGeDRPDIR6ZYUT5ovLRMZh4I9YGEOnHGq4kwKdXaFnL6UH3kYyjxWVUONXL9TR9UB1F1BmJKrkFVH28SgA5wDbVuIlTDECnR3JK5qzJvIo3cymth7Pg8ZsbahZAfg62O-G_7rsd829rhD6hwTBOSeMIsdNNcOH2lKgB3K6PfMyBu1upIzf7Cnvs6KsIwU6zU",
+                "feedback_panel": {
+                    "close_rec_tips": "操作成功",
+                    "feedback_panel_detail": [
+                        {
+                            "icon_url": "https://i0.hdslb.com/bfs/sycp/mng/201907/a53df8f189bb12666a39d10ad1babcf5.png",
+                            "jump_type": 1,
+                            "jump_url": "",
+                            "module_id": 1,
+                            "secondary_panel": [
+                                {
+                                    "reason_id": 1,
+                                    "text": "不想看该内容"
+                                },
+                                {
+                                    "reason_id": 2,
+                                    "text": "相似内容过多"
+                                },
+                                {
+                                    "reason_id": 5,
+                                    "text": "广告质量差"
+                                }
+                            ],
+                            "sub_text": "（选择后将优化广告展示）",
+                            "text": "屏蔽广告"
+                        },
+                        {
+                            "icon_url": "https://i0.hdslb.com/bfs/sycp/mng/202409/539675ae22c4230d299f1525a458b785.png",
+                            "jump_type": 2,
+                            "jump_url": "https://cm.bilibili.com/feedback-pc/#/introduction",
+                            "module_id": 10,
+                            "sub_text": "",
+                            "text": "我为什么会看到此广告"
+                        },
+                        {
+                            "icon_url": "https://i0.hdslb.com/bfs/sycp/mng/202409/5dcdf2063f6deb0df5e0bcdd0a9b7561.png",
+                            "jump_type": 2,
+                            "jump_url": "https://cm.bilibili.com/feedback-pc/#/ad?creative_id=1891497288&source_id=4331&complain_detail=eyJhZF90eXBlIjozLCJhdmlkIjowLCJleHBfbmFtZSI6IiIsImdyYWRlX2NvbmNyZXRlX2lkX21hcHBpbmciOiJ7XCIxXCI6XCIxODk0ODY4ODc4XCIsXCIxMlwiOlwiNDMzMVwiLFwiMTNcIjpcIjMxODA4MTNcIixcIjE2XCI6XCIzMTgwODEzXzQ5MTc4XCIsXCIyXCI6XCI0MDY0NzE3XCIsXCIyNFwiOlwiMVwiLFwiMjVcIjpcIjExNDJcIixcIjI2XCI6XCIxMTU5XCIsXCIyOFwiOlwiYThmYTRmNDU0NTUyYTFjZTcyYTUyYWJhNzMwZjI5Y2FcIixcIjNcIjpcIjQwNjQ3MTdcIixcIjRcIjpcIjBcIixcIjVcIjpcIjBcIixcIjZcIjpcIjQwNjQ3MTdcIn0iLCJpbWFnZV9pZCI6MTYyNTgxMzM4LCJtYXRlcmlhbF90eXBlIjo0LCJzdHJhdGVneV9pZCI6MCwidGl0bGVfaWQiOjE1OTY2MjQxNCwidHJhaWwiOiI1Ni57XCJwc0lkXCI6MTMyMDU5LFwidjJcIjpcIkhKVWZuOHVGeXQ4NEdPdHlNVzAyVi1RRUJNY3BNVmtmV1R1Q0Z3cHR1WDU1LUF2Q093clRZWVpteEYyVUVEYW9JZWp3a2lGZFdza0pINGhQUjNaRm96b09WVU1zZWR0d0d0aC14cEFZY2ZmYXN1WXNyWTZBaUJQLXpCWXE2ckJUX0MyMjBnbGpiWFppLVFnU1g1eTNZYmUxQjR0WVUyZFRaeF9UQWJhSU15VF9HcDFyYnVNcThBXCJ9OzYzLntcInBzSWRcIjoxMzIwNTgsXCJ2MlwiOlwiSHNBXCJ9OzcwLntcInBzSWRcIjoxMTQ3ODAsXCJ2MlwiOlwiQUFcIn0ifQ&request_id=1781055578084q10a88a48a75q2591",
+                            "module_id": 9,
+                            "sub_text": "",
+                            "text": "我要投诉"
+                        }
+                    ],
+                    "open_rec_tips": "将减少展示此类广告",
+                    "panel_type_text": "广告",
+                    "toast": "将减少相似广告推荐"
+                },
+                "sales_type": 12,
+                "quality_infos": [
+                    {
+                        "bg_style": 0,
+                        "border_color": "",
+                        "border_color_night": "",
+                        "icon_night": "",
+                        "is_bg": false,
+                        "text": "18万人感兴趣",
+                        "text_color": "#9499A0FF",
+                        "text_color_night": "#757A81FF"
+                    }
+                ],
+                "wx_program_info": null,
+                "list_type": 0,
+                "crowd_id": 0,
+                "pc_style": 0
+            }
+        ]
+    },
+    "adsControl": {
+        "has_danmu": 0,
+        "under_player_scroller_seconds": 60,
+        "has_live_booking_ad": false
+    },
+    "noRecommendLive": false,
+    "noRecommendActivity": false,
+    "noTagAndNote": false,
+    "emergencyBan": {
+        "no_like": false,
+        "no_coin": false,
+        "no_fav": false,
+        "no_share": false
+    },
+    "player": {
+        "toast": {},
+        "tooltip": {},
+        "hotspot": {},
+        "danmaku": {},
+        "sharePanel": {},
+        "endPanel": {},
+        "interaction": {},
+        "auxiliary": {},
+        "subtitle": {},
+        "track": {}
+    },
+    "continuousPlay": false,
+    "nanoTheme": {
+        "bpx-primary-color": "var(--brand_blue)",
+        "bpx-fn-color": "var(--brand_blue)",
+        "bpx-fn-hover-color": "var(--brand_blue)",
+        "bpx-box-shadow": "var(--bg3)",
+        "bpx-dmsend-switch-icon": "var(--text2)",
+        "bpx-dmsend-hint-icon": "var(--graph_medium)",
+        "bpx-aux-header-icon": "var(--graph_icon)",
+        "bpx-aux-float-icon": "var(--graph_icon)",
+        "bpx-aux-block-icon": "var(--text3)",
+        "bpx-dmsend-info-font": "var(--text2)",
+        "bpx-dmsend-input-font": "var(--text1)",
+        "bpx-dmsend-hint-font": "var(--text3)",
+        "bpx-aux-header-font": "var(--text1)",
+        "bpx-aux-footer-font": "var(--text2)",
+        "bpx-aux-footer-font-hover": "var(--text1)",
+        "bpx-aux-content-font1": "var(--text1)",
+        "bpx-aux-content-font2": "var(--text2)",
+        "bpx-aux-content-font3": "var(--text2)",
+        "bpx-aux-content-font4": "var(--text3)",
+        "bpx-aux-content-font5": "var(--text3)",
+        "bpx-dmsend-main-bg": "var(--bg1)",
+        "bpx-dmsend-input-bg": "var(--bg3)",
+        "bpx-aux-header-bg": "var(--graph_bg_regular)",
+        "bpx-aux-footer-bg": "var(--graph_bg_regular)",
+        "bpx-aux-content-bg": "var(--bg1)",
+        "bpx-aux-button-bg": "var(--bg3)",
+        "bpx-aux-button-disabled-bg": "var(--graph_bg_thin)",
+        "bpx-aux-float-bg": "var(--bg1_float)",
+        "bpx-aux-float-hover-bg": "var(--graph_medium)",
+        "bpx-aux-cover-bg": "var(--graph_weak)",
+        "bpx-dmsend-border": "var(--bg3)",
+        "bpx-aux-float-border": "var(--line_light)",
+        "bpx-aux-line-border": "var(--line_regular)",
+        "bpx-aux-input-border": "var(--line_regular)",
+        "bpx-dmsend-disable-button-bg": "var(--graph_bg_thick)",
+        "bpx-dmsend-disable-button-text": "var(--text3)"
+    },
+    "insertScripts": [
+        "//s1.hdslb.com/bfs/static/jinkela/video/video.c53e6b0be0db0d5820d0c10cfd6705474507ba22.js"
+    ],
+    "constants": {},
+    "abtest": {
+        "travel_trace_enabled": "false",
+        "aaab": "2",
+        "login_dialog_version": "V0",
+        "ai_summary_version": "HIDE",
+        "rcmd_tab_version": "DISABLE",
+        "enable_shortcut_key": "DISABLE",
+        "enable_live_anime": "ENABLE",
+        "danmaku_report_version": "V0",
+        "enable_strip_ad": "ENABLE",
+        "comment_version_hash": "b264229dca"
+    },
+    "corePlayer": {
+        "id": 0,
+        "ref": "<link rel='preload' href='//s1.hdslb.com/bfs/static/player/main/core.edd97524.js' as='script'/>",
+        "str": "<script type='text/javascript' src='//s1.hdslb.com/bfs/static/player/main/core.edd97524.js'></script>",
+        "version": "4.9.85"
+    }
+}

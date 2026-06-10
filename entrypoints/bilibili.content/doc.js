@@ -73,30 +73,41 @@ const scrollContainer = window
 scrollContainer.scrollBy(0, 100)
 scrollContainer.scrollY
 
-// 视频信息（主世界 hook 监听 view 接口，解析见 view_api.js）
-// https://api.bilibili.com/x/web-interface/view?bvid=BV1EDbfzsE7k
-const viewData = {
-    title: '说真的25年的风口已经很明显了…', // 标题
-    bvid: 'BV1EDbfzsE7k', // BV号
-    aid: 114900290570272, // AV号
-    tname_v2: '', // 分区名（可能为空，优先 tname_v2 再 tname）
-    pic: 'http://i1.hdslb.com/bfs/archive/....jpg', // 封面
-    pubdate: 1753239708, // 发布时间 Unix 秒
-    duration: 274, // 时长（秒）
-    dimension: { width: 1920, height: 1080 }, // 分辨率
-    owner: {
-        mid: 491266931, // UP主 mid，评论区比对判断是否作者
-        name: 'GenJi是真想教会你AI', // 昵称
-        face: 'https://i2.hdslb.com/bfs/face/....jpg', // 头像
+// 视频 / UP 主信息：主世界读取 window.__INITIAL_STATE__（videoData + upData），解析见 initial_state.js
+// window.__INITIAL_STATE__.videoData — 标题、BV/AV、封面、统计、分辨率等
+// window.__INITIAL_STATE__.upData — 昵称、mid、粉丝、签名、等级、大会员、认证等
+const initialState = {
+    videoData: {
+        title: 'AI还是真的？连特效师也看不出来？',
+        bvid: 'BV1r2Es6XETu',
+        aid: 116706424985820,
+        cid: 38922487681,
+        pic: 'http://i2.hdslb.com/bfs/archive/....jpg',
+        pubdate: 1780801595,
+        duration: 683,
+        dimension: { width: 3840, height: 2160 },
+        stat: {
+            view: 3622427,
+            like: 101578,
+            coin: 15344,
+            favorite: 28069,
+            share: 3363,
+            reply: 2566,
+            danmaku: 12313,
+        },
     },
-    stat: {
-        view: 2929569, // 播放量
-        like: 32822, // 点赞
-        coin: 3775, // 投币
-        favorite: 43417, // 收藏
-        share: 3280, // 分享
-        reply: 338, // 评论
-        danmaku: 213, // 弹幕
+    upData: {
+        mid: '946974',
+        name: '影视飓风',
+        face: 'https://i0.hdslb.com/bfs/face/....jpg',
+        fans: 16383632,
+        attention: 676,
+        sign: '无限进步！…',
+        level_info: { current_level: 6 },
+        vip: { label: { text: '十年大会员' } },
+        official_verify: { desc: '2025百大UP主…' },
+        archiveCount: 915,
+        nameplate: { name: '2020百大UP主' },
     },
 };
 
