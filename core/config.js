@@ -5,8 +5,15 @@ export const MESSAGE_START_CRAWL = 'START_CRAWL';
 export const MESSAGE_START_QUEUE = 'START_CRAWL_QUEUE';
 export const MESSAGE_OPEN_RECORDS = 'OPEN_RECORDS';
 
-/** 连续无法滚动且没有新评论时，再尝试几次才结束（避免暂停后误判到底） */
+/** 连续无法滚动且没有新评论时，再尝试几次才结束 */
 export const CRAWL_SCROLL_STALL_LIMIT = 3;
+
+export class CrawlAbortedError extends Error {
+    constructor() {
+        super('用户已结束爬取');
+        this.name = 'CrawlAbortedError';
+    }
+}
 
 /** 队列中每个页面加载完成后的等待时间（毫秒） */
 export const QUEUE_PAGE_LOAD_WAIT_MS = 5000;
@@ -64,18 +71,6 @@ export const DELAY_JITTER_MS = 50;
 export function delayMs(baseMs) {
     const ms = Math.max(0, baseMs - DELAY_JITTER_MS + Math.random() * DELAY_JITTER_MS * 2);
     return new Promise((r) => setTimeout(r, ms));
-}
-
-/** 可暂停的延迟：暂停期间不计时，恢复后继续等待剩余时间 */
-export async function delayWithPause(baseMs, waitIfPaused) {
-    const total = Math.max(0, baseMs - DELAY_JITTER_MS + Math.random() * DELAY_JITTER_MS * 2);
-    let remaining = total;
-    while (remaining > 0) {
-        await waitIfPaused();
-        const chunk = Math.min(80, remaining);
-        await delayMs(chunk);
-        remaining -= chunk;
-    }
 }
 
 export const DEFAULT_DOMAIN_CONFIG = {

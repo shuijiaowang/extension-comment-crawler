@@ -1,8 +1,8 @@
 import {
     countTotalComments,
+    CrawlAbortedError,
     CRAWL_SCROLL_STALL_LIMIT,
     delayMs,
-    delayWithPause,
     getDomainConfigStorage,
     isTotalLimitReached,
     MESSAGE_START_CRAWL,
@@ -52,7 +52,7 @@ export default defineContentScript({
         const getCommentThreadShadow = (index) =>
             getCommentsContainer()?.querySelectorAll('bili-comment-thread-renderer')[index]?.shadowRoot ??
             null;
-        const expandRepliesInDom = async (commentItem, cfg, checkpoint, pauseDelay) => {
+        const expandRepliesInDom = async (commentItem, cfg, checkpoint) => {
             const { commentReplisePageSizeLimit, clickDelay } = cfg;
             const replyContainer = commentItem
                 .querySelector('bili-comment-replies-renderer')
@@ -62,7 +62,7 @@ export default defineContentScript({
             if (replyShowMoreButton) {
                 await checkpoint('replies');
                 replyShowMoreButton.click();
-                await pauseDelay(clickDelay);
+                await delayMs(clickDelay);
             }
             for (let page = 0; page < commentReplisePageSizeLimit; page++) {
                 await checkpoint('replies');
@@ -73,17 +73,17 @@ export default defineContentScript({
                 );
                 if (!nextBtn) break;
                 nextBtn.click();
-                await pauseDelay(clickDelay);
+                await delayMs(clickDelay);
             }
             const replyCollapseButtons = replyContainer.querySelectorAll('#pagination-foot bili-text-button');
             const replyCollapseButton = replyCollapseButtons[replyCollapseButtons.length - 1];
             if (replyCollapseButton) {
                 await checkpoint('replies');
                 replyCollapseButton.click();
-                await pauseDelay(clickDelay);
+                await delayMs(clickDelay);
             }
         };
-        const collectOneRoot = async (rootIndex, results, cfg, checkpoint, pauseDelay) => {
+        const collectOneRoot = async (rootIndex, results, cfg, checkpoint) => {
             const { commentTotalLimit, crawlReplies, clickDelay } = cfg;
             const remaining = remainingTotalQuota(results, commentTotalLimit);
             if (remaining <= 0) return false;
@@ -98,9 +98,9 @@ export default defineContentScript({
                 const commentItem = getCommentThreadShadow(rootIndex);
                 if (commentItem) {
                     const before = replyCache.subReplyCount(rootId);
-                    await expandRepliesInDom(commentItem, cfg, checkpoint, pauseDelay);
+                    await expandRepliesInDom(commentItem, cfg, checkpoint);
                     if (replyCache.subReplyCount(rootId) === before) {
-                        await pauseDelay(clickDelay);
+                        await delayMs(clickDelay);
                     }
                 }
             }
@@ -146,9 +146,8 @@ export default defineContentScript({
             };
             const checkpoint = async (phase = 'running') => {
                 report(phase);
-                await progressPanel.waitIfPaused();
+                progressPanel.throwIfAborted();
             };
-            const pauseDelay = (ms) => delayWithPause(ms, () => progressPanel.waitIfPaused());
 
             crawling = true;
             let scrollStallCount = 0;
@@ -164,7 +163,7 @@ export default defineContentScript({
                         !isTotalLimitReached(results, commentTotalLimit)
                     ) {
                         await checkpoint('running');
-                        await collectOneRoot(results.length, results, cfg, checkpoint, pauseDelay);
+                        await collectOneRoot(results.length, results, cfg, checkpoint);
                         report('running');
                     }
                     if (results.length >= commentLimit || isTotalLimitReached(results, commentTotalLimit)) {
@@ -174,9 +173,9 @@ export default defineContentScript({
                     const rootsBefore = replyCache.rootOrder.length;
                     const scrollBefore = window.scrollY;
                     window.scrollBy(0, scrollStep);
-                    await pauseDelay(scrollDelay);
+                    await delayMs(scrollDelay);
                     if (replyCache.rootOrder.length === rootsBefore) {
-                        await pauseDelay(clickDelay);
+                        await delayMs(clickDelay);
                     }
                     const scrollAfter = window.scrollY;
                     const rootsAfter = replyCache.rootOrder.length;
@@ -203,6 +202,24 @@ export default defineContentScript({
                 });
                 return { ok: true, count: results.length };
             } catch (e) {
+                if (e instanceof CrawlAbortedError) {
+                    console.log('用户结束爬取', results);
+                    if (results.length > 0) {
+                        report('saving');
+                        const meta = await ensurePageMeta();
+                        await saveCrawlResults(window.location.hostname, results, meta);
+                    }
+                    const total = countTotalComments(results);
+                    progressPanel.setDone({
+                        rootCount: results.length,
+                        totalCount: total,
+                        note:
+                            results.length > 0
+                                ? `已手动结束，已保存 ${results.length} 条一级评论（累计 ${total} 条）。`
+                                : '已手动结束，未采集到评论。',
+                    });
+                    return { ok: true, count: results.length, aborted: true };
+                }
                 const message = e?.message ?? '爬取失败';
                 progressPanel.setError(message);
                 return { ok: false, error: message };

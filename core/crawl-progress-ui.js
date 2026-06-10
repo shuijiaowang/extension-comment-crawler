@@ -1,9 +1,9 @@
-import { MESSAGE_OPEN_RECORDS } from './config.js';
+import { CrawlAbortedError, MESSAGE_OPEN_RECORDS } from './config.js';
 
 const HOST_ID = 'ext-comment-crawler-progress-host';
 
 /**
- * 在目标页面插入爬取进度悬浮框（暂停/继续、完成提示、跳转记录页）
+ * 在目标页面插入爬取进度悬浮框（结束、完成提示、跳转记录页）
  * @param {{
  *   accent?: string,
  *   accentHover?: string,
@@ -21,9 +21,7 @@ export function createCrawlProgressPanel(options = {}) {
         platformId = '',
     } = options;
 
-    let paused = false;
-    /** @type {(() => void) | null} */
-    let pauseRelease = null;
+    let aborted = false;
     /** @type {'running' | 'scrolling' | 'replies' | 'saving' | 'done' | 'error'} */
     let phase = 'running';
     /** @type {{ roots: number, rootLimit: number, total: number, totalLimit: number, cachedRoots: number }} */
@@ -33,28 +31,9 @@ export function createCrawlProgressPanel(options = {}) {
     let doneNote = '';
     let errorMessage = '';
 
-    const waitIfPaused = async () => {
-        while (paused) {
-            await new Promise((resolve) => {
-                pauseRelease = resolve;
-            });
-        }
-    };
-
-    const resume = () => {
-        if (!paused) return;
-        paused = false;
-        if (pauseRelease) {
-            const release = pauseRelease;
-            pauseRelease = null;
-            release();
-        }
-        render();
-    };
-
-    const pause = () => {
-        if (paused) return;
-        paused = true;
+    const requestAbort = () => {
+        if (aborted || phase === 'done' || phase === 'error') return;
+        aborted = true;
         render();
     };
 
@@ -201,7 +180,7 @@ export function createCrawlProgressPanel(options = {}) {
     const statusText = () => {
         if (phase === 'done') return '爬取已完成，结果已保存到抓取记录。';
         if (phase === 'error') return errorMessage || '爬取失败';
-        if (paused) return '已暂停：当前步骤完成后停止，等待/滚动也会冻结，点击继续恢复。';
+        if (aborted) return '正在结束：完成当前步骤后将保存已采集数据。';
         if (phase === 'scrolling') return '正在滚动页面，加载更多一级评论…';
         if (phase === 'replies') return '正在展开并采集二级评论…';
         if (phase === 'saving') return '正在保存抓取结果…';
@@ -250,12 +229,13 @@ export function createCrawlProgressPanel(options = {}) {
             return;
         }
 
-        const toggleBtn = document.createElement('button');
-        toggleBtn.type = 'button';
-        toggleBtn.className = 'btn-secondary';
-        toggleBtn.textContent = paused ? '继续' : '暂停';
-        toggleBtn.addEventListener('click', () => (paused ? resume() : pause()));
-        actionsEl.appendChild(toggleBtn);
+        const stopBtn = document.createElement('button');
+        stopBtn.type = 'button';
+        stopBtn.className = 'btn-secondary';
+        stopBtn.textContent = '结束';
+        stopBtn.disabled = aborted;
+        stopBtn.addEventListener('click', requestAbort);
+        actionsEl.appendChild(stopBtn);
     };
 
     const render = () => {
@@ -305,24 +285,14 @@ export function createCrawlProgressPanel(options = {}) {
         doneRoots = rootCount;
         doneTotal = totalCount;
         doneNote = note;
-        paused = false;
-        if (pauseRelease) {
-            const release = pauseRelease;
-            pauseRelease = null;
-            release();
-        }
+        aborted = false;
         render();
     };
 
     const setError = (message) => {
         phase = 'error';
         errorMessage = message;
-        paused = false;
-        if (pauseRelease) {
-            const release = pauseRelease;
-            pauseRelease = null;
-            release();
-        }
+        aborted = false;
         render();
     };
 
@@ -330,13 +300,14 @@ export function createCrawlProgressPanel(options = {}) {
     render();
 
     return {
-        waitIfPaused,
-        pause,
-        resume,
+        requestAbort,
+        throwIfAborted: () => {
+            if (aborted) throw new CrawlAbortedError();
+        },
+        isAborted: () => aborted,
         setProgress,
         setDone,
         setError,
         destroy,
-        isPaused: () => paused,
     };
 }

@@ -1,8 +1,8 @@
 import {
     countTotalComments,
+    CrawlAbortedError,
     CRAWL_SCROLL_STALL_LIMIT,
     delayMs,
-    delayWithPause,
     effectiveReplyLimit,
     getDomainConfigStorage,
     isTotalLimitReached,
@@ -53,7 +53,7 @@ export default defineContentScript({
             document.querySelector('.comments-el .comments-container')?.querySelector('.list-container');
         const getParentCommentEl = (index) =>
             getCommentListContainer()?.querySelectorAll('.parent-comment')[index] ?? null;
-        const expandRepliesInDom = async (parentEl, cfg, rootId, maxReplies, checkpoint, pauseDelay) => {
+        const expandRepliesInDom = async (parentEl, cfg, rootId, maxReplies, checkpoint) => {
             const { clickDelay } = cfg;
             const countDomReplies = () =>
                 parentEl.querySelectorAll('.reply-container .list-container .comment-item').length;
@@ -64,7 +64,7 @@ export default defineContentScript({
                 const beforeCache = commentCache.subReplyCount(rootId);
                 const beforeDom = countDomReplies();
                 replyShowMoreButton.click();
-                await pauseDelay(clickDelay);
+                await delayMs(clickDelay);
                 if (
                     commentCache.subReplyCount(rootId) <= beforeCache &&
                     countDomReplies() <= beforeDom
@@ -73,7 +73,7 @@ export default defineContentScript({
                 }
             }
         };
-        const collectOneRoot = async (rootIndex, results, cfg, checkpoint, pauseDelay) => {
+        const collectOneRoot = async (rootIndex, results, cfg, checkpoint) => {
             const { commentTotalLimit, crawlReplies, clickDelay } = cfg;
             const remaining = remainingTotalQuota(results, commentTotalLimit);
             if (remaining <= 0) return false;
@@ -88,9 +88,9 @@ export default defineContentScript({
                 const parentEl = getParentCommentEl(rootIndex);
                 if (parentEl) {
                     const before = commentCache.subReplyCount(rootId);
-                    await expandRepliesInDom(parentEl, cfg, rootId, maxReplies, checkpoint, pauseDelay);
+                    await expandRepliesInDom(parentEl, cfg, rootId, maxReplies, checkpoint);
                     if (commentCache.subReplyCount(rootId) === before) {
-                        await pauseDelay(clickDelay);
+                        await delayMs(clickDelay);
                     }
                 }
             }
@@ -136,9 +136,8 @@ export default defineContentScript({
             };
             const checkpoint = async (phase = 'running') => {
                 report(phase);
-                await progressPanel.waitIfPaused();
+                progressPanel.throwIfAborted();
             };
-            const pauseDelay = (ms) => delayWithPause(ms, () => progressPanel.waitIfPaused());
 
             crawling = true;
             let scrollStallCount = 0;
@@ -155,7 +154,7 @@ export default defineContentScript({
                         !isTotalLimitReached(results, commentTotalLimit)
                     ) {
                         await checkpoint('running');
-                        await collectOneRoot(results.length, results, cfg, checkpoint, pauseDelay);
+                        await collectOneRoot(results.length, results, cfg, checkpoint);
                         report('running');
                     }
                     if (results.length >= commentLimit || isTotalLimitReached(results, commentTotalLimit)) {
@@ -166,9 +165,9 @@ export default defineContentScript({
                     const scrollBefore = scrollContainer?.scrollTop ?? window.scrollY;
                     if (scrollContainer) scrollContainer.scrollBy(0, scrollStep);
                     else window.scrollBy(0, scrollStep);
-                    await pauseDelay(scrollDelay);
+                    await delayMs(scrollDelay);
                     if (commentCache.rootOrder.length === rootsBefore) {
-                        await pauseDelay(clickDelay);
+                        await delayMs(clickDelay);
                     }
                     const scrollAfter = scrollContainer?.scrollTop ?? window.scrollY;
                     const rootsAfter = commentCache.rootOrder.length;
@@ -195,6 +194,24 @@ export default defineContentScript({
                 });
                 return { ok: true, count: results.length };
             } catch (e) {
+                if (e instanceof CrawlAbortedError) {
+                    console.log('用户结束爬取', results);
+                    if (results.length > 0) {
+                        report('saving');
+                        const meta = await ensurePageMeta();
+                        await saveCrawlResults(window.location.hostname, results, meta);
+                    }
+                    const total = countTotalComments(results);
+                    progressPanel.setDone({
+                        rootCount: results.length,
+                        totalCount: total,
+                        note:
+                            results.length > 0
+                                ? `已手动结束，已保存 ${results.length} 条一级评论（累计 ${total} 条）。`
+                                : '已手动结束，未采集到评论。',
+                    });
+                    return { ok: true, count: results.length, aborted: true };
+                }
                 const message = e?.message ?? '爬取失败';
                 progressPanel.setError(message);
                 return { ok: false, error: message };
